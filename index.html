@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DLSU Residency Tracker Prototype</title>
+    <title>MLF Residency Tracker</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,20 +145,35 @@
             text-decoration: underline;
         }
 
+        /* Sandwich Hamburger Menu Styling */
         .menu-btn {
             background: none;
             border: 1px solid var(--border-soft);
             background: var(--surface-card);
-            font-size: 1.25rem;
             cursor: pointer;
-            padding: 6px 12px;
+            padding: 10px 12px;
             border-radius: 8px;
             transition: all 0.2s;
             flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 40px;
+            height: 36px;
         }
 
         .menu-btn:hover {
             background: var(--bg-canvas);
+            border-color: var(--text-muted);
+        }
+
+        .menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-main);
+            border-radius: 2px;
+            transition: all 0.2s ease;
         }
 
         .nav-menu {
@@ -496,7 +511,7 @@
                 justify-content: space-between;
             }
             .user-profile-chip {
-                max-width: calc(100% - 80px);
+                max-width: calc(100% - 60px);
             }
             .user-email {
                 max-width: 120px;
@@ -521,7 +536,11 @@
                     <span class="logout-link" onclick="handleLogout()">Sign Out</span>
                 </div>
 
-                <button id="menuToggleButton" class="menu-btn hidden" onclick="toggleMenu()">Menu</button>
+                <button id="menuToggleButton" class="menu-btn hidden" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <div id="dropdownMenu" class="nav-menu">
                     <button onclick="switchView('home')">Home Hub</button>
                     <button id="adminMenuTab" class="hidden" onclick="switchView('admin')">Admin Panel</button>
@@ -551,7 +570,7 @@
             </div>
 
             <div id="homeViewLeft" class="card">
-                <div class="panel-heading">Tracking Console</div>
+                <div class="panel-heading">Time Card</div>
                 
                 <div class="metric-display">
                     <div class="metric-label">Accumulated Balance</div>
@@ -564,7 +583,7 @@
                 </div>
 
                 <button type="button" id="smartActionButton" class="smart-btn" onclick="handleSmartAction()" disabled>
-                    Syncing Node Cloud...
+                    Syncing...
                 </button>
             </div>
         </div>
@@ -910,12 +929,13 @@
 
             btn.disabled = !allowed;
 
+            // Updated strictly to "Clock Out" and "Clock In" labels
             if (isClockedIn) {
                 btn.className = "smart-btn clock-out";
-                btn.innerText = "Clock Out Shift";
+                btn.innerText = "Clock Out";
             } else {
                 btn.className = "smart-btn clock-in";
-                btn.innerText = "Clock In Shift";
+                btn.innerText = "Clock In";
             }
         }
 
@@ -924,7 +944,7 @@
 
             const btn = document.getElementById('smartActionButton');
             btn.disabled = true;
-            btn.innerText = "Transmitting Packet...";
+            btn.innerText = "Syncing...";
 
             const targetAction = isClockedIn ? "Clock Out" : "Clock In";
 
