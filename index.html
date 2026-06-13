@@ -7,11 +7,10 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Clean, modern aesthetic variables */
             --bg-canvas: #f4f6f8;
             --surface-card: #ffffff;
             --text-main: #1e293b;
@@ -43,7 +42,7 @@
             padding-bottom: 40px;
         }
 
-        /* --- GLOBAL NAVIGATION HEADER --- */
+        /* Navigation Header styling */
         header {
             background-color: var(--surface-card);
             border-bottom: 1px solid var(--border-soft);
@@ -82,7 +81,6 @@
             color: var(--text-main);
         }
 
-        /* Profile & Dropdown Controls Setup */
         .header-controls {
             display: flex;
             align-items: center;
@@ -144,7 +142,6 @@
             background: var(--bg-canvas);
         }
 
-        /* Modern Dropdown Component */
         .nav-menu {
             position: absolute;
             top: 45px;
@@ -188,10 +185,10 @@
             color: var(--dlsu-green);
         }
 
-        /* --- LAYOUT GATEWAYS --- */
+        /* App Layout Structures */
         .login-box-container {
             max-width: 420px;
-            margin: 100px auto padding;
+            margin: 100px auto;
             padding: 0 24px;
         }
 
@@ -211,7 +208,6 @@
             }
         }
 
-        /* --- MODERN CARD COMPONENT --- */
         .card {
             background: var(--surface-card);
             border-radius: 16px;
@@ -219,6 +215,8 @@
             padding: 24px;
             box-shadow: var(--shadow-sm);
             transition: box-shadow 0.2s ease;
+            width: 100%;
+            overflow: hidden;
         }
 
         .card:hover {
@@ -235,7 +233,6 @@
             justify-content: space-between;
         }
 
-        /* --- NOTICES & BANNERS --- */
         .warning, .admin-warning {
             padding: 14px 16px;
             border-radius: 12px;
@@ -261,7 +258,6 @@
             color: #b45309;
         }
 
-        /* --- METRICS & INTUITIVE STATS --- */
         .metric-display {
             text-align: center;
             padding: 18px 0;
@@ -291,7 +287,6 @@
             color: #b45309;
         }
 
-        /* --- MODERN INTERACTION BUTTONS --- */
         .smart-btn {
             width: 100%;
             padding: 16px;
@@ -358,7 +353,6 @@
             box-shadow: 0 0 0 3px rgba(10, 92, 54, 0.1);
         }
 
-        /* --- LOG FEEDS & COLLAPSIBLE CONTAINERS --- */
         .log-feed-container, .attendance-board-container, .roster-board-container {
             background: #fafafa;
             border: 1px solid var(--border-soft);
@@ -398,13 +392,19 @@
         }
 
         .board-user { flex-direction: column; }
-        .board-user .email, .roster-user-item .roster-email { font-weight: 600; color: var(--text-main); }
+        .board-user .email, .roster-user-item .roster-email { 
+            font-weight: 600; 
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .board-user .time-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .roster-user-item { justify-content: space-between; align-items: center; }
-        .roster-meta-block { display: flex; flex-direction: column; max-width: 65%; }
+        .roster-user-item { justify-content: space-between; align-items: center; gap: 10px; }
+        .roster-meta-block { display: flex; flex-direction: column; max-width: 65%; min-width: 0; }
         .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
-        .roster-action-group { display: flex; gap: 6px; }
+        .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
 
         .action-sub-btn {
             border: none;
@@ -425,12 +425,12 @@
 
         .empty-state { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
 
-        /* --- TOAST NOTIFICATIONS --- */
         .toast {
             display: none;
             position: fixed;
             bottom: 24px;
             right: 24px;
+            left: 24px;
             background: #d1fae5;
             color: #065f46;
             border: 1px solid #a7f3d0;
@@ -439,6 +439,14 @@
             font-weight: 600;
             box-shadow: var(--shadow-md);
             z-index: 1000;
+            text-align: center;
+        }
+
+        @media(min-width: 576px) {
+            .toast {
+                left: auto;
+                max-width: 350px;
+            }
         }
 
         .toast.show {
@@ -471,7 +479,7 @@
                     <span class="logout-link" onclick="handleLogout()">Sign Out</span>
                 </div>
 
-                <button id="menuToggleButton" class="menu-btn hidden" onclick="toggleMenu()">☰</button>
+                <button id="menuToggleButton" class="menu-btn hidden" onclick="toggleMenu()">Menu</button>
                 <div id="dropdownMenu" class="nav-menu">
                     <button onclick="switchView('home')">Home Hub</button>
                     <button id="adminMenuTab" class="hidden" onclick="switchView('admin')">Admin Panel</button>
@@ -493,11 +501,11 @@
         <div id="leftControlColumn" class="hidden" style="display: flex; flex-direction: column; gap: 24px;">
             
             <div id="timeWarning" class="warning">
-                ⚠️ <strong>Logging Blocked:</strong> Tracking metrics are strictly limited between 7:00 AM and 11:59 PM for regular accounts.
+                <strong>Logging Blocked:</strong> Tracking metrics are strictly limited between 7:00 AM and 11:59 PM for regular accounts.
             </div>
 
             <div id="adminTimeWarning" class="admin-warning">
-                💡 <strong>Administrative Override:</strong> You are registering an operational log entry outside regular office hours. Your security clearance permits this entry.
+                <strong>Administrative Override:</strong> You are registering an operational log entry outside regular office hours. Your security clearance permits this entry.
             </div>
 
             <div id="homeViewLeft" class="card">
@@ -610,7 +618,6 @@
                 document.getElementById('userEmailText').innerText = userEmail;
                 document.getElementById('totalHoursText').innerText = Number(cachedHours).toFixed(2);
                 
-                // Toggle application main view wrappers visible
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('userProfileChip').classList.remove('hidden');
                 document.getElementById('leftControlColumn').classList.remove('hidden');
@@ -695,7 +702,6 @@
             } else if (view === 'admin' && userIsAdmin) {
                 document.getElementById('viewTitle').innerText = "Admin Settings";
                 homeViewRight.classList.add('hidden');
-                // Keep tracker active on left for admin simplicity, swap view streams on right column!
                 adminView.classList.remove('hidden');
             }
         }
@@ -847,7 +853,7 @@
                             <button type="button" class="action-sub-btn status-toggle" onclick="toggleUserLogState('${member.email}', ${member.isCurrentlyClockedIn})">
                                 ${toggleButtonLabel}
                             </button>
-                            <button type="button" class="action-sub-btn delete" onclick="deleteUserFromRoster('${member.email}')">
+                            <button type="button" class="action-sub-btn delete" onclick="deleteUserRecord('${member.email}')">
                                 Delete
                             </button>
                         </div>
@@ -856,171 +862,134 @@
             }).join('');
         }
 
-        function toggleUserLogState(email, currentClockState) {
-            const confirmToggle = confirm(`Are you sure you want to force status change for ${email}?`);
-            if (!confirmToggle) return;
-
-            const payload = {
-                apiToken: CLIENT_API_TOKEN,
-                type: "TOGGLE_USER_STATUS",
-                targetEmail: email,
-                currentClockState: currentClockState
-            };
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                boxMode: "no-cors",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            .then(() => {
-                alert(`Successfully processed cached override request for ${email}`);
-                setTimeout(() => fetchUserData(userEmail), 500);
-            })
-            .catch(err => console.error("Error modifying log records:", err));
-        }
-
-        function deleteUserFromRoster(email) {
-            const confirmDelete = confirm(`WARNING: This will completely delete ALL history logs and summary calculations for ${email}. Proceed?`);
-            if (!confirmDelete) return;
-
-            const payload = {
-                apiToken: CLIENT_API_TOKEN,
-                type: "DELETE_USER",
-                targetEmail: email
-            };
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            .then(() => {
-                alert(`Successfully wiped ${email} from organization databases.`);
-                setTimeout(() => fetchUserData(userEmail), 500);
-            })
-            .catch(err => console.error("Error executing user roster removal requests:", err));
-        }
-
         function updateActionButtonUI() {
-            const actionBtn = document.getElementById('smartActionButton');
-            const timeAllowed = checkTimeWindow();
+            const btn = document.getElementById('smartActionButton');
+            const allowed = checkTimeWindow();
 
-            if (!timeAllowed && !userIsAdmin) {
-                actionBtn.disabled = true;
-                actionBtn.className = "smart-btn";
-                actionBtn.innerText = "Outside Logging Window";
-                return;
-            }
+            btn.disabled = !allowed;
 
-            actionBtn.disabled = false;
-            if (!isClockedIn) {
-                actionBtn.className = "smart-btn clock-in";
-                actionBtn.innerText = "Clock In";
+            if (isClockedIn) {
+                btn.className = "smart-btn clock-out";
+                btn.innerText = "Clock Out Shift";
             } else {
-                actionBtn.className = "smart-btn clock-out";
-                actionBtn.innerText = "Clock Out";
+                btn.className = "smart-btn clock-in";
+                btn.innerText = "Clock In Shift";
             }
         }
 
         function handleSmartAction() {
-            const actionBtn = document.getElementById('smartActionButton');
-            const toast = document.getElementById('successToast');
-            
-            actionBtn.disabled = true;
-            const executionAction = !isClockedIn ? 'Clock In' : 'Clock Out';
-            actionBtn.innerText = "Processing Request...";
+            if (!checkTimeWindow()) return;
 
-            const payload = {
-                apiToken: CLIENT_API_TOKEN,
-                idNumber: userEmail,
-                action: executionAction
-            };
+            const btn = document.getElementById('smartActionButton');
+            btn.disabled = true;
+            btn.innerText = "Transmitting Packet...";
 
-            const tentativeClockInTime = new Date().toISOString();
-
-            isClockedIn = !isClockedIn; 
-            localStorage.setItem('res_tracker_isClockedIn', isClockedIn);
-            
-            if (isClockedIn) {
-                clockInTime = new Date(tentativeClockInTime);
-                localStorage.setItem('res_tracker_clockInTimestamp', tentativeClockInTime);
-            } else {
-                clockInTime = null;
-                localStorage.removeItem('res_tracker_clockInTimestamp');
-            }
-
-            manageLiveShiftTimer();
-            checkTimeWindow();
-            
-            if (!isClockedIn) {
-                actionBtn.className = "smart-btn clock-in";
-                actionBtn.innerText = "Clock In";
-            } else {
-                actionBtn.className = "smart-btn clock-out";
-                actionBtn.innerText = "Clock Out";
-            }
+            const targetAction = isClockedIn ? "Clock Out" : "Clock In";
 
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({
+                    token: CLIENT_API_TOKEN,
+                    action: targetAction,
+                    email: userEmail
+                })
             })
             .then(() => {
-                toast.classList.add('show');
+                showToast(`Successfully registered ${targetAction}!`);
                 setTimeout(() => {
-                    toast.classList.remove('show');
                     fetchUserData(userEmail);
-                }, 1200);
+                }, 1500);
             })
             .catch(err => {
-                alert("Error saving transaction data logs.");
-                isClockedIn = !isClockedIn;
-                localStorage.setItem('res_tracker_isClockedIn', isClockedIn);
-                fetchUserData(userEmail);
-                console.error(err);
+                console.error("Transmission breakdown:", err);
+                alert("Network error processing sync operation.");
+                updateActionButtonUI();
             });
         }
 
-        function handleLogout() {
-            clearInterval(liveTimerIntervalId);
-            localStorage.clear();
-            window.location.reload();
+        function toggleUserLogState(targetEmail, currentStatus) {
+            if (!confirm(`Are you sure you want to force status change for ${targetEmail}?`)) return;
+            
+            const adminAction = currentStatus ? "Clock Out" : "Clock In";
+            
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: CLIENT_API_TOKEN,
+                    action: adminAction,
+                    email: targetEmail
+                })
+            })
+            .then(() => {
+                showToast(`Forced status mutation applied for ${targetEmail}`);
+                setTimeout(() => { fetchUserData(userEmail); }, 1500);
+            })
+            .catch(err => console.error("Admin toggle error:", err));
+        }
+
+        function deleteUserRecord(targetEmail) {
+            if (!confirm(`CRITICAL WARNING: Wipe all recorded performance records for ${targetEmail}? This action cannot be reversed.`)) return;
+
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: CLIENT_API_TOKEN,
+                    action: "Delete User",
+                    email: targetEmail
+                })
+            })
+            .then(() => {
+                showToast(`Purged records for ${targetEmail}`);
+                setTimeout(() => { fetchUserData(userEmail); }, 1500);
+            })
+            .catch(err => console.error("Admin deletion error:", err));
         }
 
         function addNewAdmin() {
-            const inputField = document.getElementById('newAdminEmail');
-            const targetEmail = inputField.value.trim();
+            const input = document.getElementById('newAdminEmail');
+            const newEmail = input.value.trim();
 
-            if (!targetEmail || !targetEmail.endsWith("@dlsu.edu.ph")) {
-                alert("Please enter a valid @dlsu.edu.ph email address.");
+            if (!newEmail || !newEmail.endsWith("@dlsu.edu.ph")) {
+                alert("Please declare a legitimate @dlsu.edu.ph identity workspace profile.");
                 return;
             }
-
-            const payload = {
-                apiToken: CLIENT_API_TOKEN,
-                type: "ADD_ADMIN",
-                newAdminEmail: targetEmail
-            };
 
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({
+                    token: CLIENT_API_TOKEN,
+                    action: "Add Admin",
+                    email: newEmail
+                })
             })
             .then(() => {
-                alert(`Successfully registered ${targetEmail} as admin!`);
-                inputField.value = "";
-                switchView('home');
+                showToast(`Administrative security token assigned to ${newEmail}`);
+                input.value = "";
+                setTimeout(() => { fetchUserData(userEmail); }, 1500);
             })
-            .catch(err => {
-                alert("Failed to submit admin registration rules.");
-                console.error(err);
-            });
+            .catch(err => console.error("Admin upgrade error:", err));
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        function handleLogout() {
+            localStorage.clear();
+            location.reload();
         }
     </script>
 </body>
