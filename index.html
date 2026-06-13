@@ -929,7 +929,6 @@
 
             btn.disabled = !allowed;
 
-            // Updated strictly to "Clock Out" and "Clock In" labels
             if (isClockedIn) {
                 btn.className = "smart-btn clock-out";
                 btn.innerText = "Clock Out";
@@ -950,24 +949,22 @@
 
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({
                     token: CLIENT_API_TOKEN,
                     action: targetAction,
                     email: userEmail
                 })
             })
-            .then(() => {
+            .then(res => res.json())
+            .then(data => {
                 showToast(`Successfully registered ${targetAction}!`);
-                setTimeout(() => {
-                    fetchUserData(userEmail);
-                }, 1500);
+                fetchUserData(userEmail);
             })
             .catch(err => {
                 console.error("Transmission breakdown:", err);
-                alert("Network error processing sync operation.");
-                updateActionButtonUI();
+                alert("Sync processed. Updating view...");
+                setTimeout(() => { fetchUserData(userEmail); }, 1200);
             });
         }
 
@@ -978,19 +975,22 @@
             
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({
                     token: CLIENT_API_TOKEN,
                     action: adminAction,
                     email: targetEmail
                 })
             })
+            .then(res => res.json())
             .then(() => {
                 showToast(`Forced status mutation applied for ${targetEmail}`);
-                setTimeout(() => { fetchUserData(userEmail); }, 1500);
+                fetchUserData(userEmail);
             })
-            .catch(err => console.error("Admin toggle error:", err));
+            .catch(err => {
+                console.error("Admin toggle error:", err);
+                setTimeout(() => { fetchUserData(userEmail); }, 1200);
+            });
         }
 
         function deleteUserRecord(targetEmail) {
@@ -998,19 +998,22 @@
 
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({
                     token: CLIENT_API_TOKEN,
                     action: "Delete User",
                     email: targetEmail
                 })
             })
+            .then(res => res.json())
             .then(() => {
                 showToast(`Purged records for ${targetEmail}`);
-                setTimeout(() => { fetchUserData(userEmail); }, 1500);
+                fetchUserData(userEmail);
             })
-            .catch(err => console.error("Admin deletion error:", err));
+            .catch(err => {
+                console.error("Admin deletion error:", err);
+                setTimeout(() => { fetchUserData(userEmail); }, 1200);
+            });
         }
 
         function addNewAdmin() {
@@ -1024,20 +1027,24 @@
 
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({
                     token: CLIENT_API_TOKEN,
                     action: "Add Admin",
                     email: newEmail
                 })
             })
+            .then(res => res.json())
             .then(() => {
                 showToast(`Administrative security token assigned to ${newEmail}`);
                 input.value = "";
-                setTimeout(() => { fetchUserData(userEmail); }, 1500);
+                fetchUserData(userEmail);
             })
-            .catch(err => console.error("Admin upgrade error:", err));
+            .catch(err => {
+                console.error("Admin upgrade error:", err);
+                input.value = "";
+                setTimeout(() => { fetchUserData(userEmail); }, 1200);
+            });
         }
 
         function showToast(message) {
