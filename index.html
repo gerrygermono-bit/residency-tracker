@@ -61,33 +61,6 @@
             padding-bottom: 40px;
         }
 
-        /* Minimalist Loading Screen Styles */
-        #loadingScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-canvas);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        #loadingScreen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-text {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
-
         header {
             background-color: var(--surface-card);
             border-bottom: 1px solid var(--border-soft);
@@ -429,82 +402,815 @@
             color: #fbbf24;
         }
 
-        /* Rest of your unchanged core layout styles go here */
+        .smart-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .smart-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .smart-btn.clock-in { background-color: var(--status-in); }
+        .smart-btn.clock-in:hover { background-color: var(--status-in-hover); }
+        .smart-btn.clock-out { background-color: var(--status-out); }
+        .smart-btn.clock-out:hover { background-color: var(--status-out-hover); }
+        
+        .smart-btn:disabled { 
+            background-color: #cbd5e1 !important; 
+            color: #94a3b8; 
+            cursor: not-allowed; 
+            box-shadow: none; 
+        }
+        [data-theme="dark"] .smart-btn:disabled {
+            background-color: #334155 !important;
+            color: #64748b;
+        }
+
+        .mode-selection-container {
+            display: flex;
+            gap: 12px;
+            margin-top: -4px;
+            margin-bottom: 14px;
+            animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-soft);
+            background: var(--surface-card);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mode-btn:hover {
+            background: var(--bg-canvas);
+            border-color: var(--text-muted);
+        }
+        .mode-btn.selected {
+            background: var(--dlsu-green);
+            color: white;
+            border-color: var(--dlsu-green);
+        }
+        [data-theme="dark"] .mode-btn.selected {
+            background: #10b981;
+            color: #0f172a;
+            border-color: #10b981;
+        }
+
+        .admin-submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #111827;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+            margin-top: 8px;
+        }
+        .admin-submit-btn:hover { background: #1f2937; }
+        [data-theme="dark"] .admin-submit-btn {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        [data-theme="dark"] .admin-submit-btn:hover { background: #e2e8f0; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            font-family: inherit;
+            background-color: transparent;
+            color: var(--text-main);
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--dlsu-green);
+            box-shadow: 0 0 0 3px rgba(10, 92, 54, 0.1);
+        }
+        [data-theme="dark"] input[type="email"]:focus {
+            border-color: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
+        }
+
+        .log-feed-container, .attendance-board-container, .roster-board-container, .history-feed-container {
+            background: #fafafa;
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 6px;
+        }
+        .history-feed-container {
+            max-height: 450px;
+        }
+        [data-theme="dark"] .log-feed-container, [data-theme="dark"] .attendance-board-container, [data-theme="dark"] .roster-board-container, [data-theme="dark"] .history-feed-container {
+            background: #1e293b40;
+        }
+
+        .feed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        [data-theme="dark"] .feed-item { border-bottom-color: #334155; }
+
+        .badge-action {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-in { background-color: #ecfdf5; color: var(--status-in); }
+        .badge-out { background-color: #fff1f2; color: var(--status-out); }
+        [data-theme="dark"] .badge-in { background-color: #10b98120; color: #34d399; }
+        [data-theme="dark"] .badge-out { background-color: #f43f5e20; color: #fb7185; }
+
+        .badge-mode {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-canvas);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .board-user, .roster-user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+        [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item { border-bottom-color: #334155; }
+        .board-user { flex-direction: column; align-items: flex-start; }
+
+        .board-user .email, .roster-user-item .roster-email {
+            font-weight: 600;
+            color: var(--text-main);
+            word-break: break-all;
+        }
+        .board-user .time-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        .roster-meta-block { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+        .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
+        [data-theme="dark"] .roster-hours-sub { color: #818cf8; }
+
+        .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
+        .action-sub-btn {
+            border: none;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .action-sub-btn:active { transform: scale(0.95); }
+        .action-sub-btn.status-toggle { background: #d97706; }
+        .action-sub-btn.status-toggle:hover { background: #b45309; }
+        .action-sub-btn.delete { background: var(--status-out); }
+        .action-sub-btn.delete:hover { background: var(--status-out-hover); }
+
+        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
+        
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            left: 24px;
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            text-align: center;
+        }
+        [data-theme="dark"] .toast { background: #065f46; color: #d1fae5; border-color: #047857; }
+        @media(min-width: 576px) { .toast { left: auto; max-width: 350px; } }
+        .toast.show { display: block; animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+        .hidden { display: none !important; }
+
+        /* Minimalist Loading Screen Styles */
+        .minimal-loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-canvas);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .minimal-loader-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-main);
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <div id="loadingScreen">
-        <div class="loading-text">Loading...</div>
+    <div class="minimal-loader-screen hidden" id="minimalAppLoader">
+        <div class="minimal-loader-text">Loading...</div>
     </div>
 
     <header>
         <div class="nav-container">
             <div class="brand">
                 <div class="brand-logo"></div>
-                <h1 id="headerTitle">Welcome!</h1>
+                <h1>Residency Tracker</h1>
             </div>
+            
             <div class="header-controls" id="headerControls" style="display: none;">
-                <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle structural interface brightness mapping context">
-                    <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
                 </button>
+
                 <div class="user-profile-chip">
-                    <span class="user-email" id="userEmailDisplay">...</span>
-                    <span class="admin-badge" id="adminBadge" style="display: none;">Admin</span>
+                    <span class="user-email" id="userEmailLabel">...</span>
+                    <span class="admin-badge hidden" id="adminBadge">Admin</span>
+                    <a class="logout-link" onclick="handleLogout()">Logout</a>
                 </div>
-                <button class="menu-btn" onclick="toggleMenu()" id="menuButton" style="display: none;">
-                    <span></span><span></span><span></span>
+
+                <button class="menu-btn" onclick="toggleMenu(event)" title="Options Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
+
                 <div class="nav-menu" id="navMenu">
-                    <button id="adminPanelToggle" style="display: none;" onclick="setView('admin')">Admin Console</button>
-                    <button onclick="handleLogout()" class="logout-link" style="text-align: left; padding: 10px 16px;">Sign Out</button>
+                    <button onclick="showPanel('tracker')">Residency Panel</button>
+                    <button onclick="showPanel('history')">Log History</button>
+                    <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="login-box-container" id="loginView">
-        <div class="card" style="text-align: center; padding: 40px 32px;">
-            <div style="background-color: rgba(10, 92, 54, 0.08); width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                <svg width="28" height="28" fill="var(--dlsu-green)" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-            </div>
-            <h2 style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px;">Sign In</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.5;">Please authorize using your DLSU Google Account.</p>
-            <div style="display: flex; justify-content: center;" id="gSignInWrapper">
-                <div id="g_id_onload"
-                     data-client_id="276378730888-gsvgo6j5nvp6o2mmfvghhjn8ubufsilu.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-callback="handleCredentialResponse"
-                     data-auto_select="false"
-                     data-itp_support="true">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left">
-                </div>
-            </div>
+        <div class="card" style="text-align: center;">
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Welcome!</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Please authorize using your DLSU Google Account.</p>
+            <div style="display: flex; justify-content: center;" id="gSignInBtn"></div>
         </div>
     </div>
+
+    <main class="app-layout hidden" id="mainDashboard">
+        
+        <section id="sidebarPanel">
+            <div class="card select-panel-view" id="trackerPanel">
+                <div class="panel-heading">
+                    <span>Residency Operations</span>
+                </div>
+
+                <div class="warning" id="warningBox"></div>
+
+                <div class="metric-display">
+                    <div class="metric-label">Total Office Hours</div>
+                    <div class="metric-value" id="hoursValue">0.00</div>
+                </div>
+
+                <div class="metric-display hidden" id="liveTimerDisplay">
+                    <div class="metric-label">Live Duration</div>
+                    <div class="metric-value duration" id="liveTimerValue">00:00:00</div>
+                </div>
+
+                <button class="smart-btn clock-in" id="clockInBtn" onclick="prepareClockIn()">
+                    Clock In
+                </button>
+                
+                <div class="mode-selection-container hidden" id="modeSelectionContainer">
+                    <button class="mode-btn" id="modeOnsiteBtn" onclick="selectClockInMode('Onsite')">Onsite</button>
+                    <button class="mode-btn" id="modeOnlineBtn" onclick="selectClockInMode('Online')">Online</button>
+                </div>
+
+                <button class="smart-btn clock-out hidden" id="clockOutBtn" onclick="executeClockOut()">
+                    Clock Out
+                </button>
+            </div>
+        </section>
+
+        <section id="contentPanel">
+            
+            <div class="card select-panel-view" id="trackerContentView">
+                <div class="panel-heading">Recent Actions</div>
+                <div class="log-feed-container" id="recentLogsContainer">
+                    <div class="empty-state">No recent records gathered in this tracking segment.</div>
+                </div>
+            </div>
+
+            <div class="card select-panel-view hidden" id="historyContentView">
+                <div class="panel-heading">
+                    <span>Complete Log History</span>
+                </div>
+                <div class="history-feed-container" id="fullHistoryContainer">
+                    <div class="empty-state">No structured operations logs found.</div>
+                </div>
+            </div>
+
+            <div class="card select-panel-view hidden" id="adminContentView">
+                
+                <div class="card" style="padding: 18px; margin-bottom: 20px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">Active Sessions</div>
+                    <div class="attendance-board-container" id="attendanceBoard">
+                        <div class="empty-state">No members currently clocked into the workstation ecosystem.</div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 18px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">
+                        <div class="roster-heading-content">
+                            <span>Roster</span>
+                            <select class="roster-sort-select" id="rosterSortSelect" onchange="handleRosterSortChange()">
+                                <option value="clockedInFirst">Clocked In First</option>
+                                <option value="clockedOutFirst">Clocked Out First</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="roster-board-container" id="rosterBoard">
+                        <div class="empty-state">Roster lookup context currently unpopulated.</div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-soft); padding-top: 16px;">
+                        <label for="newAdminEmail">Give Admin Privileges</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="email" id="newAdminEmail" placeholder="user@dlsu.edu.ph" autocomplete="off" />
+                            <button class="admin-submit-btn" style="width: auto; margin: 0; padding: 0 16px; white-space: nowrap;" onclick="addNewAdmin()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="successToast"></div>
 
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRPyUfRVK7MTuqzdf-T8901TnKrN_4mO_B8SImg0YGLqzhOG_Uet_apqmZzdIFYUNYGg/exec"; 
         const CLIENT_API_TOKEN = "Residency_Secure_Token_2026";
 
-        // Loading Screen Management initialization
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loadingScreen');
-                if (loader) {
-                    loader.classList.add('hidden');
-                }
-            }, 5000); // Strict 5 second window execution wrapper
+        let userEmail = "";
+        let timerInterval = null;
+        let selectedClockInModeStr = "";
+        let fullCachedPayload = null; 
+
+        window.onload = function () {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            renderGoogleSignInButton(currentTheme);
+
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                userEmail = savedEmail;
+                bootstrapApplication();
+            }
+        };
+
+        function renderGoogleSignInButton(theme) {
+            google.accounts.id.initialize({
+                client_id: "276378730888-gsvgo6j5nvp6o2mmfvghhjn8ubufsilu.apps.googleusercontent.com", 
+                callback: handleCredentialResponse
+            });
+            
+            const btnContainer = document.getElementById("gSignInBtn");
+            if (btnContainer) {
+                btnContainer.innerHTML = ""; 
+                google.accounts.id.renderButton(
+                    btnContainer,
+                    { theme: theme === 'dark' ? 'filled_black' : 'outline', size: "large", width: "280" }
+                );
+            }
+        }
+
+        function toggleTheme() {
+            const targetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+            updateThemeIcon(targetTheme);
+            
+            if (document.getElementById('loginView').classList.contains('hidden') === false) {
+                renderGoogleSignInButton(targetTheme);
+            }
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            if (theme === 'dark') {
+                icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="19.78"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+            }
+        }
+
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+
+        document.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('show');
         });
 
-        // Remaining core logical sequence and validation handlers go here...
+        function showPanel(panelName) {
+            document.querySelectorAll('.select-panel-view').forEach(el => el.classList.add('hidden'));
+            
+            if (panelName === 'tracker') {
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('trackerContentView').classList.remove('hidden');
+            } else if (panelName === 'history') {
+                document.getElementById('sidebarPanel').classList.add('hidden');
+                document.getElementById('historyContentView').classList.remove('hidden');
+                if (fullCachedPayload) populateFullHistory(fullCachedPayload.fullHistory);
+            } else if (panelName === 'admin') {
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('adminContentView').classList.remove('hidden');
+            }
+        }
+
+        function handleCredentialResponse(response) {
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            const email = payload.email;
+
+            if (!email.endsWith("@dlsu.edu.ph")) {
+                alert("Access unauthorized. Please use your legitimate institutional @dlsu.edu.ph workspace account.");
+                return;
+            }
+
+            userEmail = email;
+            localStorage.setItem('userEmail', email);
+
+            // Display minimalist loading screen for a short duration right after log in
+            const loader = document.getElementById('minimalAppLoader');
+            loader.classList.remove('hidden');
+            
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                bootstrapApplication();
+            }, 5000);
+        }
+
+        function bootstrapApplication() {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('headerControls').style.display = 'flex';
+            document.getElementById('userEmailLabel').innerText = userEmail;
+            document.getElementById('mainDashboard').classList.remove('hidden');
+            
+            fetchUserData(userEmail);
+        }
+
+        function fetchUserData(email) {
+            fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(email)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "error") {
+                        showGlobalWarning(data.message);
+                        return;
+                    }
+                    
+                    fullCachedPayload = data; 
+                    
+                    if (data.isAdmin) {
+                        document.getElementById('adminBadge').classList.remove('hidden');
+                        document.getElementById('adminMenuOpt').classList.remove('hidden');
+                        populateAdminConsole(data);
+                    }
+
+                    document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
+                    configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
+                    populateRecentLogs(data.recentLogs);
+                })
+                .catch(err => showGlobalWarning("Ecosystem connectivity error: Unable to map real-time status details."));
+        }
+
+        function configureTrackingInterface(isClockedIn, lastTimestampIso) {
+            clearInterval(timerInterval);
+            document.getElementById('liveTimerDisplay').classList.add('hidden');
+            document.getElementById('modeSelectionContainer').classList.add('hidden');
+            
+            selectedClockInModeStr = "";
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            const clockInBtn = document.getElementById('clockInBtn');
+            const clockOutBtn = document.getElementById('clockOutBtn');
+
+            if (isClockedIn) {
+                clockInBtn.classList.add('hidden');
+                clockOutBtn.classList.remove('hidden');
+                
+                document.getElementById('liveTimerDisplay').classList.remove('hidden');
+                const startTime = new Date(lastTimestampIso).getTime();
+                
+                timerInterval = setInterval(() => {
+                    const delta = Date.now() - startTime;
+                    if (delta < 0) return;
+                    
+                    const hrs = Math.floor(delta / 3600000).toString().padStart(2, '0');
+                    const mins = Math.floor((delta % 3600000) / 60000).toString().padStart(2, '0');
+                    const secs = Math.floor((delta % 60000) / 1000).toString().padStart(2, '0');
+                    
+                    document.getElementById('liveTimerValue').innerText = `${hrs}:${mins}:${secs}`;
+                }, 1000);
+            } else {
+                clockInBtn.classList.remove('hidden');
+                clockInBtn.disabled = false;
+                clockInBtn.innerText = "Clock In";
+                clockOutBtn.classList.add('hidden');
+            }
+        }
+
+        function prepareClockIn() {
+            document.getElementById('modeSelectionContainer').classList.remove('hidden');
+            const clockInBtn = document.getElementById('clockInBtn');
+            clockInBtn.disabled = true;
+            clockInBtn.innerText = "Select Mode Below...";
+        }
+
+        function selectClockInMode(mode) {
+            selectedClockInModeStr = mode;
+            
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            if (mode === 'Onsite') document.getElementById('modeOnsiteBtn').classList.add('selected');
+            if (mode === 'Online') document.getElementById('modeOnlineBtn').classList.add('selected');
+            
+            executeClockIn();
+        }
+
+        function executeClockIn() {
+            if (!selectedClockInModeStr) return;
+            
+            const btn = document.getElementById('clockInBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock In",
+                email: userEmail,
+                mode: selectedClockInModeStr
+            }, `Clocked In successfully (${selectedClockInModeStr})`);
+        }
+
+        function executeClockOut() {
+            const btn = document.getElementById('clockOutBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock Out",
+                email: userEmail,
+                mode: ""
+            }, "Clocked Out successfully");
+        }
+
+        function sendPostRequest(bodyObj, successMessage) {
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(bodyObj)
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.status === "error") {
+                    alert(`Action failed: ${resData.message}`);
+                    bootstrapApplication();
+                    return;
+                }
+                showToast(successMessage);
+                setTimeout(() => { fetchUserData(userEmail); }, 1000);
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Network communication timeout error occurred.");
+                bootstrapApplication();
+            });
+        }
+
+        function populateRecentLogs(logs) {
+            const container = document.getElementById('recentLogsContainer');
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No recent records gathered in this tracking segment.</div>';
+                return;
+            }
+
+            container.innerHTML = logs.map(item => {
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = (item.action === "Clock In" && item.mode) ? `<span class="badge-mode">${item.mode}</span>` : "";
+                return `
+                    <div class="feed-item">
+                        <div>
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:500;">${item.timestamp}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function populateFullHistory(logs) {
+            const container = document.getElementById('fullHistoryContainer');
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No structured operations logs found.</div>';
+                return;
+            }
+
+            container.innerHTML = logs.map(item => {
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = item.mode ? `<span class="badge-mode">${item.mode}</span>` : "";
+                return `
+                    <div class="feed-item">
+                        <div>
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
+                        </div>
+                        <div style="font-size: 0.85rem; font-weight:600;">${item.timestamp}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleRosterSortChange() {
+            if (fullCachedPayload) {
+                populateAdminConsole(fullCachedPayload);
+            }
+        }
+
+        function populateAdminConsole(data) {
+            const attContainer = document.getElementById('attendanceBoard');
+            if (!data.liveAttendance || data.liveAttendance.length === 0) {
+                attContainer.innerHTML = '<div class="empty-state">No members currently clocked into the workstation ecosystem.</div>';
+            } else {
+                attContainer.innerHTML = data.liveAttendance.map(user => `
+                    <div class="board-user">
+                        <span class="email">${user.email}</span>
+                        <span class="time-meta">Active running since: <b>${user.since}</b></span>
+                    </div>
+                `).join('');
+            }
+
+            const rosterContainer = document.getElementById('rosterBoard');
+            if (!data.masterRoster || data.masterRoster.length === 0) {
+                rosterContainer.innerHTML = '<div class="empty-state">Roster lookup context currently unpopulated.</div>';
+            } else {
+                let sortedRoster = [...data.masterRoster];
+                const sortValue = document.getElementById('rosterSortSelect').value;
+                
+                if (sortValue === 'clockedInFirst') {
+                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : b.isCurrentlyClockedIn ? 1 : -1);
+                } else if (sortValue === 'clockedOutFirst') {
+                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : a.isCurrentlyClockedIn ? 1 : -1);
+                }
+
+                rosterContainer.innerHTML = sortedRoster.map(member => {
+                    const statusDot = member.isCurrentlyClockedIn 
+                        ? `<span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>` 
+                        : `<span style="display:inline-block; width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></span>`;
+                    
+                    const forceButtonLabel = member.isCurrentlyClockedIn ? "Force out" : "Force in";
+
+                    return `
+                        <div class="roster-user-item">
+                            <div class="roster-meta-block">
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    ${statusDot}
+                                    <span class="roster-email">${member.email}</span>
+                                </div>
+                                <span class="roster-hours-sub">Verified: ${Number(member.totalHours).toFixed(2)} hrs</span>
+                            </div>
+                            <div class="roster-action-group">
+                                <button class="action-sub-btn status-toggle" onclick="adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">${forceButtonLabel}</button>
+                                <button class="action-sub-btn delete" onclick="adminPurgeUser('${member.email}')">Purge</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function adminOverrideToggle(targetEmail, currentStatus) {
+            const nextAction = currentStatus ? "Clock Out" : "Clock In";
+            if (!confirm(`Force structural override "${nextAction}" status update for ${targetEmail}?`)) return;
+            
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: nextAction,
+                email: targetEmail,
+                mode: currentStatus ? "" : "Admin-Override"
+            }, `Overrode profile parameters for ${targetEmail}`);
+        }
+
+        function adminPurgeUser(targetEmail) {
+            if (!confirm(`⚠️ CRITICAL REVERSIBLE WARN: Permanently delete all metrics logs rows and accumulated record entries for ${targetEmail}? This action clears both Log indices and summary computations.`)) return;
+            
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Delete User",
+                email: targetEmail
+            }, `Purged target data structures for ${targetEmail}`);
+        }
+
+        function addNewAdmin() {
+            const input = document.getElementById('newAdminEmail');
+            const newEmail = input.value.trim();
+
+            if (!newEmail || !newEmail.endsWith("@dlsu.edu.ph")) {
+                alert("Please declare a legitimate @dlsu.edu.ph identity workspace profile.");
+                return;
+            }
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Add Admin",
+                email: newEmail
+            }, `Administrative security token assigned to ${newEmail}`);
+            input.value = "";
+        }
+
+        function showGlobalWarning(msg) {
+            const box = document.getElementById('warningBox');
+            box.style.display = 'block';
+            box.innerText = msg;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        function handleLogout() {
+            localStorage.clear();
+            location.reload();
+        }
     </script>
 </body>
 </html>
