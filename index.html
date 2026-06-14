@@ -903,14 +903,29 @@
             userEmail = email;
             localStorage.setItem('userEmail', email);
 
-            // Display minimalist loading screen for a short duration right after log in
+            // Display minimalist loading screen immediately
             const loader = document.getElementById('minimalAppLoader');
             loader.classList.remove('hidden');
             
+            // Set up a minimum 5-second timer
+            let minimumTimerDone = false;
             setTimeout(() => {
-                loader.classList.add('hidden');
-                bootstrapApplication();
+                minimumTimerDone = true;
+                checkAndHideLoader();
             }, 5000);
+
+            // Fetch data while the loading screen is active
+            fetchUserData(userEmail, () => {
+                // Callback triggered once network fetch is completely done
+                checkAndHideLoader();
+            });
+
+            function checkAndHideLoader() {
+                if (minimumTimerDone && fullCachedPayload) {
+                    loader.classList.add('hidden');
+                    bootstrapApplication();
+                }
+            }
         }
 
         function bootstrapApplication() {
@@ -919,31 +934,47 @@
             document.getElementById('userEmailLabel').innerText = userEmail;
             document.getElementById('mainDashboard').classList.remove('hidden');
             
-            fetchUserData(userEmail);
+            if (!fullCachedPayload) {
+                fetchUserData(userEmail);
+            } else {
+                renderFetchedData(fullCachedPayload);
+            }
         }
 
-        function fetchUserData(email) {
+        function fetchUserData(email, callback) {
             fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(email)}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === "error") {
                         showGlobalWarning(data.message);
+                        if (callback) callback();
                         return;
                     }
                     
                     fullCachedPayload = data; 
                     
-                    if (data.isAdmin) {
-                        document.getElementById('adminBadge').classList.remove('hidden');
-                        document.getElementById('adminMenuOpt').classList.remove('hidden');
-                        populateAdminConsole(data);
+                    if (!document.getElementById('mainDashboard').classList.contains('hidden')) {
+                        renderFetchedData(data);
                     }
 
-                    document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
-                    configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
-                    populateRecentLogs(data.recentLogs);
+                    if (callback) callback();
                 })
-                .catch(err => showGlobalWarning("Ecosystem connectivity error: Unable to map real-time status details."));
+                .catch(err => {
+                    showGlobalWarning("Ecosystem connectivity error: Unable to map real-time status details.");
+                    if (callback) callback();
+                });
+        }
+
+        function renderFetchedData(data) {
+            if (data.isAdmin) {
+                document.getElementById('adminBadge').classList.remove('hidden');
+                document.getElementById('adminMenuOpt').classList.remove('hidden');
+                populateAdminConsole(data);
+            }
+
+            document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
+            configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
+            populateRecentLogs(data.recentLogs);
         }
 
         function configureTrackingInterface(isClockedIn, lastTimestampIso) {
