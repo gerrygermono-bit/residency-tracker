@@ -38,8 +38,8 @@
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
         }
 
-        body, header, .card, .user-profile-chip, .metric-display, input, button, select, .info-modal-card, .info-modal-overlay {
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        body, header, .card, .user-profile-chip, .metric-display, input, button, select {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
         html, body {
@@ -59,6 +59,8 @@
             color: var(--text-main);
             line-height: 1.5;
             padding-bottom: 40px;
+            position: relative;
+            min-height: 100vh;
         }
 
         header {
@@ -109,56 +111,12 @@
             color: var(--text-main);
         }
 
-        .header-right-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        @media (max-width: 420px) {
-            .header-right-group {
-                gap: 6px;
-            }
-        }
-
-        .info-btn {
-            background: none;
-            border: 1px solid var(--border-soft);
-            background: var(--surface-card);
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            color: var(--text-main);
-            font-family: "Georgia", "Times New Roman", serif;
-            font-style: italic;
-            font-size: 1.25rem;
-            font-weight: 600;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-
-        .info-btn:hover {
-            background: var(--bg-canvas);
-            border-color: var(--text-muted);
-        }
-
         .header-controls {
             display: flex;
             align-items: center;
             gap: 12px;
             position: relative;
             max-width: 100%;
-        }
-
-        @media (max-width: 420px) {
-            .header-controls {
-                gap: 6px;
-            }
         }
 
         .theme-toggle-btn {
@@ -195,20 +153,13 @@
         .occupancy-mini-box {
             background: var(--bg-canvas);
             border: 1px solid var(--border-soft);
-            padding: 6px 8px;
+            padding: 6px 10px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-muted);
             white-space: nowrap;
             flex-shrink: 0;
-        }
-
-        @media (max-width: 420px) {
-            .occupancy-mini-box {
-                padding: 6px 6px;
-                font-size: 0.7rem;
-            }
         }
 
         .user-profile-chip {
@@ -223,13 +174,6 @@
             min-width: 0;
         }
 
-        @media (max-width: 420px) {
-            .user-profile-chip {
-                padding: 6px 10px;
-                gap: 8px;
-            }
-        }
-
         .user-email {
             font-size: 0.85rem;
             font-weight: 600;
@@ -242,13 +186,6 @@
         @media (min-width: 375px) {
             .user-email {
                 max-width: 180px;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .user-email {
-                max-width: 100px;
-                font-size: 0.8rem;
             }
         }
 
@@ -278,12 +215,6 @@
             flex-shrink: 0;
         }
 
-        @media (max-width: 420px) {
-            .logout-link {
-                font-size: 0.8rem;
-            }
-        }
-
         .logout-link:hover {
             color: var(--status-out-hover);
             text-decoration: underline;
@@ -303,13 +234,6 @@
             justify-content: space-between;
             width: 40px;
             height: 36px;
-        }
-
-        @media (max-width: 420px) {
-            .menu-btn {
-                width: 36px;
-                padding: 8px 10px;
-            }
         }
 
         .menu-btn:hover {
@@ -826,6 +750,45 @@
 
         .empty-state { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
         
+        /* Floating Info Button Styles */
+        .info-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--dlsu-green);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            z-index: 1000;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .info-fab:hover {
+            background-color: var(--dlsu-green-hover);
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .info-fab {
+            background-color: #10b981;
+            color: #0f172a;
+            border-color: #334155;
+        }
+
+        [data-theme="dark"] .info-fab:hover {
+            background-color: #059669;
+        }
+
         .toast {
             display: none;
             position: fixed;
@@ -876,117 +839,6 @@
             opacity: 1;
         }
 
-        /* Info Modal Styles */
-        .info-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .info-modal-overlay.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        [data-theme="dark"] .info-modal-overlay {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .info-modal-card {
-            background: var(--surface-card);
-            border: 1px solid var(--border-soft);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 650px;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .info-modal-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-soft);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .info-modal-header h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .info-modal-close {
-            background: none;
-            border: none;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            line-height: 1;
-        }
-
-        .info-modal-close:hover {
-            color: var(--status-out);
-        }
-
-        .info-modal-body {
-            padding: 24px;
-            overflow-y: auto;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        .info-modal-body h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: var(--dlsu-green);
-            border-bottom: 1px solid var(--border-soft);
-            padding-bottom: 4px;
-        }
-
-        .info-modal-body h5 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-top: 14px;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        [data-theme="dark"] .info-modal-body h4 {
-            color: #34d399;
-        }
-
-        .info-modal-body p {
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        .info-modal-body ul {
-            margin-left: 20px;
-            margin-bottom: 12px;
-        }
-
-        .info-modal-body li {
-            margin-bottom: 4px;
-            line-height: 1.5;
-        }
-
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1003,6 +855,8 @@
         <div class="minimal-loader-text" id="minimalLoaderText">Loading...</div>
     </div>
 
+    <button class="info-fab" onclick="showAppInfo()" title="Application Information">i</button>
+
     <header>
         <div class="nav-container">
             <div class="brand">
@@ -1010,102 +864,36 @@
                 <h1>Residency Tracker</h1>
             </div>
             
-            <div class="header-right-group">
-                <button class="info-btn" onclick="openInfoModal()" title="Residency Guidelines"><i>i</i></button>
+            <div class="header-controls" id="headerControls" style="display: none;">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
 
-                <div class="header-controls" id="headerControls" style="display: none;">
-                    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
-                        <svg viewBox="0 0 24 24" id="themeIcon">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
+                <div class="occupancy-mini-box">Online <span id="onlineCountVal">--</span></div>
+                <div class="occupancy-mini-box">Onsite <span id="onsiteCountVal">--</span></div>
 
-                    <div class="occupancy-mini-box">Online <span id="onlineCountVal">--</span></div>
-                    <div class="occupancy-mini-box">Onsite <span id="onsiteCountVal">--</span></div>
+                <div class="user-profile-chip">
+                    <span class="user-email" id="userEmailLabel">...</span>
+                    <span class="admin-badge hidden" id="adminBadge">Admin</span>
+                    <a class="logout-link" onclick="handleLogout()">Logout</a>
+                </div>
 
-                    <div class="user-profile-chip">
-                        <span class="user-email" id="userEmailLabel">...</span>
-                        <span class="admin-badge hidden" id="adminBadge">Admin</span>
-                        <a class="logout-link" onclick="handleLogout()">Logout</a>
-                    </div>
+                <button class="menu-btn" onclick="toggleMenu(event)" title="Options Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
-                    <button class="menu-btn" onclick="toggleMenu(event)" title="Options Menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-
-                    <div class="nav-menu" id="navMenu">
-                        <button onclick="showPanel('tracker')">Residency Panel</button>
-                        <button onclick="showPanel('history')">Log History</button>
-                        <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
-                    </div>
+                <div class="nav-menu" id="navMenu">
+                    <button onclick="showPanel('tracker')">Residency Panel</button>
+                    <button onclick="showPanel('history')">Log History</button>
+                    <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
                 </div>
             </div>
         </div>
     </header>
-
-    <div class="info-modal-overlay" id="infoModal">
-        <div class="info-modal-card">
-            <div class="info-modal-header">
-                <h3>Residency Guidelines</h3>
-                <button class="info-modal-close" onclick="closeInfoModal()">&times;</button>
-            </div>
-            <div class="info-modal-body">
-                <p>Welcome to the Residency Tracker comprehensive guide! This manual will walk you through everything you need to know to use the platform smoothly, whether you are a general member or an EB!</p>
-
-                <h4>General Basics</h4>
-                <p>You must use your official <code>@dlsu.edu.ph</code> Google Workspace account to access the tracker. Simply click the authorization button on the login screen to get started.</p>
-                <p>You can switch between Light and Dark mode at any time by clicking the sun/moon icon at the top right of the screen.</p>
-                <p>Right beside the theme button, you will see two mini-boxes showing exactly how many people are currently Online and Onsite.</p>
-
-                <h4>Guide for Members</h4>
-                <p>As a member, your main dashboard allows you to log your residency hours and view your personal history.</p>
-
-                <h5>1 Clocking In</h5>
-                <ul>
-                    <li>When you are ready to begin, click the green Clock In button.</li>
-                    <li>Two options will appear underneath: Onsite and Online.</li>
-                    <li>Click the one that matches your current setup. Your timer will start immediately, and a live duration counter will appear on screen.</li>
-                </ul>
-
-                <h5>2 Clocking Out</h5>
-                <ul>
-                    <li>When you are done, click the red Clock Out button.</li>
-                    <li>Your session ends, your total accumulated hours update automatically, and your live timer disappears.</li>
-                </ul>
-
-                <h5>3 Tracking Your Activity</h5>
-                <ul>
-                    <li>The main panel shows your last 5 logs, indicating whether you clocked in or out, and whether it was an online or onsite session.</li>
-                    <li>By opening the menu (top right) and selecting Log History, you can view a complete, expanded list of all your past clock-ins and outs with exact dates and timestamps.</li>
-                </ul>
-
-                <h4>Guide for EBs</h4>
-                <p>You will see an Admin Board option in your menu. This gives you extra tools to manage the roster and members.</p>
-
-                <h5>1 Active Sessions</h5>
-                <p>This section displays a live list of everyone currently clocked in.</p>
-                <p>You can see their email and exactly what time they started their shift (including whether they are working online or onsite).</p>
-
-                <h5>2 Roster Management</h5>
-                <ul>
-                    <li>The Roster displays all members in the system, their total verified hours, and a status dot (green for clocked-in, grey for clocked-out).</li>
-                    <li>Sorting: You can sort the list to show "Clocked In First" or "Clocked Out First" using the dropdown menu.</li>
-                    <li>Force In / Force Out: If a member forgets to clock in or out, you can manually toggle their status.</li>
-                    <li>Purge / Delete: You can completely wipe a user's log history and hours if necessary. Please avoid clicking accidentally. THIS WILL DELETE THEIR HISTORY PERMANENTLY.</li>
-                </ul>
-
-                <h5>3 Assigning New Admins</h5>
-                <p>At the bottom of the Admin Board, there is a field to "Give Admin Privileges".</p>
-                <p>Type in the user's <code>@dlsu.edu.ph</code> email address and click Add. They will instantly gain administrative access.</p>
-
-                <h4>Reminders</h4>
-                <p>Auto-Clock Out: Don't worry about leaving a session open overnight. The system automatically performs a midnight reset and clocks out any remaining active sessions so that hours are recorded properly.</p>
-                <p>Need Help? If your total hours or occupancy numbers do not immediately update, simply refresh the page to pull the freshest data from the server. If you think there is a mistake, contact an EB.</p>
-            </div>
-        </div>
-    </div>
 
     <div class="login-box-container" id="loginView">
         <div class="card" style="text-align: center;">
@@ -1259,7 +1047,7 @@
             if (theme === 'dark') {
                 icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="19.78"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>`;
             } else {
-                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 A 7 7 0 0 0 21 12.79z"></path>`;
             }
         }
 
@@ -1292,14 +1080,6 @@
                 document.getElementById('trackerPanel').classList.remove('hidden');
                 document.getElementById('adminContentView').classList.remove('hidden');
             }
-        }
-
-        function openInfoModal() {
-            document.getElementById('infoModal').classList.add('show');
-        }
-
-        function closeInfoModal() {
-            document.getElementById('infoModal').classList.remove('show');
         }
 
         function handleCredentialResponse(response) {
@@ -1657,6 +1437,10 @@
             toast.innerText = message;
             toast.classList.add('show');
             setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        function showAppInfo() {
+            alert("Residency Tracker v1.0\nDesigned for DLSU accounts tracking onsite and online residency hours.");
         }
 
         function handleLogout() {
