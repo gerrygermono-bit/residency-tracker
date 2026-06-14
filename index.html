@@ -1333,14 +1333,14 @@
 
         function adminOverrideToggle(targetEmail, currentStatus) {
             const nextAction = currentStatus ? "Clock Out" : "Clock In";
-            if (!confirm(`Force structural override "${nextAction}" status update for ${targetEmail}?`)) return;
+            if (!confirm(`Force override "${nextAction}" status update for ${targetEmail}?`)) return;
             
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
                 action: nextAction,
                 email: targetEmail,
                 mode: currentStatus ? "" : "Admin-Override"
-            }, `Overrode profile parameters for ${targetEmail}`);
+            }, `Overrode for ${targetEmail}`);
         }
 
         function adminPurgeUser(targetEmail) {
@@ -1350,7 +1350,7 @@
                 token: CLIENT_API_TOKEN,
                 action: "Delete User",
                 email: targetEmail
-            }, `Purged target data structures for ${targetEmail}`);
+            }, `Purged data for ${targetEmail}`);
         }
 
         function addNewAdmin() {
@@ -1366,7 +1366,7 @@
                 token: CLIENT_API_TOKEN,
                 action: "Add Admin",
                 email: newEmail
-            }, `Administrative security token assigned to ${newEmail}`);
+            }, `Administrator assigned to ${newEmail}`);
             input.value = "";
         }
 
