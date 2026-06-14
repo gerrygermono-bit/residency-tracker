@@ -1232,7 +1232,7 @@
         function populateRecentLogs(logs) {
             const container = document.getElementById('recentLogsContainer');
             if (!logs || logs.length === 0) {
-                container.innerHTML = '<div class="empty-state">No recent records gathered in this tracking segment.</div>';
+                container.innerHTML = '<div class="empty-state">No recent records gathered.</div>';
                 return;
             }
 
@@ -1254,7 +1254,7 @@
         function populateFullHistory(logs) {
             const container = document.getElementById('fullHistoryContainer');
             if (!logs || logs.length === 0) {
-                container.innerHTML = '<div class="empty-state">No structured operations logs found.</div>';
+                container.innerHTML = '<div class="empty-state">No logs found.</div>';
                 return;
             }
 
@@ -1282,7 +1282,7 @@
         function populateAdminConsole(data) {
             const attContainer = document.getElementById('attendanceBoard');
             if (!data.liveAttendance || data.liveAttendance.length === 0) {
-                attContainer.innerHTML = '<div class="empty-state">No members currently clocked into the workstation ecosystem.</div>';
+                attContainer.innerHTML = '<div class="empty-state">No members are currently clocked in.</div>';
             } else {
                 attContainer.innerHTML = data.liveAttendance.map(user => `
                     <div class="board-user">
@@ -1294,7 +1294,7 @@
 
             const rosterContainer = document.getElementById('rosterBoard');
             if (!data.masterRoster || data.masterRoster.length === 0) {
-                rosterContainer.innerHTML = '<div class="empty-state">Roster lookup context currently unpopulated.</div>';
+                rosterContainer.innerHTML = '<div class="empty-state">Roster currently unpopulated.</div>';
             } else {
                 let sortedRoster = [...data.masterRoster];
                 const sortValue = document.getElementById('rosterSortSelect').value;
@@ -1344,7 +1344,7 @@
         }
 
         function adminPurgeUser(targetEmail) {
-            if (!confirm(`⚠️ CRITICAL REVERSIBLE WARN: Permanently delete all metrics logs rows and accumulated record entries for ${targetEmail}? This action clears both Log indices and summary computations.`)) return;
+            if (!confirm(`Permanently delete all logs and record entries for ${targetEmail}?`)) return;
             
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
@@ -1358,7 +1358,7 @@
             const newEmail = input.value.trim();
 
             if (!newEmail || !newEmail.endsWith("@dlsu.edu.ph")) {
-                alert("Please declare a legitimate @dlsu.edu.ph identity workspace profile.");
+                alert("Please only input @dlsu.edu.ph emails.");
                 return;
             }
 
