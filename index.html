@@ -64,12 +64,18 @@
         header {
             background-color: var(--surface-card);
             border-bottom: 1px solid var(--border-soft);
-            padding: 16px 24px;
+            padding: 16px 16px;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             width: 100%;
+        }
+
+        @media (min-width: 576px) {
+            header {
+                padding: 16px 24px;
+            }
         }
 
         .nav-container {
@@ -160,7 +166,13 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 180px;
+            max-width: 140px;
+        }
+
+        @media (min-width: 375px) {
+            .user-email {
+                max-width: 180px;
+            }
         }
 
         .admin-badge {
@@ -273,17 +285,29 @@
         .login-box-container {
             max-width: 420px;
             margin: 100px auto;
-            padding: 0 24px;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 576px) {
+            .login-box-container {
+                padding: 0 24px;
+            }
         }
 
         .app-layout {
             max-width: 1200px;
             margin: 32px auto;
-            padding: 0 24px;
+            padding: 0 16px;
             display: grid;
             grid-template-columns: 1fr;
             gap: 24px;
             width: 100%;
+        }
+
+        @media (min-width: 576px) {
+            .app-layout {
+                padding: 0 24px;
+            }
         }
 
         @media (min-width: 992px) {
@@ -291,7 +315,6 @@
                 grid-template-columns: 380px 1fr;
                 align-items: start;
             }
-            /* Specific helper to stretch out layout fully when sidebar is hidden */
             .app-layout.full-width-layout {
                 grid-template-columns: 1fr;
             }
@@ -301,11 +324,17 @@
             background: var(--surface-card);
             border-radius: 16px;
             border: 1px solid var(--border-soft);
-            padding: 24px;
+            padding: 16px;
             box-shadow: var(--shadow-sm);
             width: 100%;
             overflow: hidden;
             margin-bottom: 24px;
+        }
+
+        @media (min-width: 576px) {
+            .card {
+                padding: 24px;
+            }
         }
 
         .card:hover {
@@ -553,7 +582,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: nowrap; /* Forces layout to stay in one single row */
+            flex-wrap: nowrap;
             gap: 12px;
             padding: 14px 12px;
             border-bottom: 1px solid #f1f5f9;
@@ -566,17 +595,16 @@
         .feed-item > div:first-child {
             display: flex;
             align-items: center;
-            flex-wrap: nowrap; /* Ensures action and mode badges don't drop to a new line */
+            flex-wrap: nowrap;
             gap: 6px;
-            overflow: hidden; /* Elegantly handles text overflow if space is tight */
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        /* Ensure the timestamp block retains its formatting and never wraps */
         .feed-item > div:last-child {
             white-space: nowrap;
-            flex-shrink: 0; /* Prevents the timestamp from squishing */
+            flex-shrink: 0;
             text-align: right;
             color: var(--text-muted);
             font-size: 0.85rem;
@@ -614,19 +642,44 @@
             gap: 12px;
             padding: 12px;
             border-bottom: 1px solid #f1f5f9;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: 100%;
+            max-width: 100%;
         }
         [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item { border-bottom-color: #334155; }
-        .board-user { flex-direction: column; align-items: flex-start; }
+        
+        .board-user { 
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
 
-        .board-user .email, .roster-user-item .roster-email {
+        .board-user .email {
             font-weight: 600;
             color: var(--text-main);
-            word-break: break-all;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+        
+        .roster-user-item .roster-email {
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
         .board-user .time-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .roster-meta-block { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+        .roster-meta-block { 
+            display: flex; 
+            flex-direction: column; 
+            flex: 1; 
+            min-width: 0;
+            overflow: hidden;
+        }
+        
         .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
         [data-theme="dark"] .roster-hours-sub { color: #818cf8; }
 
