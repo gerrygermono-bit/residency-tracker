@@ -291,6 +291,7 @@
                 grid-template-columns: 380px 1fr;
                 align-items: start;
             }
+            /* Specific helper to stretch out layout fully when sidebar is hidden */
             .app-layout.full-width-layout {
                 grid-template-columns: 1fr;
             }
@@ -552,26 +553,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
             padding: 14px 12px;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
+            width: 100%;
         }
         .feed-item:last-child { border-bottom: none; }
         [data-theme="dark"] .feed-item { border-bottom-color: #334155; }
 
-        /* MOBILE FIX FOR SQUEEZED TIMESTAMPS AND BADGES */
-        @media (max-width: 576px) {
-            .feed-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-                padding: 12px 10px;
-            }
-        }
-
         .feed-item > div:first-child {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 6px;
         }
 
@@ -582,27 +577,12 @@
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            white-space: nowrap;
         }
-
-        .badge-in {
-            background-color: #ecfdf5;
-            color: var(--status-in);
-        }
-
-        .badge-out {
-            background-color: #fff1f2;
-            color: var(--status-out);
-        }
-
-        [data-theme="dark"] .badge-in {
-            background-color: #10b98120;
-            color: #34d399;
-        }
-
-        [data-theme="dark"] .badge-out {
-            background-color: #f43f5e20;
-            color: #fb7185;
-        }
+        .badge-in { background-color: #ecfdf5; color: var(--status-in); }
+        .badge-out { background-color: #fff1f2; color: var(--status-out); }
+        [data-theme="dark"] .badge-in { background-color: #10b98120; color: #34d399; }
+        [data-theme="dark"] .badge-out { background-color: #f43f5e20; color: #fb7185; }
 
         .badge-mode {
             font-size: 0.75rem;
@@ -612,6 +592,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             border: 1px solid var(--border-soft);
+            white-space: nowrap;
         }
 
         .board-user, .roster-user-item {
@@ -621,49 +602,23 @@
             gap: 12px;
             padding: 12px;
             border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
         }
-
-        [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item {
-            border-bottom-color: #334155;
-        }
-
-        .board-user {
-            flex-direction: column;
-            align-items: flex-start;
-        }
+        [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item { border-bottom-color: #334155; }
+        .board-user { flex-direction: column; align-items: flex-start; }
 
         .board-user .email, .roster-user-item .roster-email {
             font-weight: 600;
             color: var(--text-main);
+            word-break: break-all;
         }
+        .board-user .time-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .board-user .time-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
+        .roster-meta-block { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+        .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
+        [data-theme="dark"] .roster-hours-sub { color: #818cf8; }
 
-        .roster-meta-block {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .roster-hours-sub {
-            font-size: 0.8rem;
-            color: #4f46e5;
-            margin-top: 2px;
-            font-weight: 600;
-        }
-
-        [data-theme="dark"] .roster-hours-sub {
-            color: #818cf8;
-        }
-
-        .roster-action-group {
-            display: flex;
-            gap: 6px;
-        }
-
+        .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
         .action-sub-btn {
             border: none;
             padding: 6px 10px;
@@ -674,34 +629,14 @@
             color: white;
             transition: all 0.2s ease;
         }
+        .action-sub-btn:active { transform: scale(0.95); }
+        .action-sub-btn.status-toggle { background: #d97706; }
+        .action-sub-btn.status-toggle:hover { background: #b45309; }
+        .action-sub-btn.delete { background: var(--status-out); }
+        .action-sub-btn.delete:hover { background: var(--status-out-hover); }
 
-        .action-sub-btn:active {
-            transform: scale(0.95);
-        }
-
-        .action-sub-btn.status-toggle {
-            background: #d97706;
-        }
-
-        .action-sub-btn.status-toggle:hover {
-            background: #b45309;
-        }
-
-        .action-sub-btn.delete {
-            background: var(--status-out);
-        }
-
-        .action-sub-btn.delete:hover {
-            background: var(--status-out-hover);
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            padding: 24px 0;
-        }
-
+        .empty-state { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
+        
         .toast {
             display: none;
             position: fixed;
@@ -718,28 +653,11 @@
             z-index: 1000;
             text-align: center;
         }
+        [data-theme="dark"] .toast { background: #065f46; color: #d1fae5; border-color: #047857; }
+        @media(min-width: 576px) { .toast { left: auto; max-width: 350px; } }
+        .toast.show { display: block; animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        [data-theme="dark"] .toast {
-            background: #065f46;
-            color: #d1fae5;
-            border-color: #047857;
-        }
-
-        @media(min-width: 576px) {
-            .toast {
-                left: auto;
-                max-width: 350px;
-            }
-        }
-
-        .toast.show {
-            display: block;
-            animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .minimal-loader-screen {
             position: fixed;
@@ -755,7 +673,7 @@
             opacity: 1;
             transition: opacity 0.5s ease;
         }
-
+        
         .minimal-loader-text {
             font-size: 1.1rem;
             font-weight: 500;
@@ -773,7 +691,6 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -781,6 +698,7 @@
     </style>
 </head>
 <body>
+
     <div class="minimal-loader-screen hidden" id="minimalAppLoader">
         <div class="minimal-loader-text" id="minimalLoaderText">Loading...</div>
     </div>
@@ -791,574 +709,541 @@
                 <div class="brand-logo"></div>
                 <h1>Residency Tracker</h1>
             </div>
+            
             <div class="header-controls" id="headerControls" style="display: none;">
                 <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
                     <svg viewBox="0 0 24 24" id="themeIcon">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
+
                 <div class="user-profile-chip">
                     <span class="user-email" id="userEmailLabel">...</span>
-                    <span class="admin-badge hidden" id="userAdminBadge">Admin</span>
+                    <span class="admin-badge hidden" id="adminBadge">Admin</span>
+                    <a class="logout-link" onclick="handleLogout()">Logout</a>
                 </div>
-                <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" title="Open Navigation Menu">
+
+                <button class="menu-btn" onclick="toggleMenu(event)" title="Options Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
+
                 <div class="nav-menu" id="navMenu">
-                    <button id="navBtnMain" onclick="switchView('main')">Residency Panel</button>
-                    <button id="navBtnHistory" onclick="switchView('history')">Log History</button>
-                    <button id="navBtnAdmin" class="hidden" onclick="switchView('admin')">Admin Hub</button>
-                    <hr style="border: none; border-top: 1px solid var(--border-soft); margin: 4px 0;">
-                    <button class="logout-link" onclick="handleLogout()" style="text-align: left; width: 100%;">Sign Out</button>
+                    <button onclick="showPanel('tracker')">Residency Panel</button>
+                    <button onclick="showPanel('history')">Log History</button>
+                    <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="login-box-container" id="loginBox">
-        <div class="card" style="text-align: center; padding: 40px 32px;">
-            <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.03em;">Welcome Back</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px;">Please sign in with your identity provider to continue tracking residency.</p>
-            <div style="display: flex; justify-content: center;" id="gSignInWrapper">
-                <div id="g_id_onload"
-                     data-client_id="276378730888-gsvgo6j5nvp6o2mmfvghhjn8ubufsilu.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-callback="handleCredentialResponse"
-                     data-auto_select="false">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="pill"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left">
-                </div>
-            </div>
+    <div class="login-box-container" id="loginView">
+        <div class="card" style="text-align: center;">
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Welcome!</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Please authorize using your DLSU Google Account.</p>
+            <div style="display: flex; justify-content: center;" id="gSignInBtn"></div>
         </div>
     </div>
 
-    <main class="app-layout hidden" id="mainAppContent">
+    <main class="app-layout hidden" id="mainDashboard">
         
-        <section id="viewSectionMain" style="display: contents;">
-            <div style="display: flex; flex-direction: column; width: 100%;">
+        <section id="sidebarPanel">
+            <div class="card select-panel-view" id="trackerPanel">
+                <div class="panel-heading">
+                    <span>Residency Operations</span>
+                </div>
+
                 <div class="warning" id="warningBox"></div>
+
+                <div class="metric-display">
+                    <div class="metric-label">Total Office Hours</div>
+                    <div class="metric-value" id="hoursValue">0.00</div>
+                </div>
+
+                <div class="metric-display hidden" id="liveTimerDisplay">
+                    <div class="metric-label">Live Duration</div>
+                    <div class="metric-value duration" id="liveTimerValue">00:00:00</div>
+                </div>
+
+                <button class="smart-btn clock-in" id="clockInBtn" onclick="prepareClockIn()">
+                    Clock In
+                </button>
                 
-                <div class="card">
-                    <div class="panel-heading">Current Track Status</div>
-                    <div class="metric-display">
-                        <div class="metric-label" id="statusLabel">Status State</div>
-                        <div class="metric-value" id="statusValue">Offline</div>
+                <div class="mode-selection-container hidden" id="modeSelectionContainer">
+                    <button class="mode-btn" id="modeOnsiteBtn" onclick="selectClockInMode('Onsite')">Onsite</button>
+                    <button class="mode-btn" id="modeOnlineBtn" onclick="selectClockInMode('Online')">Online</button>
+                </div>
+
+                <button class="smart-btn clock-out hidden" id="clockOutBtn" onclick="executeClockOut()">
+                    Clock Out
+                </button>
+            </div>
+        </section>
+
+        <section id="contentPanel">
+            
+            <div class="card select-panel-view" id="trackerContentView">
+                <div class="panel-heading">Recent Actions</div>
+                <div class="log-feed-container" id="recentLogsContainer">
+                    <div class="empty-state">No recent records gathered in this tracking segment.</div>
+                </div>
+            </div>
+
+            <div class="card select-panel-view hidden" id="historyContentView">
+                <div class="panel-heading">
+                    <span>Complete Log History</span>
+                </div>
+                <div class="history-feed-container" id="fullHistoryContainer">
+                    <div class="empty-state">No structured operations logs found.</div>
+                </div>
+            </div>
+
+            <div class="card select-panel-view hidden" id="adminContentView">
+                
+                <div class="card" style="padding: 18px; margin-bottom: 20px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">Active Sessions</div>
+                    <div class="attendance-board-container" id="attendanceBoard">
+                        <div class="empty-state">No members currently clocked into the workstation ecosystem.</div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 18px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">
+                        <div class="roster-heading-content">
+                            <span>Roster</span>
+                            <select class="roster-sort-select" id="rosterSortSelect" onchange="handleRosterSortChange()">
+                                <option value="clockedInFirst">Clocked In First</option>
+                                <option value="clockedOutFirst">Clocked Out First</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="roster-board-container" id="rosterBoard">
+                        <div class="empty-state">Roster lookup context currently unpopulated.</div>
                     </div>
                     
-                    <div class="mode-selection-container hidden" id="modeSelectionBlock">
-                        <button class="mode-btn selected" id="modeBtnInternal" onclick="selectClockMode('Internal')">Internal</button>
-                        <button class="mode-btn" id="modeBtnExternal" onclick="selectClockMode('External')">External</button>
-                    </div>
-
-                    <button class="smart-btn clock-in" id="actionButton" onclick="triggerStatusAction()" disabled>
-                        <span>Synchronizing...</span>
-                    </button>
-                </div>
-
-                <div class="card">
-                    <div class="panel-heading">Tracked Duration Segment</div>
-                    <div class="metric-display">
-                        <div class="metric-label">Accrued Operational Time</div>
-                        <div class="metric-value duration" id="totalHoursValue">0.00 hrs</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; width: 100%;">
-                <div class="card">
-                    <div class="panel-heading">Recent Activities</div>
-                    <div class="log-feed-container" id="recentLogsContainer">
-                        <div class="empty-state">No recent records gathered in this tracking segment.</div>
-                    </div>
-                </div>
-
-                <div class="card hidden" id="liveAttendanceCard">
-                    <div class="panel-heading">Live Attendance Tracker</div>
-                    <div class="attendance-board-container" id="liveAttendanceContainer">
-                        <div class="empty-state">No members are currently clocked in active deployment.</div>
+                    <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-soft); padding-top: 16px;">
+                        <label for="newAdminEmail">Give Admin Privileges</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="email" id="newAdminEmail" placeholder="user@dlsu.edu.ph" autocomplete="off" />
+                            <button class="admin-submit-btn" style="width: auto; margin: 0; padding: 0 16px; white-space: nowrap;" onclick="addNewAdmin()">Add</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section id="viewSectionHistory" style="display: none; width: 100%;">
-            <div class="card" style="width: 100%;">
-                <div class="panel-heading">Full Verification Log History</div>
-                <div class="history-feed-container" id="fullHistoryContainer">
-                    <div class="empty-state">No entry sequences found within operational parameters.</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="viewSectionAdmin" style="display: none; width: 100%;">
-            <div style="display: flex; flex-direction: column; width: 100%;">
-                <div class="card">
-                    <div class="panel-heading">Master Roster Database</div>
-                    <div class="roster-board-container" id="masterRosterContainer">
-                        <div class="empty-state">Retrieving records from master directory databases...</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; width: 100%;">
-                <div class="card">
-                    <div class="panel-heading">Assign Administrative Rights</div>
-                    <div class="form-group" style="margin-bottom: 12px;">
-                        <label for="newAdminEmail">Workspace Account Identity</label>
-                        <input type="email" id="newAdminEmail" placeholder="username@dlsu.edu.ph">
-                    </div>
-                    <button class="admin-submit-btn" onclick="addNewAdmin()">Provision Access Token</button>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <div class="toast" id="successToast">Success Event Notification</div>
+    <div class="toast" id="successToast"></div>
 
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRPyUfRVK7MTuqzdf-T8901TnKrN_4mO_B8SImg0YGLqzhOG_Uet_apqmZzdIFYUNYGg/exec"; 
         const CLIENT_API_TOKEN = "Residency_Secure_Token_2026";
 
-        let currentStatusState = "Offline"; 
         let userEmail = "";
-        let selectedClockMode = "Internal"; 
-        let globalRosterDataCache = []; 
-        let globalCurrentSortCriteria = "email-asc"; 
+        let timerInterval = null;
+        let selectedClockInModeStr = "";
+        let fullCachedPayload = null; 
 
         window.onload = function () {
-            applySystemThemePreference();
-            const alternateSavedEmail = localStorage.getItem('residency_user_email');
-            if (alternateSavedEmail) {
-                initializeAuthorizedSession(alternateSavedEmail);
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            renderGoogleSignInButton(currentTheme);
+
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                userEmail = savedEmail;
+                bootstrapApplication();
             }
         };
 
-        function applySystemThemePreference() {
-            const systemActiveTheme = localStorage.getItem('residency_theme') || 'light';
-            document.documentElement.setAttribute('data-theme', systemActiveTheme);
-            updateThemeToggleButtonIcon(systemActiveTheme);
+        function renderGoogleSignInButton(theme) {
+            google.accounts.id.initialize({
+                client_id: "276378730888-gsvgo6j5nvp6o2mmfvghhjn8ubufsilu.apps.googleusercontent.com", 
+                callback: handleCredentialResponse
+            });
+            
+            const btnContainer = document.getElementById("gSignInBtn");
+            if (btnContainer) {
+                btnContainer.innerHTML = ""; 
+                google.accounts.id.renderButton(
+                    btnContainer,
+                    { theme: theme === 'dark' ? 'filled_black' : 'outline', size: "large", width: "280" }
+                );
+            }
         }
 
         function toggleTheme() {
-            const currentSystemTargetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', currentSystemTargetTheme);
-            localStorage.setItem('residency_theme', currentSystemTargetTheme);
-            updateThemeToggleButtonIcon(currentSystemTargetTheme);
-        }
-
-        function updateThemeToggleButtonIcon(theme) {
-            const iconSvgElement = document.getElementById('themeIcon');
-            if (theme === 'dark') {
-                iconSvgElement.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
-            } else {
-                iconSvgElement.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+            const targetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+            updateThemeIcon(targetTheme);
+            
+            if (document.getElementById('loginView').classList.contains('hidden') === false) {
+                renderGoogleSignInButton(targetTheme);
             }
         }
 
-        function toggleMenu() {
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            if (theme === 'dark') {
+                icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="19.78"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+            }
+        }
+
+        function toggleMenu(event) {
+            event.stopPropagation();
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        window.addEventListener('click', function(e) {
-            const targetMenuBlock = document.getElementById('navMenu');
-            const targetMenuTriggerBtn = document.getElementById('menuBtn');
-            if (targetMenuBlock && !targetMenuBlock.contains(e.target) && !targetMenuTriggerBtn.contains(e.target)) {
-                targetMenuBlock.classList.remove('show');
-            }
+        document.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('show');
         });
 
-        function switchView(targetViewId) {
-            const layoutElementReference = document.getElementById('mainAppContent');
-            const mainSectionView = document.getElementById('viewSectionMain');
-            const historySectionView = document.getElementById('viewSectionHistory');
-            const adminSectionView = document.getElementById('viewSectionAdmin');
-
-            mainSectionView.style.display = 'none';
-            historySectionView.style.display = 'none';
-            adminSectionView.style.display = 'none';
-
-            if (layoutElementReference) {
-                layoutElementReference.classList.remove('full-width-layout');
-            }
-
-            if (targetViewId === 'main') {
-                mainSectionView.style.display = 'contents';
-            } else if (targetViewId === 'history') {
-                historySectionView.style.display = 'block';
-                if (layoutElementReference) layoutElementReference.classList.add('full-width-layout');
-            } else if (targetViewId === 'admin') {
-                adminSectionView.style.display = 'contents';
-            }
+        /* Fixed: Re-configured view engine state behavior. Explicitly toggles .full-width-layout 
+           class on grid context to force cards out of choked track dimensions when panels hide. */
+        function showPanel(panelName) {
+            document.querySelectorAll('.select-panel-view').forEach(el => el.classList.add('hidden'));
+            const dashboardLayout = document.getElementById('mainDashboard');
             
-            document.getElementById('navMenu').classList.remove('show');
-        }
-
-        function parseJwtTokenPayload(token) {
-            try {
-                var base64UrlString = token.split('.')[1];
-                var base64Decodable = base64UrlString.replace(/-/g, '+').replace(/_/g, '/');
-                var jsonPayloadValueString = decodeURIComponent(window.atob(base64Decodable).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayloadValueString);
-            } catch (jwtParseException) {
-                return null;
+            if (panelName === 'tracker') {
+                dashboardLayout.classList.remove('full-width-layout');
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('trackerContentView').classList.remove('hidden');
+            } else if (panelName === 'history') {
+                dashboardLayout.classList.add('full-width-layout');
+                document.getElementById('sidebarPanel').classList.add('hidden');
+                document.getElementById('historyContentView').classList.remove('hidden');
+                if (fullCachedPayload) populateFullHistory(fullCachedPayload.fullHistory);
+            } else if (panelName === 'admin') {
+                dashboardLayout.classList.remove('full-width-layout');
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('adminContentView').classList.remove('hidden');
             }
         }
 
         function handleCredentialResponse(response) {
-            const responsePayloadData = parseJwtTokenPayload(response.credential);
-            if (!responsePayloadData || !responsePayloadData.email) {
-                alert("Security handshake processing exception. Core structures broken.");
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            const email = payload.email;
+
+            if (!email.endsWith("@dlsu.edu.ph")) {
+                alert("Access unauthorized. Please use your legitimate institutional @dlsu.edu.ph workspace account.");
                 return;
             }
 
-            const targetEmailIdentity = responsePayloadData.email.trim().toLowerCase();
-            if (!targetEmailIdentity.endsWith("@dlsu.edu.ph")) {
-                alert("Access Denied: You must declare a legitimate @dlsu.edu.ph identity workspace profile.");
-                return;
-            }
-
-            localStorage.setItem('residency_user_email', targetEmailIdentity);
-            initializeAuthorizedSession(targetEmailIdentity);
-        }
-
-        function initializeAuthorizedSession(email) {
             userEmail = email;
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('headerControls').style.display = 'flex';
+            localStorage.setItem('userEmail', email);
+
+            const loader = document.getElementById('minimalAppLoader');
+            const loaderText = document.getElementById('minimalLoaderText');
             
-            const layoutMainInterfaceContent = document.getElementById('mainAppContent');
-            layoutMainInterfaceContent.classList.remove('hidden');
+            loader.style.opacity = "1";
+            loaderText.classList.remove('fade-in');
+            loader.classList.remove('hidden');
             
-            document.getElementById('userEmailLabel').innerText = userEmail;
-
-            triggerLoaderScreenTransition(true, "Synchronizing Ecosystem Core Structures...");
-            fetchUserData(userEmail);
-        }
-
-        function triggerLoaderScreenTransition(displayLoaderState, loaderMessageText = "Loading...") {
-            const loaderScreenContainerElement = document.getElementById('minimalAppLoader');
-            const loaderStatusTextElement = document.getElementById('minimalLoaderText');
+            setTimeout(() => {
+                loaderText.classList.add('fade-in');
+            }, 500);
             
-            if (displayLoaderState) {
-                loaderStatusTextElement.innerText = loaderMessageText;
-                loaderScreenContainerElement.classList.remove('hidden');
-                setTimeout(() => {
-                    loaderStatusTextElement.classList.add('fade-in');
-                }, 50);
-            } else {
-                loaderStatusTextElement.classList.remove('fade-in');
-                setTimeout(() => {
-                    loaderScreenContainerElement.classList.add('hidden');
-                }, 500);
-            }
-        }
+            let minimumTimerDone = false;
+            setTimeout(() => {
+                minimumTimerDone = true;
+                checkAndHideLoader();
+            }, 5000);
 
-        function fetchUserData(emailTargetAddress) {
-            const targetFetchRequestEndpointUrl = `${APPS_SCRIPT_URL}?action=GetUserData&email=${encodeURIComponent(emailTargetAddress)}&token=${encodeURIComponent(CLIENT_API_TOKEN)}`;
-            
-            fetch(targetFetchRequestEndpointUrl)
-            .then(networkResponse => networkResponse.json())
-            .then(userDataPayload => {
-                if (userDataPayload.status === "error") {
-                    showGlobalWarning(userDataPayload.message);
-                    disableTrackingControlInterface();
-                    triggerLoaderScreenTransition(false);
-                    return;
-                }
-
-                document.getElementById('warningBox').style.display = 'none';
-                currentStatusState = userDataPayload.currentStatus || "Offline";
-                
-                updateEcosystemInterfaceStatusDisplays(currentStatusState);
-                document.getElementById('totalHoursValue').innerText = `${parseFloat(userDataPayload.totalHours || 0).toFixed(2)} hrs`;
-
-                populateRecentLogs(userDataPayload.recentLogs);
-                populateFullHistory(userDataPayload.fullHistory);
-
-                const operationalNavigationMenuAdminBtn = document.getElementById('navBtnAdmin');
-                const interfaceAdministrativeProfileBadge = document.getElementById('userAdminBadge');
-                const adminLiveAttendanceBlockContainer = document.getElementById('liveAttendanceCard');
-
-                if (userDataPayload.isAdmin) {
-                    operationalNavigationMenuAdminBtn.classList.remove('hidden');
-                    interfaceAdministrativeProfileBadge.classList.remove('hidden');
-                    adminLiveAttendanceBlockContainer.classList.remove('hidden');
-                    
-                    populateLiveAttendanceDashboard(userDataPayload.liveAttendance);
-                    
-                    globalRosterDataCache = userDataPayload.masterRoster || [];
-                    renderSortedMasterRosterDatabase();
-                } else {
-                    operationalNavigationMenuAdminBtn.classList.add('hidden');
-                    interfaceAdministrativeProfileBadge.classList.add('hidden');
-                    adminLiveAttendanceBlockContainer.classList.add('hidden');
-                    switchView('main');
-                }
-
-                triggerLoaderScreenTransition(false);
-            })
-            .catch(endpointFetchError => {
-                console.error("Critical structural acquisition processing error:", endpointFetchError);
-                showGlobalWarning("Ecosystem connectivity error. Re-establishing handshake vectors...");
-                disableTrackingControlInterface();
-                triggerLoaderScreenTransition(false);
+            fetchUserData(userEmail, () => {
+                checkAndHideLoader();
             });
-        }
 
-        function disableTrackingControlInterface() {
-            const mainTrackActionButton = document.getElementById('actionButton');
-            mainTrackActionButton.disabled = true;
-            mainTrackActionButton.innerHTML = '<span>Ecosystem Connection Error</span>';
-        }
-
-        function updateEcosystemInterfaceStatusDisplays(status) {
-            const currentInterfaceStatusValueElement = document.getElementById('statusValue');
-            const currentInterfaceStatusLabelElement = document.getElementById('statusLabel');
-            const currentInterfaceTrackActionButton = document.getElementById('actionButton');
-            const internalInterfaceModeSelectionBlock = document.getElementById('modeSelectionBlock');
-
-            currentInterfaceStatusValueElement.innerText = status;
-            currentInterfaceTrackActionButton.disabled = false;
-
-            if (status === "Clock In") {
-                currentInterfaceStatusLabelElement.innerText = "Status State";
-                currentInterfaceStatusValueElement.innerText = "Clock In";
-                currentInterfaceStatusValueElement.style.color = "var(--status-in)";
-                
-                currentInterfaceTrackActionButton.className = "smart-btn clock-out";
-                currentInterfaceTrackActionButton.innerHTML = `
-                    <svg style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span>Clock Out</span>
-                `;
-                internalInterfaceModeSelectionBlock.classList.add('hidden');
-            } else {
-                currentInterfaceStatusLabelElement.innerText = "Status State";
-                currentInterfaceStatusValueElement.innerText = "Offline";
-                currentInterfaceStatusValueElement.style.color = "var(--text-muted)";
-                
-                currentInterfaceTrackActionButton.className = "smart-btn clock-in";
-                currentInterfaceTrackActionButton.innerHTML = `
-                    <svg style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24">
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4"></path>
-                        <polyline points="10 17 5 12 10 7"></polyline>
-                        <line x1="15" y1="12" x2="5" y2="12"></line>
-                    </svg>
-                    <span>Clock In</span>
-                `;
-                internalInterfaceModeSelectionBlock.classList.remove('hidden');
+            function checkAndHideLoader() {
+                if (minimumTimerDone && fullCachedPayload) {
+                    loader.style.opacity = "0";
+                    
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                        bootstrapApplication();
+                    }, 500);
+                }
             }
         }
 
-        function selectClockMode(mode) {
-            selectedClockMode = mode;
-            const internalModeBtn = document.getElementById('modeBtnInternal');
-            const externalModeBtn = document.getElementById('modeBtnExternal');
-
-            if (mode === 'Internal') {
-                internalModeBtn.classList.add('selected');
-                externalModeBtn.classList.remove('selected');
-            } else {
-                externalModeBtn.classList.add('selected');
-                internalModeBtn.classList.remove('selected');
-            }
-        }
-
-        function triggerStatusAction() {
-            const nextStatusActionPattern = (currentStatusState === "Clock In") ? "Clock Out" : "Clock In";
-            const currentInterfaceTrackActionButton = document.getElementById('actionButton');
+        function bootstrapApplication() {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('headerControls').style.display = 'flex';
+            document.getElementById('userEmailLabel').innerText = userEmail;
+            document.getElementById('mainDashboard').classList.remove('hidden');
             
-            currentInterfaceTrackActionButton.disabled = true;
-            currentInterfaceTrackActionButton.innerHTML = '<span>Processing Matrix Actions...</span>';
-
-            triggerLoaderScreenTransition(true, "Registering Operational Matrix Sequence...");
-
-            const operationPayloadData = {
-                token: CLIENT_API_TOKEN,
-                action: nextStatusActionPattern,
-                email: userEmail,
-                mode: nextStatusActionPattern === "Clock In" ? selectedClockMode : ""
-            };
-
-            sendPostRequest(operationPayloadData, `Session parameters successfully synchronized to state: ${nextStatusActionPattern}`);
+            if (!fullCachedPayload) {
+                fetchUserData(userEmail);
+            } else {
+                renderFetchedData(fullCachedPayload);
+            }
         }
 
-        function sendPostRequest(payload, successToastMessage) {
+        function fetchUserData(email, callback) {
+            fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(email)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "error") {
+                        showGlobalWarning(data.message);
+                        if (callback) callback();
+                        return;
+                    }
+                    
+                    fullCachedPayload = data; 
+                    
+                    if (!document.getElementById('mainDashboard').classList.contains('hidden')) {
+                        renderFetchedData(data);
+                    }
+
+                    if (callback) callback();
+                })
+                .catch(err => {
+                    showGlobalWarning("Ecosystem connectivity error: Unable to map real-time status details.");
+                    if (callback) callback();
+                });
+        }
+
+        function renderFetchedData(data) {
+            if (data.isAdmin) {
+                document.getElementById('adminBadge').classList.remove('hidden');
+                document.getElementById('adminMenuOpt').classList.remove('hidden');
+                populateAdminConsole(data);
+            }
+
+            document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
+            configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
+            populateRecentLogs(data.recentLogs);
+        }
+
+        function configureTrackingInterface(isClockedIn, lastTimestampIso) {
+            clearInterval(timerInterval);
+            document.getElementById('liveTimerDisplay').classList.add('hidden');
+            document.getElementById('modeSelectionContainer').classList.add('hidden');
+            
+            selectedClockInModeStr = "";
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            const clockInBtn = document.getElementById('clockInBtn');
+            const clockOutBtn = document.getElementById('clockOutBtn');
+
+            if (isClockedIn) {
+                clockInBtn.classList.add('hidden');
+                clockOutBtn.classList.remove('hidden');
+                
+                document.getElementById('liveTimerDisplay').classList.remove('hidden');
+                const startTime = new Date(lastTimestampIso).getTime();
+                
+                timerInterval = setInterval(() => {
+                    const delta = Date.now() - startTime;
+                    if (delta < 0) return;
+                    
+                    const hrs = Math.floor(delta / 3600000).toString().padStart(2, '0');
+                    const mins = Math.floor((delta % 3600000) / 60000).toString().padStart(2, '0');
+                    const secs = Math.floor((delta % 60000) / 1000).toString().padStart(2, '0');
+                    
+                    document.getElementById('liveTimerValue').innerText = `${hrs}:${mins}:${secs}`;
+                }, 1000);
+            } else {
+                clockInBtn.classList.remove('hidden');
+                clockInBtn.disabled = false;
+                clockInBtn.innerText = "Clock In";
+                clockOutBtn.classList.add('hidden');
+            }
+        }
+
+        function prepareClockIn() {
+            document.getElementById('modeSelectionContainer').classList.remove('hidden');
+            const clockInBtn = document.getElementById('clockInBtn');
+            clockInBtn.disabled = true;
+            clockInBtn.innerText = "Select Mode Below...";
+        }
+
+        function selectClockInMode(mode) {
+            selectedClockInModeStr = mode;
+            
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            if (mode === 'Onsite') document.getElementById('modeOnsiteBtn').classList.add('selected');
+            if (mode === 'Online') document.getElementById('modeOnlineBtn').classList.add('selected');
+            
+            executeClockIn();
+        }
+
+        function executeClockIn() {
+            if (!selectedClockInModeStr) return;
+            
+            const btn = document.getElementById('clockInBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock In",
+                email: userEmail,
+                mode: selectedClockInModeStr
+            }, `Clocked In successfully (${selectedClockInModeStr})`);
+        }
+
+        function executeClockOut() {
+            const btn = document.getElementById('clockOutBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock Out",
+                email: userEmail,
+                mode: ""
+            }, "Clocked Out successfully");
+        }
+
+        function sendPostRequest(bodyObj, successMessage) {
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(bodyObj)
             })
-            .then(networkHttpResponse => networkHttpResponse.json())
-            .then(executionOutcomeResult => {
-                if (executionOutcomeResult.status === "error") {
-                    alert(`Operational exception handling error: ${executionOutcomeResult.message}`);
-                    fetchUserData(userEmail);
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.status === "error") {
+                    alert(`Action failed: ${resData.message}`);
+                    bootstrapApplication();
                     return;
                 }
-                showToast(successToastMessage);
-                fetchUserData(userEmail);
+                showToast(successMessage);
+                setTimeout(() => { fetchUserData(userEmail); }, 1000);
             })
-            .catch(postTransmissionError => {
-                console.error("Ecosystem pipeline error:", postTransmissionError);
-                alert("The structural execution request failed to complete. Forcing cache re-verification... ");
-                fetchUserData(userEmail);
+            .catch(err => {
+                console.error(err);
+                alert("Network communication timeout error occurred.");
+                bootstrapApplication();
             });
         }
 
         function populateRecentLogs(logs) {
-            const logsFeedContainerBlock = document.getElementById('recentLogsContainer');
+            const container = document.getElementById('recentLogsContainer');
             if (!logs || logs.length === 0) {
-                logsFeedContainerBlock.innerHTML = '<div class="empty-state">No recent records gathered in this tracking segment.</div>';
+                container.innerHTML = '<div class="empty-state">No recent records gathered in this tracking segment.</div>';
                 return;
             }
 
-            logsFeedContainerBlock.innerHTML = logs.map(logItem => {
-                const structuralActionCssClass = logItem.action === "Clock In" ? "badge-in" : "badge-out";
-                const modeContextBadgeMarkup = (logItem.action === "Clock In" && logItem.mode) ? `<span class="badge-mode">${logItem.mode}</span>` : "";
+            container.innerHTML = logs.map(item => {
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = (item.action === "Clock In" && item.mode) ? `<span class="badge-mode">${item.mode}</span>` : "";
                 return `
                     <div class="feed-item">
                         <div>
-                            <span class="badge-action ${structuralActionCssClass}">${logItem.action}</span>
-                            ${modeContextBadgeMarkup}
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">${logItem.timestamp}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:500;">${item.timestamp}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        function populateFullHistory(history) {
-            const fullHistoryContainerBlock = document.getElementById('fullHistoryContainer');
-            if (!history || history.length === 0) {
-                fullHistoryContainerBlock.innerHTML = '<div class="empty-state">No entry sequences found within operational parameters.</div>';
+        function populateFullHistory(logs) {
+            const container = document.getElementById('fullHistoryContainer');
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No structured operations logs found.</div>';
                 return;
             }
 
-            fullHistoryContainerBlock.innerHTML = history.map(historyItem => {
-                const structuralActionCssClass = historyItem.action === "Clock In" ? "badge-in" : "badge-out";
-                const modeContextBadgeMarkup = (historyItem.action === "Clock In" && historyItem.mode) ? `<span class="badge-mode">${historyItem.mode}</span>` : "";
+            container.innerHTML = logs.map(item => {
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = item.mode ? `<span class="badge-mode">${item.mode}</span>` : "";
                 return `
                     <div class="feed-item">
                         <div>
-                            <span class="badge-action ${structuralActionCssClass}">${historyItem.action}</span>
-                            ${modeContextBadgeMarkup}
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">${historyItem.timestamp}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight:600;">${item.timestamp}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        function populateLiveAttendanceDashboard(attendance) {
-            const liveAttendanceContainerBlock = document.getElementById('liveAttendanceContainer');
-            if (!attendance || attendance.length === 0) {
-                liveAttendanceContainerBlock.innerHTML = '<div class="empty-state">No members are currently clocked in active deployment.</div>';
-                return;
+        function handleRosterSortChange() {
+            if (fullCachedPayload) {
+                populateAdminConsole(fullCachedPayload);
             }
-
-            liveAttendanceContainerBlock.innerHTML = attendance.map(activeUser => `
-                <div class="board-user">
-                    <span class="email">${activeUser.email}</span>
-                    <span class="time-meta">Deployed Since: <strong>${activeUser.since}</strong></span>
-                </div>
-            `).join('');
         }
 
-        function executeRosterSortCriteriaChange(selectedSortValue) {
-            globalCurrentSortCriteria = selectedSortValue;
-            renderSortedMasterRosterDatabase();
-        }
-
-        function renderSortedMasterRosterDatabase() {
-            const targetRosterLayoutContainer = document.getElementById('masterRosterContainer');
-            if (!globalRosterDataCache || globalRosterDataCache.length === 0) {
-                targetRosterLayoutContainer.innerHTML = '<div class="empty-state">No student directory data records exist.</div>';
-                return;
+        function populateAdminConsole(data) {
+            const attContainer = document.getElementById('attendanceBoard');
+            if (!data.liveAttendance || data.liveAttendance.length === 0) {
+                attContainer.innerHTML = '<div class="empty-state">No members currently clocked into the workstation ecosystem.</div>';
+            } else {
+                attContainer.innerHTML = data.liveAttendance.map(user => `
+                    <div class="board-user">
+                        <span class="email">${user.email}</span>
+                        <span class="time-meta">Active running since: <b>${user.since}</b></span>
+                    </div>
+                `).join('');
             }
 
-            let temporaryProcessingRosterArray = [...globalRosterDataCache];
-
-            temporaryProcessingRosterArray.sort((firstElement, secondElement) => {
-                if (globalCurrentSortCriteria === "email-asc") {
-                    return firstElement.email.localeCompare(secondElement.email);
-                } else if (globalCurrentSortCriteria === "email-desc") {
-                    return secondElement.email.localeCompare(firstElement.email);
-                } else if (globalCurrentSortCriteria === "hours-asc") {
-                    return firstElement.totalHours - secondElement.totalHours;
-                } else if (globalCurrentSortCriteria === "hours-desc") {
-                    return secondElement.totalHours - firstElement.totalHours;
+            const rosterContainer = document.getElementById('rosterBoard');
+            if (!data.masterRoster || data.masterRoster.length === 0) {
+                rosterContainer.innerHTML = '<div class="empty-state">Roster lookup context currently unpopulated.</div>';
+            } else {
+                let sortedRoster = [...data.masterRoster];
+                const sortValue = document.getElementById('rosterSortSelect').value;
+                
+                if (sortValue === 'clockedInFirst') {
+                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : b.isCurrentlyClockedIn ? 1 : -1);
+                } else if (sortValue === 'clockedOutFirst') {
+                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : a.isCurrentlyClockedIn ? 1 : -1);
                 }
-                return 0;
-            });
 
-            targetRosterLayoutContainer.innerHTML = `
-                <div style="padding: 6px 12px; display: flex; justify-content: flex-end; border-bottom: 1px solid var(--border-soft);">
-                    <div class="roster-heading-content">
-                        <span style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Identity Index</span>
-                        <select class="roster-sort-select" onchange="executeRosterSortCriteriaChange(this.value)">
-                            <option value="email-asc" ${globalCurrentSortCriteria === "email-asc" ? "selected" : ""}>Email (A-Z)</option>
-                            <option value="email-desc" ${globalCurrentSortCriteria === "email-desc" ? "selected" : ""}>Email (Z-A)</option>
-                            <option value="hours-desc" ${globalCurrentSortCriteria === "hours-desc" ? "selected" : ""}>Hours (High-Low)</option>
-                            <option value="hours-asc" ${globalCurrentSortCriteria === "hours-asc" ? "selected" : ""}>Hours (Low-High)</option>
-                        </select>
-                    </div>
-                </div>
-                ${temporaryProcessingRosterArray.map(rosterRecordItem => {
-                    const statusContextOverrideLabel = rosterRecordItem.isCurrentlyClockedIn ? "Force Clock Out" : "Force Clock In";
+                rosterContainer.innerHTML = sortedRoster.map(member => {
+                    const statusDot = member.isCurrentlyClockedIn 
+                        ? `<span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>` 
+                        : `<span style="display:inline-block; width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></span>`;
+                    
+                    const forceButtonLabel = member.isCurrentlyClockedIn ? "Force out" : "Force in";
+
                     return `
                         <div class="roster-user-item">
                             <div class="roster-meta-block">
-                                <span class="roster-email">${rosterRecordItem.email}</span>
-                                <span class="roster-hours-sub">Total: ${parseFloat(rosterRecordItem.totalHours).toFixed(2)} hrs</span>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    ${statusDot}
+                                    <span class="roster-email">${member.email}</span>
+                                </div>
+                                <span class="roster-hours-sub">Verified: ${Number(member.totalHours).toFixed(2)} hrs</span>
                             </div>
                             <div class="roster-action-group">
-                                <button class="action-sub-btn status-toggle" onclick="toggleUserStatusOverride('${rosterRecordItem.email}', ${rosterRecordItem.isCurrentlyClockedIn})">
-                                    ${statusContextOverrideLabel}
-                                </button>
-                                <button class="action-sub-btn delete" onclick="purgeTargetUserDatabaseStructures('${rosterRecordItem.email}')">
-                                    Purge
-                                </button>
+                                <button class="action-sub-btn status-toggle" onclick="adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">${forceButtonLabel}</button>
+                                <button class="action-sub-btn delete" onclick="adminPurgeUser('${member.email}')">Purge</button>
                             </div>
                         </div>
                     `;
-                }).join('')}
-            `;
+                }).join('');
+            }
         }
 
-        function toggleUserStatusOverride(targetEmail, isCurrentlyClockedIn) {
-            const dynamicTargetOverrideState = isCurrentlyClockedIn ? "Clock Out" : "Clock In";
-            if (!confirm(`Are you sure you want to enforce standard identity overrides on: ${targetEmail}? Forcing status state to: [${dynamicTargetOverrideState}].`)) return;
-            
-            triggerLoaderScreenTransition(true, "Enforcing Target Matrix Status Overrides...");
+        function adminOverrideToggle(targetEmail, currentStatus) {
+            const nextAction = currentStatus ? "Clock Out" : "Clock In";
+            if (!confirm(`Force structural override "${nextAction}" status update for ${targetEmail}?`)) return;
             
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
-                action: dynamicTargetOverrideState,
+                action: nextAction,
                 email: targetEmail,
-                mode: dynamicTargetOverrideState === "Clock In" ? "Internal" : ""
-            }, `Administrative status manipulation complete for ${targetEmail}`);
+                mode: currentStatus ? "" : "Admin-Override"
+            }, `Overrode profile parameters for ${targetEmail}`);
         }
 
-        function purgeTargetUserDatabaseStructures(targetEmail) {
-            if (!confirm(`CRITICAL WARNING: You are attempting to completely delete all structural verification tracking logs and metrics associated with ${targetEmail}. This execution cannot be reverted. Proceed?`)) return;
-            
-            triggerLoaderScreenTransition(true, "Purging Target Identity Infrastructures...");
+        function adminPurgeUser(targetEmail) {
+            if (!confirm(`⚠️ CRITICAL REVERSIBLE WARN: Permanently delete all metrics logs rows and accumulated record entries for ${targetEmail}? This action clears both Log indices and summary computations.`)) return;
             
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
@@ -1375,8 +1260,6 @@
                 alert("Please declare a legitimate @dlsu.edu.ph identity workspace profile.");
                 return;
             }
-
-            triggerLoaderScreenTransition(true, "Provisioning Administrative Infrastructure Rights...");
 
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
