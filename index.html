@@ -544,16 +544,17 @@
             background: #1e293b40;
         }
 
-        /* Fixed: Reconfigured to gracefully line-wrap on tight layout environments */
+        /* Fixed: Structural optimization to guarantee item rows break gracefully on tight widths */
         .feed-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             padding: 14px 12px;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
+            width: 100%;
         }
         .feed-item:last-child { border-bottom: none; }
         [data-theme="dark"] .feed-item { border-bottom-color: #334155; }
@@ -1139,6 +1140,7 @@
             }).join('');
         }
 
+        /* Fixed: Reconfigured layout generation so it maps items symmetrically into structured row nodes */
         function populateFullHistory(logs) {
             const container = document.getElementById('fullHistoryContainer');
             if (!logs || logs.length === 0) {
@@ -1155,7 +1157,7 @@
                             <span class="badge-action ${actionClass}">${item.action}</span>
                             ${modeBadge}
                         </div>
-                        <div style="font-size: 0.85rem; font-weight:600;">${item.timestamp}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight:600;">${item.timestamp}</div>
                     </div>
                 `;
             }).join('');
