@@ -28,6 +28,22 @@
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
         }
 
+        /* Dark Theme Tokens */
+        [data-theme="dark"] {
+            --bg-canvas: #0f172a;
+            --surface-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-soft: #334155;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Added transition to body and core layout elements for a clean fade animation */
+        body, header, .card, .user-profile-chip, .metric-display, input, button {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
         html, body {
             max-width: 100%;
             overflow-x: hidden;
@@ -93,9 +109,41 @@
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             position: relative;
             max-width: 100%;
+        }
+
+        /* Minimalist Theme Toggle Button Styling */
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--border-soft);
+            background: var(--surface-card);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--bg-canvas);
+            border-color: var(--text-muted);
+        }
+
+        .theme-toggle-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .user-profile-chip {
@@ -128,6 +176,12 @@
             border-radius: 4px;
             text-transform: uppercase;
             flex-shrink: 0;
+        }
+
+        /* Context-aware colors for dark mode admin badges */
+        [data-theme="dark"] .admin-badge {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
         }
 
         .logout-link {
@@ -218,6 +272,9 @@
             background: var(--bg-canvas);
             color: var(--dlsu-green);
         }
+        [data-theme="dark"] .nav-menu button:hover {
+            color: #34d399;
+        }
 
         /* App Layout Structures */
         .login-box-container {
@@ -249,7 +306,6 @@
             border: 1px solid var(--border-soft);
             padding: 24px;
             box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s ease;
             width: 100%;
             overflow: hidden;
         }
@@ -285,12 +341,22 @@
             border-left: 4px solid var(--status-out);
             color: #991b1b;
         }
+        [data-theme="dark"] .warning {
+            background-color: #991b1b20;
+            border-color: #991b1b40;
+            color: #fca5a5;
+        }
 
         .admin-warning {
             background-color: #fffbeb;
             border: 1px solid #fef3c7;
             border-left: 4px solid #f59e0b;
             color: #b45309;
+        }
+        [data-theme="dark"] .admin-warning {
+            background-color: #78350f20;
+            border-color: #78350f40;
+            color: #fde68a;
         }
 
         .metric-display {
@@ -300,6 +366,9 @@
             background: #f8fafc;
             border: 1px solid var(--border-soft);
             margin-bottom: 16px;
+        }
+        [data-theme="dark"] .metric-display {
+            background: #1e293b60;
         }
 
         .metric-label {
@@ -317,9 +386,15 @@
             letter-spacing: -0.04em;
             margin-top: 2px;
         }
+        [data-theme="dark"] .metric-value {
+            color: #34d399;
+        }
 
         .metric-value.duration {
             color: #b45309;
+        }
+        [data-theme="dark"] .metric-value.duration {
+            color: #fbbf24;
         }
 
         .smart-btn {
@@ -348,7 +423,17 @@
         .smart-btn.clock-in:hover { background-color: var(--status-in-hover); }
         .smart-btn.clock-out { background-color: var(--status-out); }
         .smart-btn.clock-out:hover { background-color: var(--status-out-hover); }
-        .smart-btn:disabled { background-color: #cbd5e1 !important; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
+        
+        .smart-btn:disabled { 
+            background-color: #cbd5e1 !important; 
+            color: #94a3b8; 
+            cursor: not-allowed; 
+            box-shadow: none; 
+        }
+        [data-theme="dark"] .smart-btn:disabled {
+            background-color: #334155 !important;
+            color: #64748b;
+        }
 
         .admin-submit-btn {
             width: 100%;
@@ -362,8 +447,12 @@
             transition: background 0.2s ease;
             margin-top: 8px;
         }
-
         .admin-submit-btn:hover { background: #1f2937; }
+        [data-theme="dark"] .admin-submit-btn {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        [data-theme="dark"] .admin-submit-btn:hover { background: #e2e8f0; }
 
         .form-group label {
             display: block;
@@ -379,13 +468,18 @@
             border: 1px solid var(--border-soft);
             border-radius: 8px;
             font-family: inherit;
-            transition: all 0.2s ease;
+            background-color: transparent;
+            color: var(--text-main);
         }
 
         input[type="email"]:focus {
             outline: none;
             border-color: var(--dlsu-green);
             box-shadow: 0 0 0 3px rgba(10, 92, 54, 0.1);
+        }
+        [data-theme="dark"] input[type="email"]:focus {
+            border-color: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
         }
 
         .log-feed-container, .attendance-board-container, .roster-board-container {
@@ -396,6 +490,11 @@
             overflow-y: auto;
             padding: 6px;
         }
+        [data-theme="dark"] .log-feed-container, 
+        [data-theme="dark"] .attendance-board-container, 
+        [data-theme="dark"] .roster-board-container {
+            background: #1e293b40;
+        }
 
         .feed-item {
             display: flex;
@@ -405,8 +504,8 @@
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
         }
-
         .feed-item:last-child { border-bottom: none; }
+        [data-theme="dark"] .feed-item { border-bottom-color: #334155; }
 
         .badge-action {
             display: inline-block;
@@ -419,6 +518,8 @@
         
         .badge-in { background-color: #ecfdf5; color: var(--status-in); }
         .badge-out { background-color: #fff1f2; color: var(--status-out); }
+        [data-theme="dark"] .badge-in { background-color: #10b98120; color: #34d399; }
+        [data-theme="dark"] .badge-out { background-color: #f43f5e20; color: #fb7185; }
 
         .board-user, .roster-user-item {
             display: flex; 
@@ -427,8 +528,9 @@
             gap: 12px; 
             padding: 12px;
             border-bottom: 1px solid #f1f5f9;
-            flex-wrap: wrap; #f1f5f9;
+            flex-wrap: wrap;
         }
+        [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item { border-bottom-color: #334155; }
 
         .board-user { flex-direction: column; }
         .board-user .email, .roster-user-item .roster-email { 
@@ -443,6 +545,7 @@
         .roster-user-item { justify-content: space-between; align-items: center; gap: 10px; }
         .roster-meta-block { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
         .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
+        [data-theme="dark"] .roster-hours-sub { color: #818cf8; }
         .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
 
         .action-sub-btn {
@@ -480,6 +583,11 @@
             z-index: 1000;
             text-align: center;
         }
+        [data-theme="dark"] .toast {
+            background: #065f46;
+            color: #d1fae5;
+            border-color: #047857;
+        }
         
         @media(min-width: 576px) {
             .toast {
@@ -500,7 +608,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dedicated breakpoint targeting small viewport containers explicitly */
         @media (max-width: 520px) {
             header {
                 padding: 12px 16px;
@@ -515,10 +622,10 @@
                 justify-content: space-between;
             }
             .user-profile-chip {
-                max-width: calc(100% - 60px);
+                max-width: calc(100% - 100px); /* Adjusted layout to account for theme button width */
             }
             .user-email {
-                max-width: 120px;
+                max-width: 100px;
             }
         }
     </style>
@@ -533,6 +640,11 @@
             </div>
             
             <div class="header-controls">
+                <button type="button" id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle structural interface lighting mode">
+                    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                    <svg id="moonIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                </button>
+
                 <div id="userProfileChip" class="user-profile-chip hidden">
                     <span class="user-email" id="userEmailText">loading...</span>
                     <span id="adminTag" class="admin-badge" style="display: none;">Admin</span>
@@ -647,6 +759,7 @@
         let liveTimerIntervalId = null;
 
         window.onload = function () {
+            initTheme(); // Check configuration profile local storage theme values immediately upon load
             checkCachedSession();
 
             google.accounts.id.initialize({
@@ -665,6 +778,35 @@
                     hideMenu();
                 }
             });
+        }
+
+        // Logic framework handles client preferences across local storage states
+        function initTheme() {
+            const savedTheme = localStorage.getItem('res_tracker_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcons(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('res_tracker_theme', targetTheme);
+            updateThemeIcons(targetTheme);
+        }
+
+        function updateThemeIcons(theme) {
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (theme === 'dark') {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
         }
 
         function checkCachedSession() {
