@@ -531,7 +531,6 @@
             padding: 6px;
         }
         
-        /* Fixed: History container expanded out of the restrictive small box setup */
         .history-feed-container {
             background: #fafafa;
             border: 1px solid var(--border-soft);
@@ -545,16 +544,26 @@
             background: #1e293b40;
         }
 
+        /* Fixed: Reconfigured to gracefully line-wrap on tight layout environments */
         .feed-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 12px;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
         }
         .feed-item:last-child { border-bottom: none; }
         [data-theme="dark"] .feed-item { border-bottom-color: #334155; }
+
+        .feed-item > div:first-child {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
 
         .badge-action {
             display: inline-block;
@@ -563,6 +572,7 @@
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            white-space: nowrap;
         }
         .badge-in { background-color: #ecfdf5; color: var(--status-in); }
         .badge-out { background-color: #fff1f2; color: var(--status-out); }
@@ -576,8 +586,8 @@
             background: var(--bg-canvas);
             padding: 2px 6px;
             border-radius: 4px;
-            margin-left: 6px;
             border: 1px solid var(--border-soft);
+            white-space: nowrap;
         }
 
         .board-user, .roster-user-item {
@@ -644,7 +654,6 @@
 
         .hidden { display: none !important; }
 
-        /* Subtle Fade Animation Styles */
         .minimal-loader-screen {
             position: fixed;
             top: 0;
@@ -919,7 +928,6 @@
             userEmail = email;
             localStorage.setItem('userEmail', email);
 
-            // 1. Display minimalist loading screen background instantly
             const loader = document.getElementById('minimalAppLoader');
             const loaderText = document.getElementById('minimalLoaderText');
             
@@ -927,30 +935,24 @@
             loaderText.classList.remove('fade-in');
             loader.classList.remove('hidden');
             
-            // 2. After 0.5 seconds, fade the Loading... text in
             setTimeout(() => {
                 loaderText.classList.add('fade-in');
             }, 500);
             
-            // Set up a minimum 5-second timer
             let minimumTimerDone = false;
             setTimeout(() => {
                 minimumTimerDone = true;
                 checkAndHideLoader();
             }, 5000);
 
-            // Fetch data while the loading screen is active
             fetchUserData(userEmail, () => {
-                // Callback triggered once network fetch is completely done
                 checkAndHideLoader();
             });
 
             function checkAndHideLoader() {
                 if (minimumTimerDone && fullCachedPayload) {
-                    // 3. Fade out the screen as a whole
                     loader.style.opacity = "0";
                     
-                    // Wait for the 0.5s fade transition to complete before hiding elements completely
                     setTimeout(() => {
                         loader.classList.add('hidden');
                         bootstrapApplication();
