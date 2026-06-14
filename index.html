@@ -28,7 +28,6 @@
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
         }
 
-        /* Dark Theme Tokens */
         [data-theme="dark"] {
             --bg-canvas: #0f172a;
             --surface-card: #1e293b;
@@ -39,7 +38,6 @@
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Added transition to body and core layout elements for a clean fade animation */
         body, header, .card, .user-profile-chip, .metric-display, input, button {
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -63,7 +61,6 @@
             padding-bottom: 40px;
         }
 
-        /* Navigation Header styling */
         header {
             background-color: var(--surface-card);
             border-bottom: 1px solid var(--border-soft);
@@ -114,7 +111,6 @@
             max-width: 100%;
         }
 
-        /* Minimalist Theme Toggle Button Styling */
         .theme-toggle-btn {
             background: none;
             border: 1px solid var(--border-soft);
@@ -178,7 +174,6 @@
             flex-shrink: 0;
         }
 
-        /* Context-aware colors for dark mode admin badges */
         [data-theme="dark"] .admin-badge {
             background-color: rgba(16, 185, 129, 0.15);
             color: #34d399;
@@ -199,7 +194,6 @@
             text-decoration: underline;
         }
 
-        /* Sandwich Hamburger Menu Styling */
         .menu-btn {
             background: none;
             border: 1px solid var(--border-soft);
@@ -260,7 +254,7 @@
             padding: 10px 16px;
             cursor: pointer;
             text-align: left;
-            width: 160px;
+            width: 170px;
             font-size: 0.9rem;
             font-weight: 500;
             border-radius: 8px;
@@ -276,7 +270,6 @@
             color: #34d399;
         }
 
-        /* App Layout Structures */
         .login-box-container {
             max-width: 420px;
             margin: 100px auto;
@@ -308,6 +301,7 @@
             box-shadow: var(--shadow-sm);
             width: 100%;
             overflow: hidden;
+            margin-bottom: 24px;
         }
 
         .card:hover {
@@ -435,6 +429,42 @@
             color: #64748b;
         }
 
+        /* Mode Selection Buttons Row Container */
+        .mode-selection-container {
+            display: flex;
+            gap: 12px;
+            margin-top: -4px;
+            margin-bottom: 14px;
+            animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-soft);
+            background: var(--surface-card);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mode-btn:hover {
+            background: var(--bg-canvas);
+            border-color: var(--text-muted);
+        }
+        .mode-btn.selected {
+            background: var(--dlsu-green);
+            color: white;
+            border-color: var(--dlsu-green);
+        }
+        [data-theme="dark"] .mode-btn.selected {
+            background: #10b981;
+            color: #0f172a;
+            border-color: #10b981;
+        }
+
         .admin-submit-btn {
             width: 100%;
             padding: 12px;
@@ -482,7 +512,7 @@
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
         }
 
-        .log-feed-container, .attendance-board-container, .roster-board-container {
+        .log-feed-container, .attendance-board-container, .roster-board-container, .history-feed-container {
             background: #fafafa;
             border: 1px solid var(--border-soft);
             border-radius: 12px;
@@ -490,9 +520,10 @@
             overflow-y: auto;
             padding: 6px;
         }
-        [data-theme="dark"] .log-feed-container, 
-        [data-theme="dark"] .attendance-board-container, 
-        [data-theme="dark"] .roster-board-container {
+        .history-feed-container {
+            max-height: 450px;
+        }
+        [data-theme="dark"] .log-feed-container, [data-theme="dark"] .attendance-board-container, [data-theme="dark"] .roster-board-container, [data-theme="dark"] .history-feed-container {
             background: #1e293b40;
         }
 
@@ -515,39 +546,46 @@
             font-weight: 700;
             text-transform: uppercase;
         }
-        
         .badge-in { background-color: #ecfdf5; color: var(--status-in); }
         .badge-out { background-color: #fff1f2; color: var(--status-out); }
         [data-theme="dark"] .badge-in { background-color: #10b98120; color: #34d399; }
         [data-theme="dark"] .badge-out { background-color: #f43f5e20; color: #fb7185; }
 
+        .badge-mode {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-canvas);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            border: 1px solid var(--border-soft);
+        }
+
         .board-user, .roster-user-item {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            gap: 12px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
             padding: 12px;
             border-bottom: 1px solid #f1f5f9;
             flex-wrap: wrap;
         }
         [data-theme="dark"] .board-user, [data-theme="dark"] .roster-user-item { border-bottom-color: #334155; }
+        .board-user { flex-direction: column; align-items: flex-start; }
 
-        .board-user { flex-direction: column; }
-        .board-user .email, .roster-user-item .roster-email { 
-            font-weight: 600; 
+        .board-user .email, .roster-user-item .roster-email {
+            font-weight: 600;
             color: var(--text-main);
-            white-space: nowrap;
             word-break: break-all;
-            white-space: normal;
         }
         .board-user .time-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .roster-user-item { justify-content: space-between; align-items: center; gap: 10px; }
         .roster-meta-block { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
         .roster-hours-sub { font-size: 0.8rem; color: #4f46e5; margin-top: 2px; font-weight: 600; }
         [data-theme="dark"] .roster-hours-sub { color: #818cf8; }
-        .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
 
+        .roster-action-group { display: flex; gap: 6px; flex-shrink: 0; }
         .action-sub-btn {
             border: none;
             padding: 6px 10px;
@@ -558,7 +596,6 @@
             color: white;
             transition: all 0.2s ease;
         }
-
         .action-sub-btn:active { transform: scale(0.95); }
         .action-sub-btn.status-toggle { background: #d97706; }
         .action-sub-btn.status-toggle:hover { background: #b45309; }
@@ -566,7 +603,7 @@
         .action-sub-btn.delete:hover { background: var(--status-out-hover); }
 
         .empty-state { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
-
+        
         .toast {
             display: none;
             position: fixed;
@@ -583,23 +620,9 @@
             z-index: 1000;
             text-align: center;
         }
-        [data-theme="dark"] .toast {
-            background: #065f46;
-            color: #d1fae5;
-            border-color: #047857;
-        }
-        
-        @media(min-width: 576px) {
-            .toast {
-                left: auto;
-                max-width: 350px;
-            }
-        }
-
-        .toast.show {
-            display: block;
-            animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
+        [data-theme="dark"] .toast { background: #065f46; color: #d1fae5; border-color: #047857; }
+        @media(min-width: 576px) { .toast { left: auto; max-width: 350px; } }
+        .toast.show { display: block; animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
         .hidden { display: none !important; }
 
@@ -607,26 +630,9 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        @media (max-width: 520px) {
-            header {
-                padding: 12px 16px;
-            }
-            .nav-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 14px;
-            }
-            .header-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
-            .user-profile-chip {
-                max-width: calc(100% - 100px); /* Adjusted layout to account for theme button width */
-            }
-            .user-email {
-                max-width: 100px;
-            }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -636,530 +642,472 @@
         <div class="nav-container">
             <div class="brand">
                 <div class="brand-logo"></div>
-                <h2 id="viewTitle">Residency Tracker</h2>
+                <h1>MLF Residency Tracker</h1>
             </div>
             
-            <div class="header-controls">
-                <button type="button" id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle structural interface lighting mode">
-                    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-                    <svg id="moonIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+            <div class="header-controls" id="headerControls" style="display: none;">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
                 </button>
 
-                <div id="userProfileChip" class="user-profile-chip hidden">
-                    <span class="user-email" id="userEmailText">loading...</span>
-                    <span id="adminTag" class="admin-badge" style="display: none;">Admin</span>
-                    <span style="color: var(--border-soft)">|</span>
-                    <span class="logout-link" onclick="handleLogout()">Sign Out</span>
+                <div class="user-profile-chip">
+                    <span class="user-email" id="userEmailLabel">...</span>
+                    <span class="admin-badge hidden" id="adminBadge">Admin</span>
+                    <a class="logout-link" onclick="handleLogout()">Logout</a>
                 </div>
 
-                <button id="menuToggleButton" class="menu-btn hidden" onclick="toggleMenu()">
+                <button class="menu-btn" onclick="toggleMenu(event)" title="Options Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <div id="dropdownMenu" class="nav-menu">
-                    <button onclick="switchView('home')">Home Hub</button>
-                    <button id="adminMenuTab" class="hidden" onclick="switchView('admin')">Admin Panel</button>
+
+                <div class="nav-menu" id="navMenu">
+                    <button onclick="showPanel('tracker')">Residency Panel</button>
+                    <button onclick="showPanel('history')">Log History</button>
+                    <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <div id="loginSection" class="login-box-container">
+    <div class="login-box-container" id="loginView">
         <div class="card" style="text-align: center;">
-            <div class="panel-heading" style="justify-content: center; font-size: 1.2rem; margin-bottom: 8px;">Identity Verification</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Please authenticate with your official DLSU Google Workspace profile to log hours.</p>
-            <div id="googleSignInBtn" style="display: flex; justify-content: center;"></div>
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Welcome Tracker</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Please authorize using your DLSU Identity Workspace Profile Account.</p>
+            <div style="display: flex; justify-content: center;" id="gSignInBtn"></div>
         </div>
     </div>
 
-    <main class="app-layout">
+    <main class="app-layout hidden" id="mainDashboard">
         
-        <div id="leftControlColumn" class="hidden" style="display: flex; flex-direction: column; gap: 24px;">
-            
-            <div id="timeWarning" class="warning">
-                <strong>Logging Blocked:</strong> Clocking shifts are strictly limited between 7:00 AM and 11:59 PM.
-            </div>
+        <section id="sidebarPanel">
+            <div class="card select-panel-view" id="trackerPanel">
+                <div class="panel-heading">
+                    <span>Residency Operations</span>
+                </div>
 
-            <div id="adminTimeWarning" class="admin-warning">
-                <strong>Administrative Override:</strong> You are registering an operational log entry outside regular office hours. Your security clearance permits this entry.
-            </div>
+                <div class="warning" id="warningBox"></div>
 
-            <div id="homeViewLeft" class="card">
-                <div class="panel-heading">Time Card</div>
-                
                 <div class="metric-display">
-                    <div class="metric-label">Accumulated Hours</div>
-                    <div class="metric-value" id="totalHoursText">0.00</div>
+                    <div class="metric-label">Total Verified Hours</div>
+                    <div class="metric-value" id="hoursValue">0.00</div>
                 </div>
 
-                <div id="activeTimerDashboard" class="metric-display hidden">
-                    <div class="metric-label">Active Duration</div>
-                    <div class="metric-value duration" id="liveTimerText">00:00:00</div>
+                <div class="metric-display hidden" id="liveTimerDisplay">
+                    <div class="metric-label">Current Live Run Duration</div>
+                    <div class="metric-value duration" id="liveTimerValue">00:00:00</div>
                 </div>
 
-                <button type="button" id="smartActionButton" class="smart-btn" onclick="handleSmartAction()" disabled>
-                    Syncing...
+                <button class="smart-btn clock-in" id="clockInBtn" onclick="prepareClockIn()">
+                    Clock In
+                </button>
+                
+                <div class="mode-selection-container hidden" id="modeSelectionContainer">
+                    <button class="mode-btn" id="modeOnsiteBtn" onclick="selectClockInMode('Onsite')">Onsite</button>
+                    <button class="mode-btn" id="modeOnlineBtn" onclick="selectClockInMode('Online')">Online</button>
+                </div>
+
+                <button class="smart-btn clock-out hidden" id="clockOutBtn" onclick="executeClockOut()">
+                    Clock Out
                 </button>
             </div>
-        </div>
+        </section>
 
-        <div id="rightDataColumn" class="hidden" style="display: flex; flex-direction: column; gap: 24px;">
+        <section id="contentPanel">
             
-            <div id="homeViewRight" class="card">
-                <div class="panel-heading">Recent Log Stream <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">Last 5 Actions</span></div>
-                <div id="personalLogFeed" class="log-feed-container">
-                    <div class="empty-state">Retrieving timeline logs...</div>
+            <div class="card select-panel-view" id="trackerContentView">
+                <div class="panel-heading">Recent Tracking Actions</div>
+                <div class="log-feed-container" id="recentLogsContainer">
+                    <div class="empty-state">No recent records gathered in this tracking segment.</div>
                 </div>
             </div>
 
-            <div id="adminView" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+            <div class="card select-panel-view hidden" id="historyContentView">
+                <div class="panel-heading">
+                    <span>Complete Log History</span>
+                    <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">Scope: Personal Account Only</span>
+                </div>
+                <div class="history-feed-container" id="fullHistoryContainer">
+                    <div class="empty-state">No structured operations logs found.</div>
+                </div>
+            </div>
+
+            <div class="card select-panel-view hidden" id="adminContentView">
+                <div class="admin-warning" id="adminWarningBox"></div>
                 
-                <div class="card">
-                    <div class="panel-heading">Live Attendance Matrix</div>
-                    <div id="attendanceBoard" class="attendance-board-container">
-                        <div class="empty-state">Scanning active session rows...</div>
+                <div class="card" style="padding: 18px; margin-bottom: 20px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">Active Cohort Attendance</div>
+                    <div class="attendance-board-container" id="attendanceBoard">
+                        <div class="empty-state">No members currently clocked into the workstation ecosystem.</div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="panel-heading">Organization Roster Rollout</div>
-                    <div id="masterRosterBoard" class="roster-board-container">
-                        <div class="empty-state">Compiling organizational member charts...</div>
+                <div class="card" style="padding: 18px;">
+                    <div class="panel-heading" style="margin-bottom: 12px;">Consolidated Roster Directory</div>
+                    <div class="roster-board-container" id="rosterBoard">
+                        <div class="empty-state">Roster lookup context currently unpopulated.</div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-soft); padding-top: 16px;">
+                        <label for="newAdminEmail">Elevate Administrative Privileges</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="email" id="newAdminEmail" placeholder="user@dlsu.edu.ph" autocomplete="off" />
+                            <button class="admin-submit-btn" style="width: auto; margin: 0; padding: 0 16px; white-space: nowrap;" onclick="addNewAdmin()">Add</button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="panel-heading">System Management</div>
-                    <div class="form-group">
-                        <label for="newAdminEmail">Add an Administration Email</label>
-                        <input type="email" id="newAdminEmail" placeholder="name@dlsu.edu.ph">
-                        <button type="button" class="admin-submit-btn" onclick="addNewAdmin()">Grant Admin</button>
-                    </div>
-                </div>
-
             </div>
-        </div>
-
+        </section>
     </main>
 
-    <div id="successToast" class="toast">
-        Database transaction finalized successfully!
-    </div>
+    <div class="toast" id="successToast"></div>
 
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRPyUfRVK7MTuqzdf-T8901TnKrN_4mO_B8SImg0YGLqzhOG_Uet_apqmZzdIFYUNYGg/exec";
-        const GOOGLE_CLIENT_ID = "276378730888-gsvgo6j5nvp6o2mmfvghhjn8ubufsilu.apps.googleusercontent.com";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRPyUfRVK7MTuqzdf-T8901TnKrN_4mO_B8SImg0YGLqzhOG_Uet_apqmZzdIFYUNYGg/exec"; 
         const CLIENT_API_TOKEN = "Residency_Secure_Token_2026";
 
         let userEmail = "";
-        let userIsAdmin = false;
-        let isClockedIn = false;
-        let clockInTime = null;
-        let liveTimerIntervalId = null;
+        let timerInterval = null;
+        let selectedClockInModeStr = "";
+        let fullCachedPayload = null; 
 
         window.onload = function () {
-            initTheme(); // Check configuration profile local storage theme values immediately upon load
-            checkCachedSession();
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
 
             google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
+                client_id: "YOUR_GOOGLE_SIGN_IN_CLIENT_ID_HERE", 
                 callback: handleCredentialResponse
             });
+            
             google.accounts.id.renderButton(
-                document.getElementById("googleSignInBtn"),
-                { theme: "outline", size: "large" }
+                document.getElementById("gSignInBtn"),
+                { theme: currentTheme === 'dark' ? 'filled_black' : 'outline', size: "large", width: "280" }
             );
 
-            document.addEventListener('click', function(event) {
-                const menu = document.getElementById('dropdownMenu');
-                const btn = document.getElementById('menuToggleButton');
-                if (btn && !btn.contains(event.target) && menu && !menu.contains(event.target)) {
-                    hideMenu();
-                }
-            });
-        }
-
-        // Logic framework handles client preferences across local storage states
-        function initTheme() {
-            const savedTheme = localStorage.getItem('res_tracker_theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            updateThemeIcons(savedTheme);
-        }
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                userEmail = savedEmail;
+                bootstrapApplication();
+            }
+        };
 
         function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+            const targetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', targetTheme);
-            localStorage.setItem('res_tracker_theme', targetTheme);
-            updateThemeIcons(targetTheme);
+            localStorage.setItem('theme', targetTheme);
+            updateThemeIcon(targetTheme);
+            location.reload(); 
         }
 
-        function updateThemeIcons(theme) {
-            const sunIcon = document.getElementById('sunIcon');
-            const moonIcon = document.getElementById('moonIcon');
-            
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
             if (theme === 'dark') {
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
+                icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="19.78"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>`;
             } else {
-                moonIcon.classList.add('hidden');
-                sunIcon.classList.remove('hidden');
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
             }
         }
 
-        function checkCachedSession() {
-            const cachedEmail = localStorage.getItem('res_tracker_email');
-            const cachedAdmin = localStorage.getItem('res_tracker_isAdmin') === 'true';
-            const cachedClockedIn = localStorage.getItem('res_tracker_isClockedIn') === 'true';
-            const cachedHours = localStorage.getItem('res_tracker_totalHours') || '0.00';
-            const cachedTime = localStorage.getItem('res_tracker_clockInTimestamp');
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById('navMenu').classList.toggle('show');
+        }
 
-            if (cachedEmail) {
-                userEmail = cachedEmail;
-                userIsAdmin = cachedAdmin;
-                isClockedIn = cachedClockedIn;
-                if (cachedTime) clockInTime = new Date(cachedTime);
+        document.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('show');
+        });
 
-                document.getElementById('userEmailText').innerText = userEmail;
-                document.getElementById('totalHoursText').innerText = Number(cachedHours).toFixed(2);
-                
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('userProfileChip').classList.remove('hidden');
-                document.getElementById('leftControlColumn').classList.remove('hidden');
-                document.getElementById('rightDataColumn').classList.remove('hidden');
-                document.getElementById('menuToggleButton').classList.remove('hidden');
-
-                if (userIsAdmin) {
-                    document.getElementById('adminTag').style.display = 'inline-block';
-                    document.getElementById('adminMenuTab').classList.remove('hidden');
-                }
-
-                checkTimeWindow();
-                updateActionButtonUI();
-                manageLiveShiftTimer();
-                fetchUserData(userEmail);
+        function showPanel(panelName) {
+            document.querySelectorAll('.select-panel-view').forEach(el => el.classList.add('hidden'));
+            
+            if (panelName === 'tracker') {
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('trackerContentView').classList.remove('hidden');
+            } else if (panelName === 'history') {
+                document.getElementById('sidebarPanel').classList.add('hidden');
+                document.getElementById('historyContentView').classList.remove('hidden');
+                if (fullCachedPayload) populateFullHistory(fullCachedPayload.fullHistory);
+            } else if (panelName === 'admin') {
+                document.getElementById('sidebarPanel').classList.remove('hidden');
+                document.getElementById('trackerPanel').classList.remove('hidden');
+                document.getElementById('adminContentView').classList.remove('hidden');
             }
         }
 
         function handleCredentialResponse(response) {
-            const responsePayload = parseJwt(response.credential);
-            if (!responsePayload.email.endsWith("@dlsu.edu.ph")) {
-                alert("Access Denied. Use your official @dlsu.edu.ph account.");
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            const email = payload.email;
+
+            if (!email.endsWith("@dlsu.edu.ph")) {
+                alert("Access unauthorized. Please use your legitimate institutional @dlsu.edu.ph workspace account.");
                 return;
             }
-            userEmail = responsePayload.email;
-            localStorage.setItem('res_tracker_email', userEmail);
-            document.getElementById('userEmailText').innerText = userEmail;
-            
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('userProfileChip').classList.remove('hidden');
-            document.getElementById('leftControlColumn').classList.remove('hidden');
-            document.getElementById('rightDataColumn').classList.remove('hidden');
-            document.getElementById('menuToggleButton').classList.remove('hidden');
+
+            userEmail = email;
+            localStorage.setItem('userEmail', email);
+            bootstrapApplication();
+        }
+
+        function bootstrapApplication() {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('headerControls').style.display = 'flex';
+            document.getElementById('userEmailLabel').innerText = userEmail;
+            document.getElementById('mainDashboard').classList.remove('hidden');
             
             fetchUserData(userEmail);
-        }
-
-        function parseJwt(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
-
-        function toggleMenu() {
-            const menu = document.getElementById('dropdownMenu');
-            if (window.getComputedStyle(menu).display === 'none') {
-                menu.style.display = 'flex';
-                requestAnimationFrame(() => {
-                    menu.classList.add('show');
-                });
-            } else {
-                hideMenu();
-            }
-        }
-
-        function hideMenu() {
-            const menu = document.getElementById('dropdownMenu');
-            if (!menu) return;
-            menu.classList.remove('show');
-            setTimeout(() => {
-                if (!menu.classList.contains('show')) {
-                    menu.style.display = 'none';
-                }
-            }, 250);
-        }
-
-        function switchView(view) {
-            hideMenu();
-            
-            const homeViewRight = document.getElementById('homeViewRight');
-            const homeViewLeft = document.getElementById('homeViewLeft');
-            const adminView = document.getElementById('adminView');
-
-            if (view === 'home') {
-                document.getElementById('viewTitle').innerText = "Residency Tracker";
-                adminView.classList.add('hidden');
-                homeViewLeft.classList.remove('hidden');
-                homeViewRight.classList.remove('hidden');
-            } else if (view === 'admin' && userIsAdmin) {
-                document.getElementById('viewTitle').innerText = "Admin Settings";
-                homeViewRight.classList.add('hidden');
-                adminView.classList.remove('hidden');
-            }
-        }
-
-        function checkTimeWindow() {
-            const now = new Date();
-            const currentHour = now.getHours();
-            const outsideOfficeHours = (currentHour < 7 || currentHour >= 24);
-
-            if (userIsAdmin) {
-                document.getElementById('timeWarning').style.display = 'none';
-                if (outsideOfficeHours) {
-                    document.getElementById('adminTimeWarning').style.display = 'block';
-                } else {
-                    document.getElementById('adminTimeWarning').style.display = 'none';
-                }
-                return true; 
-            }
-
-            document.getElementById('adminTimeWarning').style.display = 'none';
-            if (outsideOfficeHours) {
-                document.getElementById('timeWarning').style.display = 'block';
-                return false;
-            }
-            document.getElementById('timeWarning').style.display = 'none';
-            return true;
         }
 
         function fetchUserData(email) {
             fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(email)}`)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('totalHoursText').innerText = Number(data.totalHours).toFixed(2);
-                    isClockedIn = data.isClockedIn || false; 
-                    userIsAdmin = data.isAdmin || false;
+                    if (data.status === "error") {
+                        showGlobalWarning(data.message);
+                        return;
+                    }
                     
-                    if (isClockedIn && data.clockInTimestamp) {
-                        clockInTime = new Date(data.clockInTimestamp);
-                        localStorage.setItem('res_tracker_clockInTimestamp', data.clockInTimestamp);
-                    } else {
-                        clockInTime = null;
-                        localStorage.removeItem('res_tracker_clockInTimestamp');
+                    fullCachedPayload = data; // Save to memory for history switching
+                    
+                    // Admin Authorization Controls Configuration
+                    if (data.isAdmin) {
+                        document.getElementById('adminBadge').classList.remove('hidden');
+                        document.getElementById('adminMenuOpt').classList.remove('hidden');
+                        populateAdminConsole(data);
                     }
 
-                    localStorage.setItem('res_tracker_totalHours', data.totalHours);
-                    localStorage.setItem('res_tracker_isClockedIn', isClockedIn);
-                    localStorage.setItem('res_tracker_isAdmin', userIsAdmin);
-                    
-                    if (userIsAdmin) {
-                        document.getElementById('adminTag').style.display = 'inline-block';
-                        document.getElementById('adminMenuTab').classList.remove('hidden');
-                        renderAttendanceBoard(data.liveAttendance);
-                        renderMasterRosterBoard(data.masterRoster);
-                    } else {
-                        document.getElementById('adminTag').style.display = 'none';
-                        document.getElementById('adminMenuTab').classList.add('hidden');
-                    }
-                    
-                    renderPersonalLogFeed(data.recentLogs);
-                    checkTimeWindow();
-                    updateActionButtonUI();
-                    manageLiveShiftTimer();
+                    document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
+                    configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
+                    populateRecentLogs(data.recentLogs);
                 })
-                .catch(err => {
-                    console.error("Error pulling database state updates:", err);
-                    updateActionButtonUI();
-                });
+                .catch(err => showGlobalWarning("Ecosystem connectivity error: Unable to map real-time status details."));
         }
 
-        function manageLiveShiftTimer() {
-            clearInterval(liveTimerIntervalId);
-            const panel = document.getElementById('activeTimerDashboard');
+        function configureTrackingInterface(isClockedIn, lastTimestampIso) {
+            clearInterval(timerInterval);
+            document.getElementById('liveTimerDisplay').classList.add('hidden');
+            document.getElementById('modeSelectionContainer').classList.add('hidden');
+            
+            // Reset state toggles
+            selectedClockInModeStr = "";
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            const clockInBtn = document.getElementById('clockInBtn');
+            const clockOutBtn = document.getElementById('clockOutBtn');
 
-            if (!isClockedIn || !clockInTime) {
-                panel.classList.add('hidden');
-                return;
+            if (isClockedIn) {
+                clockInBtn.classList.add('hidden');
+                clockOutBtn.classList.remove('hidden');
+                
+                document.getElementById('liveTimerDisplay').classList.remove('hidden');
+                const startTime = new Date(lastTimestampIso).getTime();
+                
+                timerInterval = setInterval(() => {
+                    const delta = Date.now() - startTime;
+                    if (delta < 0) return;
+                    
+                    const hrs = Math.floor(delta / 3600000).toString().padStart(2, '0');
+                    const mins = Math.floor((delta % 3600000) / 60000).toString().padStart(2, '0');
+                    const secs = Math.floor((delta % 60000) / 1000).toString().padStart(2, '0');
+                    
+                    document.getElementById('liveTimerValue').innerText = `${hrs}:${mins}:${secs}`;
+                }, 1000);
+            } else {
+                clockInBtn.classList.remove('hidden');
+                clockInBtn.disabled = false;
+                clockInBtn.innerText = "Clock In";
+                clockOutBtn.classList.add('hidden');
             }
-
-            panel.classList.remove('hidden');
-            liveTimerIntervalId = setInterval(() => {
-                const now = new Date();
-                const differenceMs = now - clockInTime;
-                if (differenceMs < 0) return;
-
-                const totalSeconds = Math.floor(differenceMs / 1000);
-                const hrs = Math.floor(totalSeconds / 3600);
-                const mins = Math.floor((totalSeconds % 3600) / 60);
-                const secs = totalSeconds % 60;
-
-                const displayString = 
-                    (hrs < 10 ? "0" + hrs : hrs) + ":" + 
-                    (mins < 10 ? "0" + mins : mins) + ":" + 
-                    (secs < 10 ? "0" + secs : secs);
-
-                document.getElementById('liveTimerText').innerText = displayString;
-            }, 1000);
         }
 
-        function renderPersonalLogFeed(logs) {
-            const container = document.getElementById('personalLogFeed');
+        function prepareClockIn() {
+            // Reveals Onsite / Online selectors below the Clock In button
+            document.getElementById('modeSelectionContainer').classList.remove('hidden');
+            const clockInBtn = document.getElementById('clockInBtn');
+            clockInBtn.disabled = true;
+            clockInBtn.innerText = "Select Mode Below...";
+        }
+
+        function selectClockInMode(mode) {
+            selectedClockInModeStr = mode;
+            
+            document.getElementById('modeOnsiteBtn').classList.remove('selected');
+            document.getElementById('modeOnlineBtn').classList.remove('selected');
+            
+            if (mode === 'Onsite') document.getElementById('modeOnsiteBtn').classList.add('selected');
+            if (mode === 'Online') document.getElementById('modeOnlineBtn').classList.add('selected');
+            
+            // Execute automated submit instantly upon option selection
+            executeClockIn();
+        }
+
+        function executeClockIn() {
+            if (!selectedClockInModeStr) return;
+            
+            const btn = document.getElementById('clockInBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock In",
+                email: userEmail,
+                mode: selectedClockInModeStr
+            }, `Clocked In successfully (${selectedClockInModeStr})`);
+        }
+
+        function executeClockOut() {
+            const btn = document.getElementById('clockOutBtn');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Clock Out",
+                email: userEmail,
+                mode: ""
+            }, "Clocked Out successfully");
+        }
+
+        function sendPostRequest(bodyObj, successMessage) {
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(bodyObj)
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.status === "error") {
+                    alert(`Action failed: ${resData.message}`);
+                    bootstrapApplication();
+                    return;
+                }
+                showToast(successMessage);
+                setTimeout(() => { fetchUserData(userEmail); }, 1000);
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Network communication timeout error occurred.");
+                bootstrapApplication();
+            });
+        }
+
+        function populateRecentLogs(logs) {
+            const container = document.getElementById('recentLogsContainer');
             if (!logs || logs.length === 0) {
-                container.innerHTML = `<div class="empty-state">No logs recorded yet.</div>`;
+                container.innerHTML = '<div class="empty-state">No recent records gathered in this tracking segment.</div>';
                 return;
             }
 
             container.innerHTML = logs.map(item => {
-                const badgeClass = item.action === 'Clock In' ? 'badge-in' : 'badge-out';
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = (item.action === "Clock In" && item.mode) ? `<span class="badge-mode">${item.mode}</span>` : "";
                 return `
                     <div class="feed-item">
-                        <span>${item.timestamp}</span>
-                        <span class="badge-action ${badgeClass}">${item.action}</span>
+                        <div>
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:500;">${item.timestamp}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        function renderAttendanceBoard(activeUsers) {
-            const container = document.getElementById('attendanceBoard');
-            if (!activeUsers || activeUsers.length === 0) {
-                container.innerHTML = `<div class="empty-state">Nobody is currently clocked in.</div>`;
+        function populateFullHistory(logs) {
+            const container = document.getElementById('fullHistoryContainer');
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No structured operations logs found.</div>';
                 return;
             }
 
-            container.innerHTML = activeUsers.map(user => `
-                <div class="board-user">
-                    <span class="email" title="${user.email}">${user.email}</span>
-                    <span class="time-meta">Active since ${user.since}</span>
-                </div>
-            `).join('');
-        }
-
-        function renderMasterRosterBoard(roster) {
-            const container = document.getElementById('masterRosterBoard');
-            if (!roster || roster.length === 0) {
-                container.innerHTML = `<div class="empty-state">No student profiles discovered.</div>`;
-                return;
-            }
-
-            container.innerHTML = roster.map(member => {
-                const statusText = member.isCurrentlyClockedIn ? "Clocked In" : "Clocked Out";
-                const toggleButtonLabel = member.isCurrentlyClockedIn ? "Force Out" : "Force In";
+            container.innerHTML = logs.map(item => {
+                const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
+                const modeBadge = item.mode ? `<span class="badge-mode">${item.mode}</span>` : "";
                 return `
-                    <div class="roster-user-item">
-                        <div class="roster-meta-block">
-                            <span class="roster-email" title="${member.email}">${member.email}</span>
-                            <span class="roster-hours-sub">${Number(member.totalHours).toFixed(2)} hrs accumulated • [${statusText}]</span>
+                    <div class="feed-item">
+                        <div>
+                            <span class="badge-action ${actionClass}">${item.action}</span>
+                            ${modeBadge}
                         </div>
-                        <div class="roster-action-group">
-                            <button type="button" class="action-sub-btn status-toggle" onclick="toggleUserLogState('${member.email}', ${member.isCurrentlyClockedIn})">
-                                ${toggleButtonLabel}
-                            </button>
-                            <button type="button" class="action-sub-btn delete" onclick="deleteUserRecord('${member.email}')">
-                                Delete
-                            </button>
-                        </div>
+                        <div style="font-size: 0.85rem; font-weight:600;">${item.timestamp}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        function updateActionButtonUI() {
-            const btn = document.getElementById('smartActionButton');
-            const allowed = checkTimeWindow();
+        function populateAdminConsole(data) {
+            const warningBox = document.getElementById('adminWarningBox');
+            warningBox.style.display = 'block';
+            warningBox.innerText = `Administration Dashboard Initialized. Total tracking directory indices: ${data.masterRoster.length} members.`;
 
-            btn.disabled = !allowed;
-
-            if (isClockedIn) {
-                btn.className = "smart-btn clock-out";
-                btn.innerText = "Clock Out";
+            // Render live active attendance list
+            const attContainer = document.getElementById('attendanceBoard');
+            if (!data.liveAttendance || data.liveAttendance.length === 0) {
+                attContainer.innerHTML = '<div class="empty-state">No members currently clocked into the workstation ecosystem.</div>';
             } else {
-                btn.className = "smart-btn clock-in";
-                btn.innerText = "Clock In";
+                attContainer.innerHTML = data.liveAttendance.map(user => `
+                    <div class="board-user">
+                        <span class="email">${user.email}</span>
+                        <span class="time-meta">Active running since: <b>${user.since}</b></span>
+                    </div>
+                `).join('');
+            }
+
+            // Render integrated directory roster dashboard rows
+            const rosterContainer = document.getElementById('rosterBoard');
+            if (!data.masterRoster || data.masterRoster.length === 0) {
+                rosterContainer.innerHTML = '<div class="empty-state">Roster lookup context currently unpopulated.</div>';
+            } else {
+                rosterContainer.innerHTML = data.masterRoster.map(member => {
+                    const statusDot = member.isCurrentlyClockedIn 
+                        ? `<span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>` 
+                        : `<span style="display:inline-block; width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></span>`;
+                    return `
+                        <div class="roster-user-item">
+                            <div class="roster-meta-block">
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    ${statusDot}
+                                    <span class="roster-email">${member.email}</span>
+                                </div>
+                                <span class="roster-hours-sub">Verified: ${Number(member.totalHours).toFixed(2)} hrs</span>
+                            </div>
+                            <div class="roster-action-group">
+                                <button class="action-sub-btn status-toggle" onclick="adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">Toggle</button>
+                                <button class="action-sub-btn delete" onclick="adminPurgeUser('${member.email}')">Purge</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             }
         }
 
-        function handleSmartAction() {
-            if (!checkTimeWindow()) return;
-
-            const btn = document.getElementById('smartActionButton');
-            btn.disabled = true;
-            btn.innerText = "Syncing...";
-
-            const targetAction = isClockedIn ? "Clock Out" : "Clock In";
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({
-                    token: CLIENT_API_TOKEN,
-                    action: targetAction,
-                    email: userEmail
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                showToast(`Successfully registered ${targetAction}!`);
-                fetchUserData(userEmail);
-            })
-            .catch(err => {
-                console.error("Transmission breakdown:", err);
-                alert("Sync processed. Updating view...");
-                setTimeout(() => { fetchUserData(userEmail); }, 1200);
-            });
+        function adminOverrideToggle(targetEmail, currentStatus) {
+            const nextAction = currentStatus ? "Clock Out" : "Clock In";
+            if (!confirm(`Force structural override "${nextAction}" status update for ${targetEmail}?`)) return;
+            
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: nextAction,
+                email: targetEmail,
+                mode: currentStatus ? "" : "Admin-Override"
+            }, `Overrode profile parameters for ${targetEmail}`);
         }
 
-        function toggleUserLogState(targetEmail, currentStatus) {
-            if (!confirm(`Are you sure you want to force status change for ${targetEmail}?`)) return;
+        function adminPurgeUser(targetEmail) {
+            if (!confirm(`⚠️ CRITICAL REVERSIBLE WARN: Permanently delete all metrics logs rows and accumulated record entries for ${targetEmail}? This action clears both Log indices and summary computations.`)) return;
             
-            const adminAction = currentStatus ? "Clock Out" : "Clock In";
-            
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({
-                    token: CLIENT_API_TOKEN,
-                    action: adminAction,
-                    email: targetEmail
-                })
-            })
-            .then(res => res.json())
-            .then(() => {
-                showToast(`Forced status mutation applied for ${targetEmail}`);
-                fetchUserData(userEmail);
-            })
-            .catch(err => {
-                console.error("Admin toggle error:", err);
-                setTimeout(() => { fetchUserData(userEmail); }, 1200);
-            });
-        }
-
-        function deleteUserRecord(targetEmail) {
-            if (!confirm(`CRITICAL WARNING: Wipe all recorded performance records for ${targetEmail}? This action cannot be reversed.`)) return;
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({
-                    token: CLIENT_API_TOKEN,
-                    action: "Delete User",
-                    email: targetEmail
-                })
-            })
-            .then(res => res.json())
-            .then(() => {
-                showToast(`Purged records for ${targetEmail}`);
-                fetchUserData(userEmail);
-            })
-            .catch(err => {
-                console.error("Admin deletion error:", err);
-                setTimeout(() => { fetchUserData(userEmail); }, 1200);
-            });
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Delete User",
+                email: targetEmail
+            }, `Purged target data structures for ${targetEmail}`);
         }
 
         function addNewAdmin() {
@@ -1171,35 +1119,25 @@
                 return;
             }
 
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({
-                    token: CLIENT_API_TOKEN,
-                    action: "Add Admin",
-                    email: newEmail
-                })
-            })
-            .then(res => res.json())
-            .then(() => {
-                showToast(`Administrative security token assigned to ${newEmail}`);
-                input.value = "";
-                fetchUserData(userEmail);
-            })
-            .catch(err => {
-                console.error("Admin upgrade error:", err);
-                input.value = "";
-                setTimeout(() => { fetchUserData(userEmail); }, 1200);
-            });
+            sendPostRequest({
+                token: CLIENT_API_TOKEN,
+                action: "Add Admin",
+                email: newEmail
+            }, `Administrative security token assigned to ${newEmail}`);
+            input.value = "";
+        }
+
+        function showGlobalWarning(msg) {
+            const box = document.getElementById('warningBox');
+            box.style.display = 'block';
+            box.innerText = msg;
         }
 
         function showToast(message) {
             const toast = document.getElementById('successToast');
             toast.innerText = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
         }
 
         function handleLogout() {
