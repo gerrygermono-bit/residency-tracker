@@ -522,7 +522,7 @@
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
         }
 
-        .log-feed-container, .attendance-board-container, .roster-board-container, .history-feed-container {
+        .log-feed-container, .attendance-board-container, .roster-board-container {
             background: #fafafa;
             border: 1px solid var(--border-soft);
             border-radius: 12px;
@@ -530,9 +530,17 @@
             overflow-y: auto;
             padding: 6px;
         }
+        
+        /* Fixed: History container expanded out of the restrictive small box setup */
         .history-feed-container {
-            max-height: 450px;
+            background: #fafafa;
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 6px;
         }
+        
         [data-theme="dark"] .log-feed-container, [data-theme="dark"] .attendance-board-container, [data-theme="dark"] .roster-board-container, [data-theme="dark"] .history-feed-container {
             background: #1e293b40;
         }
@@ -764,7 +772,7 @@
             <div class="card select-panel-view" id="trackerContentView">
                 <div class="panel-heading">Recent Actions</div>
                 <div class="log-feed-container" id="recentLogsContainer">
-                    <div class="empty-state">No recent records gathered.</div>
+                    <div class="empty-state">No recent records gathered in this tracking segment.</div>
                 </div>
             </div>
 
@@ -773,7 +781,7 @@
                     <span>Complete Log History</span>
                 </div>
                 <div class="history-feed-container" id="fullHistoryContainer">
-                    <div class="empty-state">No logs found.</div>
+                    <div class="empty-state">No structured operations logs found.</div>
                 </div>
             </div>
 
@@ -782,7 +790,7 @@
                 <div class="card" style="padding: 18px; margin-bottom: 20px;">
                     <div class="panel-heading" style="margin-bottom: 12px;">Active Sessions</div>
                     <div class="attendance-board-container" id="attendanceBoard">
-                        <div class="empty-state">No members are currently clocked.</div>
+                        <div class="empty-state">No members currently clocked into the workstation ecosystem.</div>
                     </div>
                 </div>
 
@@ -1160,7 +1168,7 @@
         function populateAdminConsole(data) {
             const attContainer = document.getElementById('attendanceBoard');
             if (!data.liveAttendance || data.liveAttendance.length === 0) {
-                attContainer.innerHTML = '<div class="empty-state">No members are clocked in.</div>';
+                attContainer.innerHTML = '<div class="empty-state">No members currently clocked into the workstation ecosystem.</div>';
             } else {
                 attContainer.innerHTML = data.liveAttendance.map(user => `
                     <div class="board-user">
@@ -1197,7 +1205,7 @@
                                     ${statusDot}
                                     <span class="roster-email">${member.email}</span>
                                 </div>
-                                <span class="roster-hours-sub">Total Hours: ${Number(member.totalHours).toFixed(2)} hrs</span>
+                                <span class="roster-hours-sub">Verified: ${Number(member.totalHours).toFixed(2)} hrs</span>
                             </div>
                             <div class="roster-action-group">
                                 <button class="action-sub-btn status-toggle" onclick="adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">${forceButtonLabel}</button>
