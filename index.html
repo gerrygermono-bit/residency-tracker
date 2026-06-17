@@ -1308,8 +1308,11 @@
                                             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                         </svg>
                                     </span>
-                                    <input type="text" id="input${id}" onkeydown="handleSave(event, '${id}')" style="display: none; padding: 4px; border-radius: 6px; border: 1px solid var(--border-soft); background: var(--bg-canvas); color: var(--text-main);">
-                                </div>
+                                    <input type="text" id="input${id}" 
+                                    onblur="performSave('${id}')" 
+                                    onkeydown="if(event.key==='Enter') this.blur()" 
+                                    style="display: none; padding: 4px; border-radius: 6px; border: 1px solid var(--border-soft); background: var(--bg-canvas); color: var(--text-main);">
+                              </div>
                             `;
                         }
                     </script>
@@ -1853,6 +1856,56 @@
                 display.style.display = 'inline';
                 input.style.display = 'none';
             }
+        }
+
+        function performSave(field) {
+            const display = document.getElementById('display' + field);
+            const input = document.getElementById('input' + field);
+            const newValue = input.value;
+
+            // Only save if the value actually changed
+            if (newValue === display.innerText) {
+                input.style.display = 'none';
+                display.style.display = 'inline';
+                return;
+            }
+
+            const fieldMap = {
+                'Position': 'position',
+                'Section': 'section',
+                'FullName': 'fullName',
+                'StaffId': 'staffId'
+            };
+
+            let payload = { 
+                token: SYSTEM_API_TOKEN, 
+                action: "Update Profile", 
+                email: userEmail 
+            };
+            
+            const backendKey = fieldMap[field];
+            if (backendKey) {
+                payload[backendKey] = newValue;
+            }
+
+            sendPostRequest(payload, field + " updated!");
+            
+            // Update UI
+            display.innerText = newValue;
+            display.style.display = 'inline';
+            input.style.display = 'none';
+        }
+
+        function closeAccountModal() {
+            // Manually triggers save for all possible fields before hiding
+            ['Position', 'Section', 'FullName', 'StaffId'].forEach(field => {
+                const input = document.getElementById('input' + field);
+                if (input.style.display !== 'none') {
+                    performSave(field);
+                }
+            });
+            
+            document.getElementById('accountModal').classList.add('hidden');
         }
 
     </script>
