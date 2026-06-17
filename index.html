@@ -98,6 +98,49 @@
         width: 100%;
     }
 
+    .position-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 8px;
+    }
+
+    .edit-icon { 
+        cursor: pointer; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+
+    .edit-icon svg {
+        width: 14px;
+        height: 14px;
+        stroke: var(--text-muted); /* Uses your theme's muted color */
+        stroke-width: 2;
+        fill: none;
+    }
+
+    .edit-icon:hover { 
+        background: var(--bg-canvas); 
+    }
+
+    .edit-icon:hover svg {
+        stroke: var(--dlsu-green); /* Highlights on hover */
+    }
+
+    #positionInput { 
+        display: none; 
+        padding: 4px 8px; 
+        border-radius: 6px;
+        border: 1px solid var(--border-soft);
+        background: var(--bg-canvas);
+        color: var(--text-main);
+        font-size: 0.9rem;
+    }
+
     .brand {
         display: flex;
         align-items: center;
@@ -1252,7 +1295,20 @@
             <div class="info-modal-body">
                 <p>Email: <span id="modalUserEmail" style="font-weight: 700;">...</span></p>
                 <p>Total Office Hours: <span id="modalTotalHours" style="font-weight: 700;">0.00</span></p>
-                <p>Position: <span id="modalPosition" style="font-weight: 700;">Member</span></p>
+                
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                    <span style="font-weight: 700;">Position: </span>
+                    <span id="displayPosition" style="font-weight: 700;">Member</span>
+                    
+                    <span class="edit-icon" onclick="toggleEditPosition()" title="Edit Position" style="cursor: pointer; display: flex; align-items: center;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--text-muted); stroke-width: 2; fill: none;">
+                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                        </svg>
+                    </span>
+                    
+                    <input type="text" id="positionInput" onkeydown="handlePositionKey(event)" style="display: none; padding: 4px; border-radius: 6px; border: 1px solid var(--border-soft); background: var(--bg-canvas); color: var(--text-main);">
+                </div>
+
                 <p style="margin-top: 16px;"><a class="logout-link" onclick="handleLogout()">Logout</a></p>
             </div>
         </div>
@@ -1463,7 +1519,7 @@
             // Populate Account Modal Data
             document.getElementById('modalUserEmail').innerText = userEmail;
             document.getElementById('modalTotalHours').innerText = Number(data.totalHours).toFixed(2);
-            document.getElementById('modalPosition').innerText = positionText;
+            document.getElementById('displayPosition').innerText = data.position;
 
             configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
             populateRecentLogs(data.recentLogs);
@@ -1740,6 +1796,44 @@
             localStorage.clear();
             location.reload();
         }
+        
+        function toggleEditPosition() {
+            const display = document.getElementById('displayPosition');
+            const input = document.getElementById('positionInput');
+            const icon = document.querySelector('.edit-icon');
+            
+            if (input.style.display === 'none') {
+                input.value = display.innerText;
+                display.style.display = 'none';
+                icon.style.display = 'none'; // Hide pencil while editing
+                input.style.display = 'block';
+                input.focus();
+            }
+        }
+
+        function handlePositionKey(event) {
+            if (event.key === 'Enter') {
+                const newPos = document.getElementById('positionInput').value;
+                const display = document.getElementById('displayPosition');
+                const input = document.getElementById('positionInput');
+                const icon = document.querySelector('.edit-icon');
+
+                // Calls backend to update
+                sendPostRequest({
+                    token: SYSTEM_API_TOKEN,
+                    action: "Update Position",
+                    email: userEmail,
+                    position: newPos
+                }, "Position updated successfully!");
+
+                // Update UI
+                display.innerText = newPos;
+                display.style.display = 'inline';
+                input.style.display = 'none';
+                icon.style.display = 'flex';
+            }
+        }
+
     </script>
 </body>
 </html>
