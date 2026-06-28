@@ -2864,6 +2864,16 @@
                                 <button class="star-btn" data-value="5" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
                             </div>
                         </div>
+                        <div class="rating-group">
+                            <span class="rating-label">How likely are you to recommend us?</span>
+                            <div class="stars-row" data-rating-id="3">
+                                <button class="star-btn" data-value="1" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="2" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="3" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="4" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="5" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="bugBugView" class="bug-view hidden">
@@ -3106,7 +3116,7 @@
                     
                     // 1. Always render the shop if data is available
                     if (data.availableFolios) {
-                        console.log("DEBUG: Rendering folios:", data.availableFolios);
+                        folioDataCache = data.availableFolios;
                         renderFolioShop(data.availableFolios);
                     }
                     
@@ -3442,7 +3452,9 @@
         }
 
         function setCartQuantity(name, value) {
-            const qty = Math.max(0, parseInt(value) || 0);
+            const item = folioDataCache.find(f => f.name === name);
+            const maxQty = item ? item.maxQty : Infinity;
+            const qty = Math.max(0, Math.min(maxQty, parseInt(value) || 0));
             const qtyInput = document.getElementById(`qty-${name}`);
             qtyInput.value = qty;
             cart[name] = qty;
@@ -3770,7 +3782,6 @@
         
         function renderFolioShop(folioData) {
             console.log("Debug: Folio List received:", folioData);
-            folioDataCache = folioData || [];
             const container = document.getElementById('folioGrid');
             
             if (!folioData || folioData.length === 0) {
@@ -3788,13 +3799,13 @@
                     <div class="folio-card-body">
                         <div class="folio-card-name">${item.name}</div>
                         <div class="folio-stock">
-                            <span class="folio-stock-dot ${item.remaining > 5 ? 'high' : item.remaining > 0 ? 'low' : 'empty'}"></span>
-                            <span class="folio-stock-text ${item.remaining > 5 ? 'high' : item.remaining > 0 ? 'low' : 'empty'}" ${item.canGet ? `onclick="setCartQuantity('${item.name}', ${item.remaining})" style="cursor:pointer;" title="Click to fill max"` : ''}>${item.remaining > 0 ? item.remaining + ' available' : 'Out of stock'}</span>
+                            <span class="folio-stock-dot ${!item.canGet ? 'empty' : item.maxQty > 5 ? 'high' : 'low'}"></span>
+                            <span class="folio-stock-text ${!item.canGet ? 'empty' : item.maxQty > 5 ? 'high' : 'low'}" ${item.canGet ? `onclick="setCartQuantity('${item.name}', ${item.maxQty})" style="cursor:pointer;" title="Fill max"` : ''}>Total: ${item.remaining}</span>
                         </div>
                         ${item.canGet ? `
                             <div class="folio-qty-control">
                                 <button class="qty-btn minus" onclick="updateCart('${item.name}', -1)">&minus;</button>
-                                <input class="qty-input" type="number" id="qty-${item.name}" value="0" min="0" onchange="setCartQuantity('${item.name}', this.value)">
+                                <input class="qty-input" type="number" id="qty-${item.name}" value="0" min="0" max="${item.maxQty}" onchange="setCartQuantity('${item.name}', this.value)">
                                 <button class="qty-btn plus" onclick="updateCart('${item.name}', 1)">+</button>
                             </div>
                         ` : `
@@ -3809,7 +3820,9 @@
         }
 
         function updateCart(name, change) {
-            cart[name] = Math.max(0, (cart[name] || 0) + change);
+            const item = folioDataCache.find(f => f.name === name);
+            const maxQty = item ? item.maxQty : Infinity;
+            cart[name] = Math.max(0, Math.min(maxQty, (cart[name] || 0) + change));
             const qtyInput = document.getElementById(`qty-${name}`);
             qtyInput.value = cart[name];
             qtyInput.classList.remove('bounce');
