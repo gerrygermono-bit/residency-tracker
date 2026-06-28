@@ -1923,6 +1923,544 @@
         to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* ===== BUG REPORT BUTTON ===== */
+    .bug-btn {
+        background: var(--surface-card);
+        border: 1px solid var(--border-soft);
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        color: var(--text-main);
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+    }
+
+    .bug-btn:hover {
+        background: var(--bg-canvas);
+        border-color: var(--text-muted);
+        transform: scale(1.05);
+    }
+
+    .bug-btn svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* ===== BUG / FEEDBACK MODAL ===== */
+    .bug-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        cursor: pointer;
+    }
+
+    .bug-modal {
+        background: var(--surface-card);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        width: 100%;
+        max-width: 520px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-lg);
+        animation: modalIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        cursor: default;
+    }
+
+    .bug-modal-header {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border-soft);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .bug-modal-header h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .bug-modal-close {
+        background: none;
+        border: none;
+        font-size: 1.75rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        line-height: 1;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+    }
+
+    .bug-modal-close:hover {
+        color: var(--text-main);
+        background: rgba(0,0,0,0.05);
+    }
+
+    [data-theme="dark"] .bug-modal-close:hover {
+        background: rgba(255,255,255,0.08);
+    }
+
+    .bug-modal-body {
+        padding: 24px;
+        overflow-y: auto;
+        color: var(--text-main);
+    }
+
+    .bug-modal-body p {
+        margin-bottom: 12px;
+        font-size: 0.92rem;
+    }
+
+    /* ===== FEEDBACK TYPE SEGMENTED CONTROL ===== */
+    .feedback-type-toggle {
+        display: flex;
+        background: var(--bg-canvas);
+        border-radius: 12px;
+        padding: 4px;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-soft);
+    }
+
+    .feedback-type-btn {
+        flex: 1;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: transparent;
+        color: var(--text-muted);
+        transition: all 0.25s ease;
+        font-family: inherit;
+    }
+
+    .feedback-type-btn.active {
+        background: var(--surface-card);
+        color: var(--dlsu-green);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] .feedback-type-btn.active {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .feedback-type-btn:hover:not(.active) {
+        color: var(--text-main);
+    }
+
+    .feedback-type-btn.feedback-active {
+        background: var(--surface-card);
+        color: var(--dlsu-green);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] .feedback-type-btn.feedback-active {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .feedback-type-btn.bug-active {
+        background: var(--surface-card);
+        color: var(--status-out);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] .feedback-type-btn.bug-active {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* ===== RATING STARS ===== */
+    .rating-group {
+        margin-bottom: 18px;
+    }
+
+    .rating-group:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .rating-label {
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-main);
+        display: block;
+    }
+
+    .stars-row {
+        display: flex;
+        gap: 6px;
+        direction: row;
+    }
+
+    .star-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 2px;
+        transition: transform 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .star-btn:hover {
+        transform: scale(1.2);
+    }
+
+    .star-btn svg {
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: #d1d5db;
+        stroke-width: 1.5;
+        transition: all 0.15s ease;
+    }
+
+    .star-btn.filled svg {
+        fill: #f59e0b;
+        stroke: #f59e0b;
+    }
+
+    .star-btn.hovered svg {
+        fill: #fbbf24;
+        stroke: #fbbf24;
+    }
+
+    [data-theme="dark"] .star-btn svg {
+        stroke: #4b5563;
+    }
+
+    [data-theme="dark"] .star-btn.filled svg {
+        fill: #f59e0b;
+        stroke: #f59e0b;
+    }
+
+    [data-theme="dark"] .star-btn.hovered svg {
+        fill: #fbbf24;
+        stroke: #fbbf24;
+    }
+
+    /* ===== TEXT AREA ===== */
+    .bug-textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border-soft);
+        background: var(--bg-canvas);
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 0.88rem;
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+        margin-top: 16px;
+    }
+
+    .bug-textarea:focus {
+        border-color: var(--dlsu-green);
+        box-shadow: 0 0 0 3px rgba(10, 92, 54, 0.1);
+    }
+
+    [data-theme="dark"] .bug-textarea:focus {
+        border-color: #34d399;
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
+    }
+
+    .bug-textarea::placeholder {
+        color: var(--text-muted);
+    }
+
+    /* ===== SUBMIT BUTTON ===== */
+    .bug-submit-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        background: linear-gradient(135deg, var(--dlsu-green), #10b981);
+        color: white;
+        font-family: inherit;
+        box-shadow: 0 3px 10px rgba(10, 92, 54, 0.25);
+        transition: all 0.25s ease;
+        margin-top: 16px;
+    }
+
+    .bug-submit-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 16px rgba(10, 92, 54, 0.35);
+    }
+
+    .bug-submit-btn:active {
+        transform: scale(0.97);
+    }
+
+    [data-theme="dark"] .bug-submit-btn {
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2);
+    }
+
+    .bug-submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* ===== PREMIUM EDIT PANEL ===== */
+    .premium-edit-panel {
+        background: var(--bg-canvas);
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 18px 16px 16px;
+        margin-top: 8px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.04);
+        animation: slideDown 0.25s ease forwards;
+    }
+
+    [data-theme="dark"] .premium-edit-panel {
+        box-shadow: inset 0 1px 2px rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .premium-field-group {
+        margin-bottom: 14px;
+    }
+
+    .premium-field-group:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .premium-field-label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+    }
+
+    /* ===== PREMIUM SELECT ===== */
+    .premium-select-wrapper {
+        position: relative;
+    }
+
+    .premium-select-wrapper::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid var(--text-muted);
+        border-bottom: 2px solid var(--text-muted);
+        transform: translateY(-70%) rotate(45deg);
+        pointer-events: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .premium-select-wrapper:hover::after {
+        border-color: var(--dlsu-green);
+    }
+
+    .premium-select {
+        width: 100%;
+        padding: 10px 36px 10px 14px;
+        border-radius: 12px;
+        border: 1.5px solid var(--border-soft);
+        background: var(--surface-card);
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 500;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    .premium-select:hover {
+        border-color: var(--text-muted);
+    }
+
+    .premium-select:focus {
+        border-color: var(--dlsu-green);
+        box-shadow: 0 0 0 3px rgba(10, 92, 54, 0.1);
+    }
+
+    [data-theme="dark"] .premium-select:focus {
+        border-color: #34d399;
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.12);
+    }
+
+    .premium-select option {
+        background: var(--surface-card);
+        color: var(--text-main);
+    }
+
+    /* ===== PREMIUM CHIPS ===== */
+    .premium-chip-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .premium-chip {
+        padding: 8px 18px;
+        border-radius: 100px;
+        border: 1.5px solid var(--border-soft);
+        background: transparent;
+        color: var(--text-muted);
+        font-family: inherit;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        position: relative;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .premium-chip:hover {
+        border-color: var(--dlsu-green);
+        color: var(--dlsu-green);
+        transform: translateY(-1px);
+    }
+
+    .premium-chip:active {
+        transform: scale(0.96);
+    }
+
+    .premium-chip.active {
+        background: linear-gradient(135deg, var(--dlsu-green), #10b981);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(10, 92, 54, 0.2);
+    }
+
+    [data-theme="dark"] .premium-chip.active {
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2);
+    }
+
+    .premium-chip.active::before {
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 50%;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a5c36' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") center/contain no-repeat;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a5c36' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") center/contain no-repeat;
+        background: #0a5c36;
+        flex-shrink: 0;
+    }
+
+    /* ===== PREMIUM BUTTONS ===== */
+    .premium-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .premium-btn {
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        border: none;
+        flex: 1;
+    }
+
+    .premium-btn-primary {
+        background: linear-gradient(135deg, var(--dlsu-green), #10b981);
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(10, 92, 54, 0.2);
+    }
+
+    .premium-btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 16px rgba(10, 92, 54, 0.3);
+    }
+
+    .premium-btn-primary:active {
+        transform: scale(0.97);
+    }
+
+    [data-theme="dark"] .premium-btn-primary {
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.15);
+    }
+
+    .premium-btn-ghost {
+        background: transparent;
+        border: 1.5px solid var(--border-soft);
+        color: var(--text-muted);
+    }
+
+    .premium-btn-ghost:hover {
+        background: var(--surface-card);
+        color: var(--text-main);
+        border-color: var(--text-muted);
+    }
+
+    .premium-btn-ghost:active {
+        transform: scale(0.97);
+    }
+
+    /* ===== FEEDBACK VIEW CONTAINER ===== */
+    .feedback-view, .bug-view {
+        animation: slideDown 0.3s ease forwards;
+    }
+
+    .feedback-view.hidden, .bug-view.hidden {
+        display: none;
+    }
+
+    /* ===== RATING RESULT TEXT ===== */
+    .rating-result {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+        font-weight: 500;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after {
             animation-duration: 0.01ms !important;
@@ -1949,6 +2487,14 @@
                 <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
                     <svg viewBox="0 0 24 24" id="themeIcon">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="bug-btn" onclick="openBugModal()" title="Send Feedback / Report Bug">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2a7 7 0 0 1 7 7v1h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v1a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5v-1H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h1V9a7 7 0 0 1 7-7z"/>
+                        <path d="M9 14h.01"/>
+                        <path d="M15 14h.01"/>
+                        <path d="M9 18a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3"/>
                     </svg>
                 </button>
 
@@ -2205,15 +2751,138 @@
                     </script>
                     
                     <div id="profileFieldsContainer">
+                        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-weight: 400;">Position: </span>
+                                <span id="displayPosition" style="font-weight: 700;">Member</span>
+                                <span class="edit-icon" onclick="togglePositionEdit()" title="Edit Position" style="cursor: pointer; display: flex; align-items: center;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--text-muted); stroke-width: 2; fill: none;">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div id="positionEditContainer" class="premium-edit-panel" style="display: none;">
+                                <div class="premium-field-group">
+                                    <label class="premium-field-label">Role</label>
+                                    <div class="premium-select-wrapper">
+                                        <select id="positionSelect" class="premium-select">
+                                            <option value="Probationary">Probationary</option>
+                                            <option value="Newbie">Newbie</option>
+                                            <option value="Regular">Regular</option>
+                                            <option value="EB/Senior EB">EB/Senior EB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="premium-actions">
+                                    <button class="premium-btn premium-btn-primary" onclick="performPositionSave()">Save</button>
+                                    <button class="premium-btn premium-btn-ghost" onclick="cancelPositionEdit()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-weight: 400;">Section: </span>
+                                <span id="displaySection" style="font-weight: 700;">N/A</span>
+                                <span class="edit-icon" onclick="toggleSectionEdit()" title="Edit Section" style="cursor: pointer; display: flex; align-items: center;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--text-muted); stroke-width: 2; fill: none;">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div id="sectionEditContainer" class="premium-edit-panel" style="display: none;">
+                                <div class="premium-field-group">
+                                    <label class="premium-field-label">Primary Section</label>
+                                    <div class="premium-select-wrapper">
+                                        <select id="sectionMainSelect" class="premium-select">
+                                            <option value="">-- Select Section --</option>
+                                            <option value="Art">Art</option>
+                                            <option value="Poetry">Poetry</option>
+                                            <option value="Photo">Photo</option>
+                                            <option value="Prose">Prose</option>
+                                            <option value="Screen/Play">Screen/Play</option>
+                                            <option value="Marketing and Events">Marketing and Events</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="premium-field-group">
+                                    <label class="premium-field-label">Extra Teams</label>
+                                    <div class="premium-chip-group">
+                                        <button class="premium-chip" data-value="Layout" onclick="toggleExtraSection(this)">Layout</button>
+                                        <button class="premium-chip" data-value="PropMan" onclick="toggleExtraSection(this)">PropMan</button>
+                                    </div>
+                                </div>
+                                <div class="premium-actions">
+                                    <button class="premium-btn premium-btn-primary" onclick="performSectionSave()">Save Changes</button>
+                                    <button class="premium-btn premium-btn-ghost" onclick="cancelSectionEdit()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
                         <script>
-                            document.write(createFieldRow('Position', 'Position', 'Member'));
-                            document.write(createFieldRow('Section', 'Section', 'N/A'));
                             document.write(createFieldRow('Full Name', 'FullName', 'N/A'));
+                            document.write(createFieldRow('Nickname', 'Nickname', ''));
                             document.write(createFieldRow('ID Number', 'StaffId', 'N/A'));
+                            document.write(createFieldRow('Pronouns', 'Pronouns', ''));
                         </script>
                     </div>
 
                     <p style="margin-top: 16px;"><a class="logout-link" onclick="handleLogout()">Logout</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bug Report / Feedback Modal -->
+        <div class="bug-modal-overlay hidden" id="bugModal" onclick="closeBugModal()">
+            <div class="bug-modal" onclick="event.stopPropagation()">
+                <div class="bug-modal-header">
+                    <h3>Send Feedback / Report Bug</h3>
+                    <button class="bug-modal-close" onclick="closeBugModal()">&times;</button>
+                </div>
+                <div class="bug-modal-body">
+                    <div class="feedback-type-toggle">
+                        <button class="feedback-type-btn active" id="feedbackTypeBtn" onclick="selectFeedbackType('feedback')">Feedback</button>
+                        <button class="feedback-type-btn" id="bugTypeBtn" onclick="selectFeedbackType('bug')">Bug</button>
+                    </div>
+
+                    <div id="bugFeedbackView" class="feedback-view">
+                        <div class="rating-group">
+                            <span class="rating-label">How was your experience?</span>
+                            <div class="stars-row" data-rating-id="1">
+                                <button class="star-btn" data-value="1" onclick="setRating(1, this)" onmouseenter="hoverRating(1, this)" onmouseleave="unhoverRating(1)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="2" onclick="setRating(1, this)" onmouseenter="hoverRating(1, this)" onmouseleave="unhoverRating(1)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="3" onclick="setRating(1, this)" onmouseenter="hoverRating(1, this)" onmouseleave="unhoverRating(1)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="4" onclick="setRating(1, this)" onmouseenter="hoverRating(1, this)" onmouseleave="unhoverRating(1)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="5" onclick="setRating(1, this)" onmouseenter="hoverRating(1, this)" onmouseleave="unhoverRating(1)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="rating-group">
+                            <span class="rating-label">How did you find the website?</span>
+                            <div class="stars-row" data-rating-id="2">
+                                <button class="star-btn" data-value="1" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="2" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="3" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="4" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="5" onclick="setRating(2, this)" onmouseenter="hoverRating(2, this)" onmouseleave="unhoverRating(2)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="rating-group">
+                            <span class="rating-label">How likely are you to recommend us?</span>
+                            <div class="stars-row" data-rating-id="3">
+                                <button class="star-btn" data-value="1" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="2" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="3" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="4" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                                <button class="star-btn" data-value="5" onclick="setRating(3, this)" onmouseenter="hoverRating(3, this)" onmouseleave="unhoverRating(3)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bugBugView" class="bug-view hidden">
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">Describe the bug or issue you encountered. Include steps to reproduce if possible.</p>
+                    </div>
+
+                    <textarea class="bug-textarea" id="bugMessageInput" placeholder="Share your thoughts here..." rows="4"></textarea>
+
+                    <button class="bug-submit-btn" id="bugSubmitBtn" onclick="submitFeedback()">Submit</button>
                 </div>
             </div>
         </div>
@@ -2340,10 +3009,6 @@
         function openAccountModal() {
             document.getElementById('accountModal').classList.remove('hidden');
             document.getElementById('navMenu').classList.remove('show');
-        }
-
-        function closeAccountModal() {
-            document.getElementById('accountModal').classList.add('hidden');
         }
 
         function showPanel(panelName) {
@@ -2484,11 +3149,13 @@
             document.getElementById('modalUserEmail').innerText = userEmail;
             document.getElementById('modalTotalHours').innerText = Number(data.totalHours).toFixed(2);
 
-            // updates all four profile fields
+            // updates all profile fields
             document.getElementById('displayPosition').innerText = data.position || "Member";
             document.getElementById('displaySection').innerText = data.section || "N/A";
             document.getElementById('displayFullName').innerText = data.fullName || "N/A";
+            document.getElementById('displayNickname').innerText = data.nickname || "";
             document.getElementById('displayStaffId').innerText = data.staffId || "N/A";
+            document.getElementById('displayPronouns').innerText = data.pronouns || "";
 
             configureTrackingInterface(data.isClockedIn, data.lastActionTimestamp);
             populateRecentLogs(data.recentLogs);
@@ -2731,7 +3398,7 @@
                 token: CLIENT_API_TOKEN,
                 action: nextAction,
                 email: targetEmail,
-                mode: currentStatus ? "" : "EB-Override"
+                mode: currentStatus ? "" : "Onsite"
             }, `Overrode for ${targetEmail}`);
         }
 
@@ -2866,10 +3533,10 @@
             }
 
             const fieldMap = {
-                'Position': 'position',
-                'Section': 'section',
                 'FullName': 'fullName',
-                'StaffId': 'staffId'
+                'Nickname': 'nickname',
+                'StaffId': 'staffId',
+                'Pronouns': 'pronouns'
             };
 
             let payload = { 
@@ -2891,11 +3558,215 @@
             input.style.display = 'none';
         }
 
+        // ===== POSITION EDIT (Dropdown) =====
+        function togglePositionEdit() {
+            const container = document.getElementById('positionEditContainer');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+            if (container.style.display === 'block') {
+                const currentPosition = document.getElementById('displayPosition').innerText;
+                const select = document.getElementById('positionSelect');
+                if ([...select.options].some(o => o.value === currentPosition)) {
+                    select.value = currentPosition;
+                }
+            }
+        }
+
+        function performPositionSave() {
+            const newValue = document.getElementById('positionSelect').value;
+            document.getElementById('displayPosition').innerText = newValue;
+            document.getElementById('positionEditContainer').style.display = 'none';
+            const payload = {
+                token: SYSTEM_API_TOKEN,
+                action: "Update Profile",
+                email: userEmail,
+                position: newValue
+            };
+            sendPostRequest(payload, "Position updated!");
+        }
+
+        function cancelPositionEdit() {
+            document.getElementById('positionEditContainer').style.display = 'none';
+        }
+
+        // ===== SECTION EDIT (Dropdown + Chips) =====
+        function toggleSectionEdit() {
+            const container = document.getElementById('sectionEditContainer');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+            if (container.style.display === 'block') {
+                const currentSection = document.getElementById('displaySection').innerText;
+                let mainSection = currentSection;
+                let hasLayout = false;
+                let hasPropMan = false;
+                if (currentSection.includes('&')) {
+                    const parts = currentSection.split('&').map(s => s.trim());
+                    mainSection = parts[0];
+                    hasLayout = parts.includes('Layout');
+                    hasPropMan = parts.includes('PropMan');
+                }
+                document.getElementById('sectionMainSelect').value = mainSection === 'N/A' ? '' : mainSection;
+                document.querySelectorAll('.premium-chip').forEach(chip => {
+                    const val = chip.getAttribute('data-value');
+                    chip.classList.toggle('active', (val === 'Layout' && hasLayout) || (val === 'PropMan' && hasPropMan));
+                });
+            }
+        }
+
+        function toggleExtraSection(btn) {
+            btn.classList.toggle('active');
+            btn.style.transform = 'scale(0.93)';
+            setTimeout(() => { btn.style.transform = ''; }, 150);
+        }
+
+        function performSectionSave() {
+            const mainSection = document.getElementById('sectionMainSelect').value;
+            if (!mainSection) {
+                alert('Please select a main section.');
+                return;
+            }
+            const chips = document.querySelectorAll('.premium-chip.active');
+            const extras = [];
+            chips.forEach(chip => extras.push(chip.getAttribute('data-value')));
+            let displayValue = mainSection;
+            if (extras.length > 0) {
+                displayValue += ' & ' + extras.join(' & ');
+            }
+            document.getElementById('displaySection').innerText = displayValue;
+            document.getElementById('sectionEditContainer').style.display = 'none';
+            const payload = {
+                token: SYSTEM_API_TOKEN,
+                action: "Update Profile",
+                email: userEmail,
+                section: displayValue
+            };
+            sendPostRequest(payload, "Section updated!");
+        }
+
+        function cancelSectionEdit() {
+            document.getElementById('sectionEditContainer').style.display = 'none';
+        }
+
+        // ===== BUG / FEEDBACK MODAL =====
+        let feedbackRatings = { 1: 0, 2: 0, 3: 0 };
+        let feedbackType = 'feedback';
+
+        function openBugModal() {
+            document.getElementById('bugModal').classList.remove('hidden');
+            document.getElementById('navMenu').classList.remove('show');
+            // Reset state
+            feedbackType = 'feedback';
+            feedbackRatings = { 1: 0, 2: 0, 3: 0 };
+            document.getElementById('bugMessageInput').value = '';
+            selectFeedbackType('feedback');
+        }
+
+        function closeBugModal() {
+            document.getElementById('bugModal').classList.add('hidden');
+        }
+
+        function selectFeedbackType(type) {
+            feedbackType = type;
+            const feedbackBtn = document.getElementById('feedbackTypeBtn');
+            const bugBtn = document.getElementById('bugTypeBtn');
+            const feedbackView = document.getElementById('bugFeedbackView');
+            const bugView = document.getElementById('bugBugView');
+            const textarea = document.getElementById('bugMessageInput');
+
+            if (type === 'feedback') {
+                feedbackBtn.className = 'feedback-type-btn feedback-active';
+                bugBtn.className = 'feedback-type-btn';
+                feedbackView.classList.remove('hidden');
+                bugView.classList.add('hidden');
+                textarea.placeholder = 'Any additional comments? (optional)';
+            } else {
+                bugBtn.className = 'feedback-type-btn bug-active';
+                feedbackBtn.className = 'feedback-type-btn';
+                feedbackView.classList.add('hidden');
+                bugView.classList.remove('hidden');
+                textarea.placeholder = 'Describe the bug you encountered...';
+            }
+        }
+
+        function setRating(groupId, btn) {
+            const value = parseInt(btn.getAttribute('data-value'));
+            feedbackRatings[groupId] = value;
+            const row = btn.closest('.stars-row');
+            const stars = row.querySelectorAll('.star-btn');
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                star.classList.toggle('filled', starVal <= value);
+                star.classList.remove('hovered');
+                star.style.transform = '';
+            });
+            // Bounce animation on click
+            btn.style.transform = 'scale(1.3)';
+            setTimeout(() => { btn.style.transform = ''; }, 200);
+        }
+
+        function hoverRating(groupId, btn) {
+            const value = parseInt(btn.getAttribute('data-value'));
+            const row = btn.closest('.stars-row');
+            const stars = row.querySelectorAll('.star-btn');
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= value && !star.classList.contains('filled')) {
+                    star.classList.add('hovered');
+                } else {
+                    star.classList.remove('hovered');
+                }
+            });
+        }
+
+        function unhoverRating(groupId) {
+            const row = document.querySelector(`.stars-row[data-rating-id="${groupId}"]`);
+            if (!row) return;
+            const stars = row.querySelectorAll('.star-btn');
+            stars.forEach(star => star.classList.remove('hovered'));
+        }
+
+        function submitFeedback() {
+            const message = document.getElementById('bugMessageInput').value.trim();
+            if (!message) {
+                alert('Please enter a message before submitting.');
+                return;
+            }
+
+            const payload = {
+                token: SYSTEM_API_TOKEN,
+                action: "Submit Feedback",
+                email: userEmail,
+                feedbackType: feedbackType,
+                message: message
+            };
+
+            if (feedbackType === 'feedback') {
+                payload.rating1 = feedbackRatings[1] || 0;
+                payload.rating2 = feedbackRatings[2] || 0;
+                payload.rating3 = feedbackRatings[3] || 0;
+                // Check if all ratings are given
+                if (!payload.rating1 || !payload.rating2 || !payload.rating3) {
+                    alert('Please complete all star ratings before submitting feedback.');
+                    return;
+                }
+            }
+
+            const btn = document.getElementById('bugSubmitBtn');
+            btn.disabled = true;
+            btn.innerText = 'Submitting...';
+
+            sendPostRequest(payload, feedbackType === 'feedback' ? 'Feedback sent! Thank you.' : 'Bug report submitted! Thank you.');
+            
+            setTimeout(() => {
+                closeBugModal();
+                btn.disabled = false;
+                btn.innerText = 'Submit';
+            }, 500);
+        }
+
         function closeAccountModal() {
-            // save func before hiding
-            ['Position', 'Section', 'FullName', 'StaffId'].forEach(field => {
+            // save func before hiding (excluding Position/Section which have their own handlers)
+            ['FullName', 'Nickname', 'StaffId', 'Pronouns'].forEach(field => {
                 const input = document.getElementById('input' + field);
-                if (input.style.display !== 'none') {
+                if (input && input.style.display !== 'none') {
                     performSave(field);
                 }
             });
