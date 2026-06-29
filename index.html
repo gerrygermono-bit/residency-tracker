@@ -53,6 +53,25 @@
         background: rgba(245,158,11,0.12) !important;
         border-color: rgba(245,158,11,0.3) !important;
     }
+    [data-theme="dark"] .bug-modal-body > div[style*="background: rgba(10,92,54,0.06)"] {
+        background: rgba(52,211,153,0.12) !important;
+        border-color: rgba(52,211,153,0.3) !important;
+    }
+    [data-theme="dark"] #accountModal .account-card[style*="border-left-color: #4f46e5"] {
+        border-left-color: #818cf8 !important;
+    }
+    [data-theme="dark"] #accountModal .account-card-header[style*="color: #4f46e5"] {
+        color: #818cf8 !important;
+    }
+    [data-theme="dark"] .info-modal-body h4[style*="color: #d97706"] {
+        color: #fbbf24 !important;
+    }
+    [data-theme="dark"] .info-modal-body h4[style*="color: #7c3aed"] {
+        color: #a78bfa !important;
+    }
+    [data-theme="dark"] .info-modal-body h4[style*="color: #4f46e5"] {
+        color: #818cf8 !important;
+    }
 
     html, body {
         max-width: 100%;
@@ -454,6 +473,27 @@
         transform: translateY(0);
     }
 
+    .nav-menu-occupancy {
+        padding: 10px 16px 4px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        display: flex;
+        gap: 16px;
+        border-bottom: 1px solid var(--border-soft);
+        margin-bottom: 4px;
+    }
+
+    @media (max-width: 600px) {
+        .header-controls .occupancy-mini-box {
+            display: none;
+        }
+        .nav-menu {
+            left: 0;
+            right: auto;
+        }
+    }
+
     .nav-menu button, .nav-menu .account-info-box {
         background: var(--surface-card);
         border: none;
@@ -608,6 +648,25 @@
         background-color: var(--bg-canvas);
     }
 
+    .roster-section-chip {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        background: rgba(10,92,54,0.1);
+        color: var(--dlsu-green);
+        border: 1px solid rgba(10,92,54,0.15);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    [data-theme="dark"] .roster-section-chip {
+        color: #34d399;
+        background: rgba(52,211,153,0.1);
+        border-color: rgba(52,211,153,0.2);
+    }
+
     .warning {
         padding: 14px 16px;
         border-radius: 12px;
@@ -654,6 +713,7 @@
 
     [data-theme="dark"] .metric-display {
         background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.4));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
     [data-theme="dark"] .metric-display::before {
@@ -769,7 +829,8 @@
 
     .mode-selection-container {
         display: flex;
-        gap: 12px;
+        flex-direction: column;
+        gap: 10px;
         margin-top: -4px;
         margin-bottom: 14px;
         animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -805,6 +866,37 @@
         color: #0f172a;
         border-color: transparent;
         box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .clock-in-note {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--border-soft);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        background: var(--bg-canvas);
+        color: var(--text-main);
+        outline: none;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+    }
+
+    .clock-in-note:focus {
+        border-color: var(--dlsu-green);
+    }
+
+    .clock-in-note::placeholder {
+        color: var(--text-muted);
+    }
+
+    .streak-value {
+        color: var(--dlsu-green) !important;
+        font-size: 1.5rem !important;
+    }
+
+    [data-theme="dark"] .streak-value {
+        color: #34d399 !important;
     }
 
     .admin-submit-btn {
@@ -951,6 +1043,15 @@
     [data-theme="dark"] .feed-item:hover {
         background: rgba(255, 255, 255, 0.03);
         border-left-color: #34d399;
+    }
+
+    .log-note {
+        width: 100%;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-style: italic;
+        padding: 4px 0 2px;
+        margin-top: -2px;
     }
 
     .feed-item > div:first-child {
@@ -1159,6 +1260,28 @@
         transform: translateY(-1px);
     }
 
+    [data-theme="dark"] .action-sub-btn.status-toggle {
+        background: linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(180, 83, 9, 0.15));
+        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.15);
+    }
+    [data-theme="dark"] .action-sub-btn.status-toggle:hover {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.4), rgba(217, 119, 6, 0.25));
+    }
+    [data-theme="dark"] .action-sub-btn.bulk-clockout {
+        background: linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(180, 83, 9, 0.15));
+        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.15);
+    }
+    [data-theme="dark"] .action-sub-btn.bulk-clockout:hover {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.4), rgba(217, 119, 6, 0.25));
+    }
+    [data-theme="dark"] .action-sub-btn.delete {
+        background: linear-gradient(135deg, rgba(244, 63, 94, 0.3), rgba(244, 63, 94, 0.15));
+        box-shadow: 0 2px 6px rgba(244, 63, 94, 0.15);
+    }
+    [data-theme="dark"] .action-sub-btn.delete:hover {
+        background: linear-gradient(135deg, rgba(251, 113, 133, 0.35), rgba(244, 63, 94, 0.2));
+    }
+
     .empty-state {
         text-align: center;
         color: var(--text-muted);
@@ -1217,9 +1340,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: linear-gradient(135deg, var(--bg-canvas) 0%, #e8ecf1 50%, var(--bg-canvas) 100%);
-        background-size: 200% 200%;
-        animation: bgShift 10s ease infinite;
+        background: #ffffff;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1227,30 +1348,39 @@
         z-index: 9999;
         opacity: 1;
         transition: opacity 0.5s ease;
-        gap: 20px;
+    }
+
+    [data-theme="dark"] .minimal-loader-screen {
+        background: #0f172a;
     }
 
     .minimal-loader-screen::before {
         content: '';
         width: 32px;
         height: 32px;
-        border: 3px solid var(--border-soft);
-        border-top-color: var(--dlsu-green);
+        border: 3px solid #e2e8f0;
+        border-top-color: #0a5c36;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
     }
 
     [data-theme="dark"] .minimal-loader-screen::before {
+        border-color: #334155;
         border-top-color: #34d399;
     }
 
     .minimal-loader-text {
         font-size: 1.1rem;
         font-weight: 500;
-        color: var(--text-main);
+        color: #1e293b;
         letter-spacing: 0.05em;
         opacity: 0;
         transition: opacity 0.5s ease;
+        margin-top: 20px;
+    }
+
+    [data-theme="dark"] .minimal-loader-text {
+        color: #f8fafc;
     }
 
     .minimal-loader-text.fade-in {
@@ -1578,7 +1708,18 @@
 
     .folio-stock-text.high { color: var(--status-in); }
     .folio-stock-text.low { color: #d97706; }
+    [data-theme="dark"] .folio-stock-text.low { color: #fbbf24; }
     .folio-stock-text.empty { color: var(--status-out); }
+
+    .folio-limit-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        margin-top: 3px;
+        text-align: center;
+        padding: 2px 0;
+        letter-spacing: 0.02em;
+    }
 
     .folio-qty-control {
         display: flex;
@@ -1902,9 +2043,7 @@
     }
 
     .closure-modal {
-        background: var(--surface-card);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: #ffffff;
         border: 1px solid var(--glass-border);
         border-radius: 20px;
         width: 100%;
@@ -1912,6 +2051,12 @@
         box-shadow: var(--shadow-lg);
         animation: modalIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         overflow: hidden;
+    }
+
+    [data-theme="dark"] .closure-modal {
+        background: var(--surface-card);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
     .closure-modal-header {
@@ -2049,6 +2194,10 @@
         color: inherit;
     }
 
+    [data-theme="dark"] ::selection {
+        background-color: rgba(52, 211, 153, 0.35);
+    }
+
     :focus-visible {
         outline: 2px solid var(--dlsu-green);
         outline-offset: 2px;
@@ -2103,7 +2252,8 @@
         transform: scale(1.05);
     }
 
-    .bug-btn svg {
+    .bug-btn svg,
+    .help-btn svg {
         width: 18px;
         height: 18px;
         fill: none;
@@ -2111,6 +2261,28 @@
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
+    }
+
+    .help-btn {
+        background: var(--surface-card);
+        border: 1px solid var(--border-soft);
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        color: var(--text-main);
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+    }
+
+    .help-btn:hover {
+        background: var(--bg-canvas);
+        border-color: var(--text-muted);
+        transform: scale(1.05);
     }
 
     /* ===== BUG / FEEDBACK MODAL ===== */
@@ -2132,9 +2304,7 @@
     }
 
     .bug-modal {
-        background: var(--surface-card);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: #ffffff;
         border: 1px solid var(--glass-border);
         border-radius: 20px;
         width: 100%;
@@ -2145,6 +2315,12 @@
         box-shadow: var(--shadow-lg);
         animation: modalIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         cursor: default;
+    }
+
+    [data-theme="dark"] .bug-modal {
+        background: var(--surface-card);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
     .bug-modal-header {
@@ -2297,7 +2473,7 @@
         width: 28px;
         height: 28px;
         fill: none;
-        stroke: #d1d5db;
+        stroke: #94a3b8;
         stroke-width: 1.5;
         transition: all 0.15s ease;
     }
@@ -2486,6 +2662,11 @@
     .premium-select option {
         background: var(--surface-card);
         color: var(--text-main);
+        padding: 8px;
+    }
+    [data-theme="dark"] .premium-select option {
+        background: #1e293b;
+        color: #f1f5f9;
     }
 
     /* ===== PREMIUM CHIPS ===== */
@@ -2654,6 +2835,13 @@
                         <path d="M9 18a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3"/>
                     </svg>
                 </button>
+                <button class="help-btn" onclick="openInfoModal()" title="Guidelines">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </button>
 
                 <div class="occupancy-mini-box">Online <span id="onlineCountVal">--</span></div>
                 <div class="occupancy-mini-box">Onsite <span id="onsiteCountVal">--</span></div>
@@ -2667,11 +2855,14 @@
                 SANDWICH / NAV MENU HERE
                 -->
                 <div class="nav-menu" id="navMenu">
+                    <div class="nav-menu-occupancy">
+                        <span>Online <span id="menuOnlineCountVal">--</span></span>
+                        <span>Onsite <span id="menuOnsiteCountVal">--</span></span>
+                    </div>
                     <button onclick="showPanel('tracker')">Residency Panel</button>
                     <button onclick="openAccountModal()">Account Information</button>
                     <button onclick="showPanel('history')">Log History</button>
                     <button onclick="showPanel('shop')">Get a Folio</button>
-                    <button onclick="openInfoModal()">Guidelines</button>
                     <button class="hidden" id="adminMenuOpt" onclick="showPanel('admin')">Admin Board</button>
                     
                 </div>
@@ -2724,6 +2915,10 @@
                     <div class="metric-label">Total Office Hours</div>
                     <div class="metric-value" id="hoursValue">0.00</div>
                 </div>
+                <div class="metric-display" id="streakContainer">
+                    <div class="metric-label">Day Streak</div>
+                    <div class="metric-value streak-value" id="streakValue">0</div>
+                </div>
 
                 <div class="metric-display hidden" id="liveTimerDisplay">
                     <div class="metric-label">Live Duration</div>
@@ -2735,8 +2930,11 @@
                 </button>
                 
                 <div class="mode-selection-container hidden" id="modeSelectionContainer">
-                    <button class="mode-btn" id="modeOnsiteBtn" onclick="selectClockInMode('Onsite')">Onsite</button>
-                    <button class="mode-btn" id="modeOnlineBtn" onclick="selectClockInMode('Online')">Online</button>
+                    <div style="display:flex; gap:12px; width:100%;">
+                        <button class="mode-btn" id="modeOnsiteBtn" onclick="selectClockInMode('Onsite')">Onsite</button>
+                        <button class="mode-btn" id="modeOnlineBtn" onclick="selectClockInMode('Online')">Online</button>
+                    </div>
+                    <input type="text" id="clockInNote" class="clock-in-note" placeholder="What are you working on? (optional)" maxlength="200">
                 </div>
 
                 <button class="smart-btn clock-out hidden" id="clockOutBtn" onclick="executeClockOut()">
@@ -2779,10 +2977,21 @@
                     <div class="panel-heading" style="margin-bottom: 12px;">
                         <div class="roster-heading-content">
                             <span>Roster</span>
-                            <select class="roster-sort-select" id="rosterSortSelect" onchange="handleRosterSortChange()">
-                                <option value="clockedInFirst">Clocked In First</option>
-                                <option value="clockedOutFirst">Clocked Out First</option>
-                            </select>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <select class="roster-sort-select" id="rosterSectionFilter" onchange="handleRosterSortChange()">
+                                    <option value="">All Sections</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Poetry">Poetry</option>
+                                    <option value="Photo">Photo</option>
+                                    <option value="Prose">Prose</option>
+                                    <option value="Screen/Play">Screen/Play</option>
+                                    <option value="Marketing and Events">Marketing and Events</option>
+                                </select>
+                                <select class="roster-sort-select" id="rosterSortSelect" onchange="handleRosterSortChange()">
+                                    <option value="clockedInFirst">Clocked In First</option>
+                                    <option value="clockedOutFirst">Clocked Out First</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="roster-board-container" id="rosterBoard">
@@ -2799,12 +3008,22 @@
                     
                     <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-soft); padding-top: 16px;">
                         <label>Your EB Password</label>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 10px;">This lets members approve &gt;10 folio requests. Resets every Saturday.</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 10px;">This lets members approve folio requests over the per-member limit. Resets every Saturday.</p>
                         <div style="display: flex; gap: 8px;">
                             <input type="text" id="adminBoardPasswordInput" placeholder="Enter your EB password" autocomplete="off" style="flex: 1; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-soft); border-radius: 8px; font-family: inherit; background-color: transparent; color: var(--text-main);" />
                             <button class="admin-submit-btn" style="width: auto; margin: 0; padding: 0 16px; white-space: nowrap;" onclick="saveAdminBoardPassword()">Save</button>
                         </div>
                         <span id="adminPasswordStatus" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; display: block;"></span>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border-soft); padding-top: 16px;">
+                        <label>Log Missed Hours</label>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 10px;">If a member forgot to clock in, log their missed hours here. Use negative values to deduct.</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <input type="email" id="hoursAdjustEmail" placeholder="member@dlsu.edu.ph" autocomplete="off" style="flex: 2; min-width: 180px; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-soft); border-radius: 8px; font-family: inherit; background-color: transparent; color: var(--text-main);" />
+                            <input type="number" id="hoursAdjustAmount" placeholder="Hours (+/-)" autocomplete="off" style="flex: 1; min-width: 80px; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-soft); border-radius: 8px; font-family: inherit; background-color: transparent; color: var(--text-main);" />
+                            <button class="admin-submit-btn" style="width: auto; margin: 0; padding: 0 16px; white-space: nowrap;" onclick="adjustMemberHours()">Log</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2902,7 +3121,7 @@
 
                 <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Browsing</h5>
                 <ul style="margin: 0 0 12px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
-                    <li>Each folio card shows an <strong>image</strong>, the <strong>folio name</strong>, and the <strong>total stock</strong> count.</li>
+                    <li>Each folio card shows an <strong>image</strong>, the <strong>folio name</strong>, the <strong>total stock</strong>, and the <strong>per-member limit</strong>.</li>
                     <li>Use the <strong>search bar</strong> to filter folios by name.</li>
                     <li>Click on a folio image to open a full-size preview.</li>
                 </ul>
@@ -2916,7 +3135,8 @@
 
                 <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Quantity Limits &amp; EB Password</h5>
                 <ul style="margin: 0 0 12px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
-                    <li><strong>Non-admin members</strong> can request up to <strong>10 total folios</strong> per batch. If you exceed 10, you'll need an <strong>EB password</strong> to proceed.</li>
+                    <li>Each folio type has a <strong>per-member limit</strong> set by the EBs. If a folio has a limit of 3, you can only take up to 3 of that folio type total.</li>
+                    <li>If you want more than the per-member limit, you'll need an <strong>EB password</strong> to proceed.</li>
                     <li>Once verified, the approval lasts for your entire session — you won't need to re-enter it.</li>
                 </ul>
 
@@ -2937,7 +3157,7 @@
                 </h4>
                 <ul style="margin: 0 0 8px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
                     <li style="margin-bottom: 4px;">EBs can set a <strong>personal password</strong> from the Admin Board. It can be anything, make it fun!</li>
-                    <li style="margin-bottom: 4px;">This password lets members approve folio requests over 10 copies. If you're a member, <strong>ask an EB</strong> for their password.</li>
+                    <li style="margin-bottom: 4px;">This password lets members approve folio requests over the per-member limit. If you're a member, <strong>ask an EB</strong> for their password.</li>
                     <li style="margin-bottom: 4px;">Passwords <strong>reset every Saturday at 10 PM</strong> for security. EBs will need to set a new one after reset.</li>
                     <li style="margin-bottom: 4px;">If an EB hasn't set a password yet, they'll be prompted to create one when they log in.</li>
                 </ul>
@@ -2970,11 +3190,15 @@
 
                 <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Roster Management</h5>
                 <ul style="margin: 0 0 12px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
-                    <li>Shows all members, their <strong>total verified hours</strong>, and a status dot (green = clocked in, grey = clocked out).</li>
-                    <li>Sort the list with the dropdown: <strong>Clocked In First</strong> or <strong>Clocked Out First</strong>.</li>
+                    <li>Shows all members, their <strong>total verified hours</strong>, a status dot (green = clocked in, grey = clocked out), and their <strong>section</strong>.</li>
+                    <li>Sort the list with the dropdown: <strong>Clocked In First</strong> or <strong>Clocked Out First</strong>. You can also <strong>filter by section</strong>.</li>
+                    <li><strong>Click on a member</strong> to view their full account information.</li>
                     <li><strong>Force In / Force Out:</strong> Manually toggle a member's status if they forgot to clock in or out.</li>
                     <li><strong>Purge:</strong> Completely wipe a user's log history and hours. <span style="color: var(--status-out); font-weight: 700;">This is permanent — use with care!</span></li>
                 </ul>
+
+                <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Log Missed Hours</h5>
+                <p style="font-size: 0.88rem; margin-bottom: 12px;">If a member forgot to clock in, use the <strong>Log Missed Hours</strong> section to add hours directly. Enter the member's email and the number of hours (positive to add, negative to deduct). This logs an entry in the <strong>Res_Log</strong> sheet.</p>
 
                 <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Assigning New Admins</h5>
                 <p style="font-size: 0.88rem; margin-bottom: 12px;">Type a <code>@dlsu.edu.ph</code> email in the "Give Admin Privileges" field and click <strong>Add</strong>. They'll gain administrative access instantly.</p>
@@ -2982,7 +3206,7 @@
                 <h5 style="margin: 0 0 4px; font-size: 0.9rem;">Set Your EB Password</h5>
                 <ul style="margin: 0 0 4px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
                     <li>In the Admin Board, you'll find a section to set your <strong>EB Password</strong>.</li>
-                    <li>This password is used when members need to request more than 10 folios. Share it with them when they ask!</li>
+                    <li>This password is used when members need to request more than the per-folio limit. Share it with them when they ask!</li>
                     <li>Passwords reset every <strong>Saturday at 10 PM</strong>, so you'll need to set a new one each week.</li>
                     <li>If you haven't set one yet, you'll see a prompt when you log in.</li>
                 </ul>
@@ -3061,7 +3285,7 @@
                                 <input type="text" id="inputFullName" class="premium-select" style="padding: 10px 14px; width: 100%;">
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="saveTextField('FullName')">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applyTextFieldEdit('FullName')">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelTextFieldEdit('FullName')">Cancel</button>
                             </div>
                         </div>
@@ -3080,7 +3304,7 @@
                                 <input type="text" id="inputNickname" class="premium-select" style="padding: 10px 14px; width: 100%;">
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="saveTextField('Nickname')">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applyTextFieldEdit('Nickname')">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelTextFieldEdit('Nickname')">Cancel</button>
                             </div>
                         </div>
@@ -3096,10 +3320,10 @@
                         <div id="editStaffIdPanel" class="premium-edit-panel" style="display: none;">
                             <div class="premium-field-group">
                                 <label class="premium-field-label">ID Number</label>
-                                <input type="text" id="inputStaffId" class="premium-select" style="padding: 10px 14px; width: 100%;">
+                                <input type="text" id="inputStaffId" class="premium-select" style="padding: 10px 14px; width: 100%;" inputmode="numeric" pattern="[0-9]*">
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="saveTextField('StaffId')">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applyTextFieldEdit('StaffId')">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelTextFieldEdit('StaffId')">Cancel</button>
                             </div>
                         </div>
@@ -3118,7 +3342,7 @@
                                 <input type="text" id="inputPronouns" class="premium-select" style="padding: 10px 14px; width: 100%;">
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="saveTextField('Pronouns')">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applyTextFieldEdit('Pronouns')">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelTextFieldEdit('Pronouns')">Cancel</button>
                             </div>
                         </div>
@@ -3155,7 +3379,7 @@
                                 </div>
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="performPositionSave()">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applyPositionEdit()">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelPositionEdit()">Cancel</button>
                             </div>
                         </div>
@@ -3191,10 +3415,16 @@
                                 </div>
                             </div>
                             <div class="premium-actions">
-                                <button class="premium-btn premium-btn-primary" onclick="performSectionSave()">Save</button>
+                                <button class="premium-btn premium-btn-primary" onclick="applySectionEdit()">Apply</button>
                                 <button class="premium-btn premium-btn-ghost" onclick="cancelSectionEdit()">Cancel</button>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Save All / Discard -->
+                    <div class="premium-actions" style="margin-top: 20px;">
+                        <button class="premium-btn premium-btn-primary" onclick="saveAllAccountChanges()">Save All Changes</button>
+                        <button class="premium-btn premium-btn-ghost" onclick="discardAccountChanges()">Discard Changes</button>
                     </div>
 
                     <!-- Logout -->
@@ -3242,6 +3472,12 @@
                             <label class="premium-field-label">Allowable Qty</label>
                             <input type="number" id="editAllowable" class="premium-select" style="padding: 9px 12px; width: 100%;">
                         </div>
+                    </div>
+
+                    <!-- Limit per Member (editable) - Column J -->
+                    <div class="premium-field-group" style="margin-top: 12px;">
+                        <label class="premium-field-label">Limit per Member</label>
+                        <input type="number" id="editLimitPerMember" class="premium-select" style="padding: 9px 12px; width: 100%;" placeholder="Max per member (0 = unlimited)">
                     </div>
 
                     <!-- Location (editable) -->
@@ -3361,6 +3597,46 @@
             </div>
         </div>
 
+        <!-- Admin View Member Info Modal -->
+        <div class="bug-modal-overlay hidden" id="adminViewMemberModal">
+            <div class="bug-modal" onclick="event.stopPropagation()" style="max-width: 460px;">
+                <div class="bug-modal-header">
+                    <h3>Member Information</h3>
+                    <button class="bug-modal-close" onclick="closeAdminViewMemberModal()">&times;</button>
+                </div>
+                <div class="bug-modal-body" id="adminViewMemberContent">
+                </div>
+            </div>
+        </div>
+
+        <!-- First-Time / Unfilled Account Alert -->
+        <div class="bug-modal-overlay hidden" id="firstTimeAlert">
+            <div class="bug-modal" onclick="event.stopPropagation()" style="max-width: 460px;">
+                <div class="bug-modal-header">
+                    <h3>Welcome! Let's Get Started</h3>
+                </div>
+                <div class="bug-modal-body" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 12px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--dlsu-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <p style="font-size: 0.95rem; margin-bottom: 16px; line-height: 1.6;">
+                        Please complete your <strong>Account Information</strong> and read the <strong>Guidelines</strong> to get the most out of the PropMan Lobby.
+                    </p>
+                    <div style="background: rgba(10,92,54,0.06); border: 1px solid rgba(10,92,54,0.15); padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 0.85rem; text-align: left;">
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dlsu-green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <span>Fill in your <strong>Name, Section, Position, ID Number</strong>, and other details in <strong>Account Information</strong>. Also read the <strong>Guidelines</strong> to understand how everything works!</span>
+                        </div>
+                    </div>
+                    <div class="cart-actions" style="flex-direction: column; gap: 10px;">
+                        <button class="cart-checkout-btn" onclick="closeFirstTimeAlert(); openAccountModal();" style="width: 100%;">Go to Account Information</button>
+                        <button class="cart-checkout-btn" onclick="closeFirstTimeAlert(); openInfoModal();" style="width: 100%; background: linear-gradient(135deg, #4f46e5, #6366f1);">Read Guidelines</button>
+                        <button class="action-sub-btn delete" onclick="closeFirstTimeAlert();" style="width: 100%; justify-content: center;">Proceed to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Alert Modal -->
         <div class="bug-modal-overlay hidden" id="alertModal" onclick="closeAlertModal()">
             <div class="bug-modal" onclick="event.stopPropagation()" style="max-width: 420px;">
@@ -3402,7 +3678,7 @@
                     <button class="bug-modal-close" onclick="closeEbPasswordModal()">&times;</button>
                 </div>
                 <div class="bug-modal-body">
-                    <p style="margin-bottom: 16px;">You can only request up to <strong>10 folios</strong> at a time without approval. Ask an EB for their password to proceed.</p>
+                    <p style="margin-bottom: 16px;">You have reached the per-member limit for one or more folio types. Ask an EB for their password to proceed.</p>
                     <div class="form-group">
                         <label for="ebPasswordInput">EB Password</label>
                         <input type="password" id="ebPasswordInput" placeholder="Enter EB password" autocomplete="off" style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid var(--border-soft); border-radius: 8px; font-family: inherit; background-color: transparent; color: var(--text-main); margin-top: 6px;" />
@@ -3423,7 +3699,7 @@
                     <button class="bug-modal-close" onclick="closeAdminSetPasswordModal()">&times;</button>
                 </div>
                 <div class="bug-modal-body">
-                    <p style="margin-bottom: 16px;">This password lets members approve folio requests over 10 copies when they ask you. Choose anything — make it fun, unique, personal! It resets every Saturday.</p>
+                    <p style="margin-bottom: 16px;">This password lets members approve folio requests over the per-member limit when they ask you. Choose anything — make it fun, unique, personal! It resets every Saturday.</p>
                     <div class="form-group">
                         <label for="adminPasswordInput">Your EB Password</label>
                         <input type="text" id="adminPasswordInput" placeholder="Enter your password" autocomplete="off" style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid var(--border-soft); border-radius: 8px; font-family: inherit; background-color: transparent; color: var(--text-main); margin-top: 6px;" />
@@ -3456,18 +3732,36 @@
         let fullCachedPayload = null;
         let lastSessionMode = "";
         let pendingOnsiteCheckout = false;
-        let folioDataCache = []; 
+        let folioDataCache = [];
+        let appBootstrapped = false; 
 
         window.onload = function () {
             const currentTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', currentTheme);
             updateThemeIcon(currentTheme);
-            renderGoogleSignInButton(currentTheme);
+            try {
+                renderGoogleSignInButton(currentTheme);
+            } catch (e) {
+                console.warn("GSI not ready yet, will retry", e);
+                // Retry GSI once after a short delay
+                setTimeout(function () {
+                    try {
+                        renderGoogleSignInButton(currentTheme);
+                    } catch (e2) {
+                        console.warn("GSI retry failed", e2);
+                    }
+                }, 1500);
+            }
 
             const savedEmail = localStorage.getItem('userEmail');
             if (savedEmail) {
                 userEmail = savedEmail;
+                // Hide login immediately, show empty dashboard — no flash
                 bootstrapApplication();
+                // Then fetch data in background to populate the dashboard
+                fetchUserData(userEmail, function () {
+                    if (fullCachedPayload) checkFirstTimeSetup(fullCachedPayload);
+                });
             }
         };
 
@@ -3565,6 +3859,7 @@
         }
 
         function handleCredentialResponse(response) {
+            appBootstrapped = false;
             const payload = JSON.parse(atob(response.credential.split('.')[1]));
             const email = payload.email;
 
@@ -3587,36 +3882,25 @@
                 loaderText.classList.add('fade-in');
             }, 500);
             
-            let minimumTimerDone = false;
-            setTimeout(() => {
-                minimumTimerDone = true;
-                checkAndHideLoader();
-            }, 5000);
-
             fetchUserData(userEmail, () => {
-                checkAndHideLoader();
+                loader.style.opacity = "0";
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    bootstrapApplication();
+                    if (fullCachedPayload) checkFirstTimeSetup(fullCachedPayload);
+                }, 500);
             });
-
-            function checkAndHideLoader() {
-                if (minimumTimerDone && fullCachedPayload) {
-                    loader.style.opacity = "0";
-                    
-                    setTimeout(() => {
-                        loader.classList.add('hidden');
-                        bootstrapApplication();
-                    }, 500);
-                }
-            }
         }
 
         function bootstrapApplication() {
+            if (appBootstrapped) return;
+            appBootstrapped = true;
+            
             document.getElementById('loginView').classList.add('hidden');
             document.getElementById('headerControls').style.display = 'flex';
             document.getElementById('mainDashboard').classList.remove('hidden');
             
-            if (!fullCachedPayload) {
-                fetchUserData(userEmail);
-            } else {
+            if (fullCachedPayload) {
                 renderFetchedData(fullCachedPayload);
             }
         }
@@ -3646,6 +3930,9 @@
                     // 2. Only render the dashboard if the element is not hidden
                     if (!document.getElementById('mainDashboard').classList.contains('hidden')) {
                         renderFetchedData(data);
+                    } else {
+                        // If dashboard is hidden (loading state), bootstrap after data arrives
+                        bootstrapApplication();
                     }
 
                     if (callback) callback();
@@ -3667,10 +3954,15 @@
                     setTimeout(showAdminSetPasswordPrompt, 500);
                 }
             }
-
+            
             document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
-            document.getElementById('onlineCountVal').innerText = data.onlineCount || 0;
-            document.getElementById('onsiteCountVal').innerText = data.onsiteCount || 0;
+            document.getElementById('streakValue').innerText = data.streak || 0;
+            var onlineCount = data.onlineCount || 0;
+            var onsiteCount = data.onsiteCount || 0;
+            document.getElementById('onlineCountVal').innerText = onlineCount;
+            document.getElementById('onsiteCountVal').innerText = onsiteCount;
+            document.getElementById('menuOnlineCountVal').innerText = onlineCount;
+            document.getElementById('menuOnsiteCountVal').innerText = onsiteCount;
             
             document.getElementById('modalUserEmail').innerText = userEmail;
             document.getElementById('modalTotalHours').innerText = Number(data.totalHours).toFixed(2);
@@ -3796,12 +4088,18 @@
             btn.disabled = true;
             btn.innerText = "Processing...";
 
-            sendPostRequest({
+            var clockNote = document.getElementById('clockInNote').value.trim();
+            var clockInPayload = {
                 token: CLIENT_API_TOKEN,
                 action: "Clock In",
                 email: userEmail,
                 mode: selectedClockInModeStr
-            }, `Clocked In successfully (${selectedClockInModeStr})`);
+            };
+            if (clockNote) {
+                clockInPayload.note = clockNote;
+            }
+            document.getElementById('clockInNote').value = '';
+            sendPostRequest(clockInPayload, `Clocked In successfully (${selectedClockInModeStr})`);
         }
 
         function executeClockOut() {
@@ -3855,6 +4153,7 @@
             container.innerHTML = logs.map(item => {
                 const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
                 const modeBadge = (item.action === "Clock In" && item.mode) ? `<span class="badge-mode">${item.mode}</span>` : "";
+                const noteHtml = item.note ? `<div class="log-note">${item.note}</div>` : "";
                 return `
                     <div class="feed-item">
                         <div>
@@ -3862,6 +4161,7 @@
                             ${modeBadge}
                         </div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); font-weight:500;">${item.timestamp}</div>
+                        ${noteHtml}
                     </div>
                 `;
             }).join('');
@@ -3877,6 +4177,7 @@
             container.innerHTML = logs.map(item => {
                 const actionClass = item.action === "Clock In" ? "badge-in" : "badge-out";
                 const modeBadge = item.mode ? `<span class="badge-mode">${item.mode}</span>` : "";
+                const noteHtml = item.note ? `<div class="log-note">${item.note}</div>` : "";
                 return `
                     <div class="feed-item">
                         <div>
@@ -3884,6 +4185,7 @@
                             ${modeBadge}
                         </div>
                         <div style="font-size: 0.85rem; color: var(--text-muted); font-weight:600;">${item.timestamp}</div>
+                        ${noteHtml}
                     </div>
                 `;
             }).join('');
@@ -3912,34 +4214,57 @@
             if (!data.masterRoster || data.masterRoster.length === 0) {
                 rosterContainer.innerHTML = '<div class="empty-state">Roster currently unpopulated.</div>';
             } else {
-                let sortedRoster = [...data.masterRoster];
+                let filteredRoster = [...data.masterRoster];
+                const sectionFilter = document.getElementById('rosterSectionFilter').value;
                 const sortValue = document.getElementById('rosterSortSelect').value;
                 
+                // Filter by section
+                if (sectionFilter) {
+                    filteredRoster = filteredRoster.filter(m => {
+                        var sec = (m.section || '').trim();
+                        return sec === sectionFilter || sec.startsWith(sectionFilter) || sec.includes(sectionFilter);
+                    });
+                }
+                
+                // Sort
                 if (sortValue === 'clockedInFirst') {
-                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : b.isCurrentlyClockedIn ? 1 : -1);
+                    filteredRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : b.isCurrentlyClockedIn ? 1 : -1);
                 } else if (sortValue === 'clockedOutFirst') {
-                    sortedRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : a.isCurrentlyClockedIn ? 1 : -1);
+                    filteredRoster.sort((a, b) => (b.isCurrentlyClockedIn === a.isCurrentlyClockedIn) ? 0 : a.isCurrentlyClockedIn ? 1 : -1);
                 }
 
-                rosterContainer.innerHTML = sortedRoster.map(member => {
+                rosterContainer.innerHTML = filteredRoster.map(member => {
                     const statusDot = member.isCurrentlyClockedIn 
                         ? `<span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>` 
                         : `<span style="display:inline-block; width:8px; height:8px; background:#cbd5e1; border-radius:50%;"></span>`;
                     
                     const forceButtonLabel = member.isCurrentlyClockedIn ? "Force out" : "Force in";
+                    
+                    // Section chips
+                    var sectionHtml = '';
+                    if (member.section && member.section !== 'N/A' && member.section !== '') {
+                        var parts = member.section.split(' & ').map(function(s){return s.trim()});
+                        sectionHtml = parts.map(function(p){
+                            return '<span class="roster-section-chip">' + p + '</span>';
+                        }).join('');
+                    }
+                    
+                    var displayName = member.fullName || member.email.split('@')[0];
 
                     return `
                         <div class="roster-user-item">
-                            <div class="roster-meta-block">
+                            <div class="roster-meta-block" onclick="openAdminViewMemberModal('${member.email}')" style="cursor:pointer;">
                                 <div style="display:flex; align-items:center; gap:6px;">
                                     ${statusDot}
                                     <span class="roster-email">${member.email}</span>
                                 </div>
+                                <div style="font-size:0.78rem; color: var(--text-muted); margin: 2px 0 4px;">${displayName}</div>
+                                <div style="display:flex; gap:4px; flex-wrap:wrap;">${sectionHtml}</div>
                                 <span class="roster-hours-sub">Verified: ${Number(member.totalHours).toFixed(2)} hrs</span>
                             </div>
                             <div class="roster-action-group">
-                                <button class="action-sub-btn status-toggle" onclick="adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">${forceButtonLabel}</button>
-                                <button class="action-sub-btn delete" onclick="adminPurgeUser('${member.email}')">Purge</button>
+                                <button class="action-sub-btn status-toggle" onclick="event.stopPropagation(); adminOverrideToggle('${member.email}', ${member.isCurrentlyClockedIn})">${forceButtonLabel}</button>
+                                <button class="action-sub-btn delete" onclick="event.stopPropagation(); adminPurgeUser('${member.email}')">Purge</button>
                             </div>
                         </div>
                     `;
@@ -3951,6 +4276,71 @@
             if (fullCachedPayload) {
                 populateAdminConsole(fullCachedPayload);
             }
+        }
+
+        function openAdminViewMemberModal(email) {
+            var member = (fullCachedPayload && fullCachedPayload.masterRoster) 
+                ? fullCachedPayload.masterRoster.find(function(m) { return m.email === email; }) 
+                : null;
+            if (!member) { showAlert('Member data not found.'); return; }
+            
+            var displayName = member.fullName || 'N/A';
+            var nickname = member.nickname || '';
+            var staffId = member.staffId || 'N/A';
+            var pronouns = member.pronouns || '';
+            var position = member.position || 'N/A';
+            var section = member.section || 'N/A';
+            var hours = Number(member.totalHours).toFixed(2);
+            
+            var sectionChips = '';
+            if (section && section !== 'N/A') {
+                var parts = section.split(' & ').map(function(s){return s.trim()});
+                sectionChips = parts.map(function(p){
+                    return '<span class="roster-section-chip" style="font-size:0.75rem; padding:3px 10px;">' + p + '</span>';
+                }).join(' ');
+            }
+            
+            document.getElementById('adminViewMemberContent').innerHTML = `
+                <div class="account-card" style="margin-bottom:12px;">
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Email</span>
+                        <span class="profile-field-value">${email}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Name</span>
+                        <span class="profile-field-value">${displayName}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Nickname</span>
+                        <span class="profile-field-value">${nickname || '—'}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">ID Number</span>
+                        <span class="profile-field-value">${staffId}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Pronouns</span>
+                        <span class="profile-field-value">${pronouns || '—'}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Position</span>
+                        <span class="profile-field-value">${position}</span>
+                    </div>
+                    <div class="profile-field-row">
+                        <span class="profile-field-label">Section</span>
+                        <span class="profile-field-value">${sectionChips || 'N/A'}</span>
+                    </div>
+                    <div class="profile-field-row" style="border-bottom:none;">
+                        <span class="profile-field-label">Hours</span>
+                        <span class="hours-badge">${hours}</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('adminViewMemberModal').classList.remove('hidden');
+        }
+        
+        function closeAdminViewMemberModal() {
+            document.getElementById('adminViewMemberModal').classList.add('hidden');
         }
 
         async function adminOverrideToggle(targetEmail, currentStatus) {
@@ -4078,6 +4468,7 @@
         }
 
         function handleLogout() {
+            appBootstrapped = false;
             sessionStorage.clear();
             localStorage.clear();
             location.reload();
@@ -4180,6 +4571,26 @@
             document.getElementById('adminSetPasswordModal').classList.remove('hidden');
         }
         
+        // ===== ADMIN HOURS ADJUSTMENT =====
+        function adjustMemberHours() {
+            var targetEmail = document.getElementById('hoursAdjustEmail').value.trim();
+            var hoursDelta = parseFloat(document.getElementById('hoursAdjustAmount').value);
+            
+            if (!targetEmail) { showAlert('Please enter a member email.'); return; }
+            if (isNaN(hoursDelta) || hoursDelta === 0) { showAlert('Please enter a valid number of hours (positive to add, negative to deduct).'); return; }
+            
+            sendPostRequest({
+                token: SYSTEM_API_TOKEN,
+                action: "Adjust Hours",
+                email: userEmail,
+                targetEmail: targetEmail,
+                hoursDelta: hoursDelta
+            }, "Logged " + hoursDelta + " hrs for " + targetEmail);
+            
+            document.getElementById('hoursAdjustEmail').value = '';
+            document.getElementById('hoursAdjustAmount').value = '';
+        }
+
         // ===== ADMIN BOARD PASSWORD SAVE =====
         function saveAdminBoardPassword() {
             const password = document.getElementById('adminBoardPasswordInput').value.trim();
@@ -4195,6 +4606,9 @@
             document.getElementById('adminBoardPasswordInput').value = '';
         }
         
+        // ===== ACCOUNT CHANGES TRACKING =====
+        var pendingAccountChanges = {};
+
         // ===== TEXT FIELD EDIT (Name, Nickname, ID, Pronouns) =====
         function toggleTextFieldEdit(fieldId) {
             var panel = document.getElementById('edit' + fieldId + 'Panel');
@@ -4208,7 +4622,7 @@
                 input.select();
             }
         }
-        function saveTextField(fieldId) {
+        function applyTextFieldEdit(fieldId) {
             var display = document.getElementById('display' + fieldId);
             var input = document.getElementById('input' + fieldId);
             var newValue = input.value.trim();
@@ -4223,18 +4637,16 @@
                 'StaffId': 'staffId',
                 'Pronouns': 'pronouns'
             };
-            var payload = {
-                token: SYSTEM_API_TOKEN,
-                action: "Update Profile",
-                email: userEmail
-            };
+            if (fieldId === 'StaffId' && newValue && !/^\d+$/.test(newValue)) {
+                showAlert('ID Number must contain only numbers.');
+                return;
+            }
             var backendKey = fieldMap[fieldId];
             if (backendKey) {
-                payload[backendKey] = newValue;
+                pendingAccountChanges[backendKey] = newValue;
             }
             display.innerText = newValue || 'N/A';
             document.getElementById('edit' + fieldId + 'Panel').style.display = 'none';
-            sendPostRequest(payload, fieldId + " updated!");
         }
         function cancelTextFieldEdit(fieldId) {
             document.getElementById('edit' + fieldId + 'Panel').style.display = 'none';
@@ -4253,17 +4665,13 @@
             }
         }
 
-        function performPositionSave() {
+        function applyPositionEdit() {
             const newValue = document.getElementById('positionSelect').value;
-            document.getElementById('displayPosition').innerText = newValue;
+            if (newValue) {
+                pendingAccountChanges['position'] = newValue;
+            }
+            document.getElementById('displayPosition').innerText = newValue || 'N/A';
             document.getElementById('positionEditContainer').style.display = 'none';
-            const payload = {
-                token: SYSTEM_API_TOKEN,
-                action: "Update Profile",
-                email: userEmail,
-                position: newValue
-            };
-            sendPostRequest(payload, "Position updated!");
         }
 
         function cancelPositionEdit() {
@@ -4323,7 +4731,7 @@
             setTimeout(() => { btn.style.transform = ''; }, 150);
         }
 
-        function performSectionSave() {
+        function applySectionEdit() {
             const mainSection = document.getElementById('sectionMainSelect').value;
             if (!mainSection) {
                 showAlert('Please select a main section.');
@@ -4336,19 +4744,47 @@
             if (extras.length > 0) {
                 displayValue += ' & ' + extras.join(' & ');
             }
+            pendingAccountChanges['section'] = displayValue;
             renderSectionChips(displayValue);
             document.getElementById('sectionEditContainer').style.display = 'none';
-            const payload = {
-                token: SYSTEM_API_TOKEN,
-                action: "Update Profile",
-                email: userEmail,
-                section: displayValue
-            };
-            sendPostRequest(payload, "Section updated!");
         }
 
         function cancelSectionEdit() {
             document.getElementById('sectionEditContainer').style.display = 'none';
+        }
+
+        function saveAllAccountChanges() {
+            var keys = Object.keys(pendingAccountChanges);
+            if (keys.length === 0) {
+                showAlert('No changes to save.');
+                return;
+            }
+            var payload = {
+                token: SYSTEM_API_TOKEN,
+                action: "Update Profile",
+                email: userEmail
+            };
+            keys.forEach(function(k) {
+                payload[k] = pendingAccountChanges[k];
+            });
+            pendingAccountChanges = {};
+            sendPostRequest(payload, "All changes saved!");
+        }
+
+        function discardAccountChanges() {
+            pendingAccountChanges = {};
+            closeAccountModal();
+            // Refresh data to revert display values to server state
+            fetchUserData(userEmail, function() {
+                if (fullCachedPayload) {
+                    document.getElementById('displayFullName').innerText = fullCachedPayload.fullName || 'N/A';
+                    document.getElementById('displayNickname').innerText = fullCachedPayload.nickname || '';
+                    document.getElementById('displayStaffId').innerText = fullCachedPayload.staffId || 'N/A';
+                    document.getElementById('displayPronouns').innerText = fullCachedPayload.pronouns || '';
+                    document.getElementById('displayPosition').innerText = fullCachedPayload.position || 'N/A';
+                    renderSectionChips(fullCachedPayload.section);
+                }
+            });
         }
 
         // ===== BUG / FEEDBACK MODAL =====
@@ -4431,25 +4867,29 @@
 
         function submitFeedback() {
             const message = document.getElementById('bugMessageInput').value.trim();
-            if (!message) {
-                showAlert('Please enter a message before submitting.');
-                return;
+
+            if (feedbackType === 'bug') {
+                if (!message) {
+                    showAlert('Please enter a message before submitting.');
+                    return;
+                }
             }
 
             const payload = {
                 token: SYSTEM_API_TOKEN,
                 action: "Submit Feedback",
                 email: userEmail,
-                feedbackType: feedbackType,
-                message: message
+                feedbackType: feedbackType
             };
+
+            if (message) {
+                payload.message = message;
+            }
 
             if (feedbackType === 'feedback') {
                 payload.rating1 = feedbackRatings[1] || 0;
                 payload.rating2 = feedbackRatings[2] || 0;
-                payload.rating3 = feedbackRatings[3] || 0;
-                // Check if all ratings are given
-                if (!payload.rating1 || !payload.rating2 || !payload.rating3) {
+                if (!payload.rating1 || !payload.rating2) {
                     showAlert('Please complete all star ratings before submitting feedback.');
                     return;
                 }
@@ -4468,14 +4908,39 @@
             }, 500);
         }
 
+        // ===== FIRST-TIME / UNFILLED ACCOUNT ALERT =====
+        function checkFirstTimeSetup(data) {
+            if (!data) return;
+            var hasMissingInfo = !data.fullName || data.fullName.trim() === '' ||
+                                !data.section || data.section === 'N/A' || data.section.trim() === '' ||
+                                !data.position || data.position.trim() === '';
+            if (hasMissingInfo) {
+                document.getElementById('firstTimeAlert').classList.remove('hidden');
+            }
+        }
+        
+        function closeFirstTimeAlert() {
+            document.getElementById('firstTimeAlert').classList.add('hidden');
+        }
+
         function closeAccountModal() {
+            if (Object.keys(pendingAccountChanges).length > 0) {
+                var confirmed = confirm("You have unsaved changes. Discard them?");
+                if (!confirmed) return;
+                pendingAccountChanges = {};
+            }
             document.getElementById('accountModal').classList.add('hidden');
         }
 
         // Close modals on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                var modals = ['infoModal', 'accountModal', 'editFolioModal', 'alertModal', 'confirmModal', 'bugModal'];
+                var modals = ['infoModal', 'editFolioModal', 'alertModal', 'confirmModal', 'bugModal', 'firstTimeAlert', 'adminViewMemberModal'];
+                // Handle account modal specially to check for unsaved changes
+                var accEl = document.getElementById('accountModal');
+                if (accEl && !accEl.classList.contains('hidden')) {
+                    closeAccountModal();
+                }
                 modals.forEach(function(id) {
                     var el = document.getElementById(id);
                     if (el && !el.classList.contains('hidden')) {
@@ -4511,6 +4976,7 @@
                             <span class="folio-stock-dot ${!item.canGet ? 'empty' : item.maxQty > 5 ? 'high' : 'low'}"></span>
                             <span class="folio-stock-text ${!item.canGet ? 'empty' : item.maxQty > 5 ? 'high' : 'low'}" ${item.canGet ? `onclick="setCartQuantity('${item.name}', ${item.maxQty})" style="cursor:pointer;" title="Fill max"` : ''}>Total: ${item.remaining}</span>
                         </div>
+                        ${item.limitPerMember > 0 ? `<div class="folio-limit-badge">Limit: ${item.limitPerMember}/member</div>` : ''}
                         ${item.canGet ? `
                             <div class="folio-qty-control">
                                 <button class="qty-btn minus" onclick="updateCart('${item.name}', -1)">&minus;</button>
@@ -4562,10 +5028,24 @@
             const items = Object.entries(cart).filter(([n, q]) => q > 0);
             if (items.length === 0) { showAlert("Cart is empty!"); return; }
             
-            const totalQty = items.reduce((sum, [, q]) => sum + q, 0);
+            const folioHistory = (fullCachedPayload && fullCachedPayload.folioHistory) || {};
             
-            // Check if >10 limit applies — admins bypass, non-admins need EB password
-            if (totalQty > 10 && fullCachedPayload && !fullCachedPayload.isAdmin) {
+            // Check per-folio limits — admins bypass, non-admins need EB password
+            let needsApproval = false;
+            for (const [name, qty] of items) {
+                const folio = folioDataCache.find(f => f.name === name);
+                if (!folio) continue;
+                const limit = folio.limitPerMember || 0;
+                if (limit > 0) {
+                    const alreadyTaken = folioHistory[name] || 0;
+                    if (alreadyTaken + qty > limit) {
+                        needsApproval = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (needsApproval && fullCachedPayload && !fullCachedPayload.isAdmin) {
                 if (sessionStorage.getItem('ebVerified') === 'true') {
                     await doSubmitCart(items);
                 } else {
@@ -4580,13 +5060,15 @@
         let pendingCartItems = null;
         
         async function doSubmitCart(items) {
+            const ebVerified = sessionStorage.getItem('ebVerified') === 'true';
             for (const [name, qty] of items) {
                 await sendPostRequest({
                     token: SYSTEM_API_TOKEN,
                     action: "Get Folio",
                     email: userEmail,
                     folioName: name,
-                    quantity: qty
+                    quantity: qty,
+                    allowExceed: ebVerified
                 }, "Requested " + name);
             }
             clearCart();
@@ -4614,6 +5096,7 @@
             document.getElementById('editDistributedDisplay').innerText = item.distributed || 0;
             document.getElementById('editTotalDisplay').innerText = item.remaining || 0;
             document.getElementById('editAllowable').value = item.maxQty || 0;
+            document.getElementById('editLimitPerMember').value = item.limitPerMember || 0;
             document.getElementById('editLocation').value = item.location || '';
             document.getElementById('editNote').value = item.note || '';
             document.getElementById('editImageUrl').value = item.imageUrl || '';
@@ -4638,6 +5121,7 @@
                 beginningQty: parseFloat(document.getElementById('editBeginningQty').value) || 0,
                 location: document.getElementById('editLocation').value,
                 allowable: parseFloat(document.getElementById('editAllowable').value) || 0,
+                limitPerMember: parseFloat(document.getElementById('editLimitPerMember').value) || 0,
                 note: document.getElementById('editNote').value,
                 imageUrl: document.getElementById('editImageUrl').value
             };
