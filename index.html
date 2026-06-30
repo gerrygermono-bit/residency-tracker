@@ -196,14 +196,35 @@
         font-size: 1.25rem;
         font-weight: 700;
         letter-spacing: -0.025em;
+        cursor: default;
         background: linear-gradient(135deg, var(--dlsu-green), #10b981);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        transition: all 0.4s ease;
+    }
+    .brand h1:hover {
+        background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: brandRainbow 2s linear infinite;
+    }
+    @keyframes brandRainbow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
     }
 
     [data-theme="dark"] .brand h1 {
         background: linear-gradient(135deg, #34d399, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    [data-theme="dark"] .brand h1:hover {
+        background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
+        background-size: 200% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -897,6 +918,33 @@
 
     [data-theme="dark"] .streak-value {
         color: #34d399 !important;
+    }
+
+    .restore-streak-btn {
+        display: inline-block;
+        margin: 4px auto 0;
+        padding: 6px 14px;
+        border: 1px solid var(--border-soft);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--text-muted);
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .restore-streak-btn:hover {
+        border-color: var(--dlsu-green);
+        color: var(--dlsu-green);
+    }
+    .restore-streak-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    [data-theme="dark"] .restore-streak-btn:hover {
+        border-color: #34d399;
+        color: #34d399;
     }
 
     .admin-submit-btn {
@@ -2846,6 +2894,54 @@
         100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
+    .emoji-rain {
+        position: fixed;
+        top: -40px;
+        z-index: 99999;
+        pointer-events: none;
+        font-size: 30px;
+        animation: emojiFall linear forwards;
+    }
+    @keyframes emojiFall {
+        to { transform: translateY(110vh) rotate(720deg); }
+    }
+
+    .disco-overlay {
+        position: fixed;
+        left: -100vw;
+        top: -100vh;
+        width: 300vw;
+        height: 300vh;
+        z-index: 99998;
+        pointer-events: none;
+        background: conic-gradient(#ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
+        animation: discoSpin 3s linear infinite;
+        mix-blend-mode: overlay;
+        opacity: 0.4;
+        transition: opacity 1.5s ease;
+    }
+    .disco-overlay.fade-out {
+        opacity: 0;
+    }
+    @keyframes discoSpin {
+        to { transform: rotate(360deg); }
+    }
+
+    .disco-sparkle {
+        position: fixed;
+        width: 5px;
+        height: 5px;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99999;
+        animation: sparkleFade 1.2s ease-out forwards;
+    }
+    @keyframes sparkleFade {
+        0% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(4) translateY(-20px); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after {
             animation-duration: 0.01ms !important;
@@ -2875,11 +2971,14 @@
                     </svg>
                 </button>
                 <button class="bug-btn" onclick="openBugModal()" title="Send Feedback / Report Bug">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2a7 7 0 0 1 7 7v1h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v1a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5v-1H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h1V9a7 7 0 0 1 7-7z"/>
-                        <path d="M9 14h.01"/>
-                        <path d="M15 14h.01"/>
-                        <path d="M9 18a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3"/>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="5" r="2"/>
+                        <path d="M10 3.5 L7 1.5 M14 3.5 L17 1.5"/>
+                        <ellipse cx="12" cy="13" rx="6" ry="5.5"/>
+                        <line x1="12" y1="7" x2="12" y2="19"/>
+                        <path d="M6 10 L3 9 M18 10 L21 9"/>
+                        <path d="M6 13 L3 14 M18 13 L21 14"/>
+                        <path d="M7 17 L4 19 M17 17 L20 19"/>
                     </svg>
                 </button>
                 <button class="help-btn" onclick="openInfoModal()" title="Guidelines">
@@ -2960,11 +3059,12 @@
 
                 <div class="metric-display">
                     <div class="metric-label">Total Office Hours</div>
-                    <div class="metric-value" id="hoursValue">0.00</div>
+                    <div class="metric-value" id="hoursValue">--</div>
                 </div>
                 <div class="metric-display" id="streakContainer">
                     <div class="metric-label">Day Streak</div>
-                    <div class="metric-value streak-value" id="streakValue">0</div>
+                    <div class="metric-value streak-value" id="streakValue">--</div>
+                    <button class="restore-streak-btn hidden" id="restoreStreakBtn" onclick="restoreStreak()">Restore Streak</button>
                 </div>
 
                 <div class="metric-display hidden" id="liveTimerDisplay">
@@ -2995,7 +3095,7 @@
             <div class="card select-panel-view" id="trackerContentView">
                 <div class="panel-heading">Recent Actions</div>
                 <div class="log-feed-container" id="recentLogsContainer">
-                    <div class="empty-state">No recent records gathered segment.</div>
+                    <div class="empty-state">No recent records gathered.</div>
                 </div>
             </div>
 
@@ -3114,7 +3214,7 @@
                     <li style="margin-bottom: 4px;">Toggle between <strong>Light</strong> and <strong>Dark</strong> mode using the sun/moon icon in the header.</li>
                     <li style="margin-bottom: 4px;">The <strong>Online</strong> and <strong>Onsite</strong> mini-boxes show how many people are currently active.</li>
                     <li style="margin-bottom: 4px;">Open the <strong>Account Information</strong> menu to edit your profile — Position, Section, Full Name, Nickname, Pronouns, and ID Number.</li>
-                    <li style="margin-bottom: 4px;">Use the <strong>Send Feedback / Report Bug</strong> button (head icon) to submit ratings, feedback, or bug reports.</li>
+                    <li style="margin-bottom: 4px;">Use the <strong>Send Feedback / Report Bug</strong> button (bug icon) to submit ratings, feedback, or bug reports.</li>
                 </ul>
             </div>
 
@@ -3217,7 +3317,7 @@
                     Feedback &amp; Bug Reports
                 </h4>
                 <ul style="margin: 0 0 8px; padding-left: 20px; font-size: 0.88rem; list-style-type: disc;">
-                    <li style="margin-bottom: 4px;">Click the <strong>head icon</strong> in the header to open the feedback modal.</li>
+                    <li style="margin-bottom: 4px;">Click the <strong>bug icon</strong> in the header to open the feedback modal.</li>
                     <li style="margin-bottom: 4px;">Switch between <strong>Feedback</strong> (with star ratings) or <strong>Bug Report</strong> mode.</li>
                     <li style="margin-bottom: 4px;">Rate your experience and how you found the website.</li>
                     <li style="margin-bottom: 4px;">Write a message and hit <strong>Submit</strong> — we read every submission!</li>
@@ -3833,7 +3933,20 @@
             }
         }
 
+        var themeClickCount = 0;
+        var themeClickTimer = null;
+
         function toggleTheme() {
+            themeClickCount++;
+            clearTimeout(themeClickTimer);
+            themeClickTimer = setTimeout(function() { themeClickCount = 0; }, 5000);
+
+            if (themeClickCount >= 6) {
+                themeClickCount = 0;
+                startDiscoMode();
+                return;
+            }
+
             const targetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', targetTheme);
             localStorage.setItem('theme', targetTheme);
@@ -3842,6 +3955,47 @@
             if (document.getElementById('loginView').classList.contains('hidden') === false) {
                 renderGoogleSignInButton(targetTheme);
             }
+        }
+
+        function startDiscoMode() {
+            var icon = document.getElementById('themeIcon');
+            icon.innerHTML = '';
+
+            var discoText = document.createElement('span');
+            discoText.id = 'discoIcon';
+            discoText.textContent = '\uD83E\uDEA9';
+            discoText.style.cssText = 'font-size:22px;line-height:1;';
+            icon.parentNode.appendChild(discoText);
+
+            var overlay = document.createElement('div');
+            overlay.className = 'disco-overlay';
+            document.body.appendChild(overlay);
+
+            var sparkleInterval = setInterval(function() {
+                for (var s = 0; s < 4; s++) {
+                    var spark = document.createElement('div');
+                    spark.className = 'disco-sparkle';
+                    spark.style.left = Math.random() * 100 + 'vw';
+                    spark.style.top = Math.random() * 100 + 'vh';
+                    spark.style.animationDelay = (Math.random() * 0.3) + 's';
+                    document.body.appendChild(spark);
+                    setTimeout(function() { spark.remove(); }, 1500);
+                }
+            }, 200);
+
+            setTimeout(function() {
+                clearInterval(sparkleInterval);
+                if (overlay) overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    if (overlay) overlay.remove();
+                    var sparks = document.querySelectorAll('.disco-sparkle');
+                    for (var i = 0; i < sparks.length; i++) sparks[i].remove();
+                    var ds = document.getElementById('discoIcon');
+                    if (ds) ds.remove();
+                    var theme = document.documentElement.getAttribute('data-theme') || 'light';
+                    updateThemeIcon(theme);
+                }, 1500);
+            }, 5000);
         }
 
         function updateThemeIcon(theme) {
@@ -4008,7 +4162,29 @@
             }
             
             document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
-            document.getElementById('streakValue').innerText = data.streak || 0;
+            var streak = data.streak || 0;
+            document.getElementById('streakValue').innerText = streak;
+            var restoreBtn = document.getElementById('restoreStreakBtn');
+            if (streak === 0) {
+                restoreBtn.classList.remove('hidden');
+                if (data.lastStreakRestore) {
+                    var today = new Date();
+                    var lastRestore = new Date(data.lastStreakRestore);
+                    var diffDays = Math.floor((today - lastRestore) / (1000 * 60 * 60 * 24));
+                    if (diffDays < 2) {
+                        restoreBtn.disabled = true;
+                        restoreBtn.textContent = 'Restore (cooldown)';
+                    } else {
+                        restoreBtn.disabled = false;
+                        restoreBtn.textContent = 'Restore Streak';
+                    }
+                } else {
+                    restoreBtn.disabled = false;
+                    restoreBtn.textContent = 'Restore Streak';
+                }
+            } else {
+                restoreBtn.classList.add('hidden');
+            }
             var onlineCount = data.onlineCount || 0;
             var onsiteCount = data.onsiteCount || 0;
             document.getElementById('onlineCountVal').innerText = onlineCount;
@@ -4975,6 +5151,25 @@
             document.getElementById('firstTimeAlert').classList.add('hidden');
         }
 
+        function restoreStreak() {
+            var payload = {
+                action: "Restore Streak",
+                email: userEmail,
+                token: SYSTEM_API_TOKEN
+            };
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(function() {
+                showAlert("Streak restored! Refreshing data...");
+                fetchUserData(userEmail);
+            }).catch(function() {
+                showAlert("Failed to restore streak. Try again.");
+            });
+        }
+
         (function() {
             var canHover = window.matchMedia('(hover: hover)').matches;
             function setupMeme() {
@@ -5001,6 +5196,34 @@
                 setupMeme();
             }
         })();
+
+        var logoClickCount = 0;
+        var logoTimer = null;
+        document.querySelector('.brand h1').addEventListener('click', function() {
+            logoClickCount++;
+            clearTimeout(logoTimer);
+            logoTimer = setTimeout(function() { logoClickCount = 0; }, 5000);
+
+            if (logoClickCount >= 1) {
+                logoClickCount = 0;
+                rainEmojis('\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08', 50);
+            }
+        });
+
+        function rainEmojis(emoji, count) {
+            for (var i = 0; i < count; i++) {
+                var el = document.createElement('div');
+                el.className = 'emoji-rain';
+                el.textContent = emoji;
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (20 + Math.random() * 20) + 'px';
+                el.style.animationDuration = (3 + Math.random() * 4) + 's';
+                el.style.animationDelay = (Math.random() * 2) + 's';
+                el.style.opacity = 0.6 + Math.random() * 0.4;
+                document.body.appendChild(el);
+                setTimeout(function() { el.remove(); }, 5000);
+            }
+        }
 
         function closeAccountModal() {
             if (Object.keys(pendingAccountChanges).length > 0) {
