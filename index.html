@@ -391,6 +391,9 @@
         font-size: 0.9rem;
         color: var(--text-main);
     }
+    .profile-field-value.is-empty {
+        color: #ef4444;
+    }
     .edit-icon-sm {
         cursor: pointer;
         display: inline-flex;
@@ -3402,7 +3405,7 @@
                         <!-- Full Name -->
                         <div class="profile-field-row">
                             <span class="profile-field-label">Name</span>
-                            <span class="profile-field-value" id="displayFullName">N/A</span>
+                            <span class="profile-field-value is-empty" id="displayFullName">—</span>
                             <span class="edit-icon-sm" data-click="toggleTextFieldEdit('FullName')">
                                 <svg width="14" height="14" stroke-width="2"><use href="#pencil-icon"/></svg>
                             </span>
@@ -3421,7 +3424,7 @@
                         <!-- Nickname -->
                         <div class="profile-field-row">
                             <span class="profile-field-label">Nickname</span>
-                            <span class="profile-field-value" id="displayNickname"></span>
+                            <span class="profile-field-value is-empty" id="displayNickname">—</span>
                             <span class="edit-icon-sm" data-click="toggleTextFieldEdit('Nickname')">
                                 <svg width="14" height="14" stroke-width="2"><use href="#pencil-icon"/></svg>
                             </span>
@@ -3440,7 +3443,7 @@
                         <!-- ID Number -->
                         <div class="profile-field-row">
                             <span class="profile-field-label">ID Number</span>
-                            <span class="profile-field-value" id="displayStaffId">N/A</span>
+                            <span class="profile-field-value is-empty" id="displayStaffId">—</span>
                             <span class="edit-icon-sm" data-click="toggleTextFieldEdit('StaffId')">
                                 <svg width="14" height="14" stroke-width="2"><use href="#pencil-icon"/></svg>
                             </span>
@@ -3459,7 +3462,7 @@
                         <!-- Pronouns -->
                         <div class="profile-field-row" style="border-bottom: none;">
                             <span class="profile-field-label">Pronouns</span>
-                            <span class="profile-field-value" id="displayPronouns"></span>
+                            <span class="profile-field-value is-empty" id="displayPronouns">—</span>
                             <span class="edit-icon-sm" data-click="toggleTextFieldEdit('Pronouns')">
                                 <svg width="14" height="14" stroke-width="2"><use href="#pencil-icon"/></svg>
                             </span>
@@ -3467,7 +3470,30 @@
                         <div id="editPronounsPanel" class="premium-edit-panel hidden">
                             <div class="premium-field-group">
                                 <label class="premium-field-label">Pronouns</label>
-                                <input type="text" id="inputPronouns" class="premium-select" style="padding: 10px 14px; width: 100%;">
+                                <input type="text" id="inputPronouns" class="premium-select" list="pronounSuggestions" style="padding: 10px 14px; width: 100%;">
+                                <datalist id="pronounSuggestions">
+                                    <option value="he/him">
+                                    <option value="she/her">
+                                    <option value="they/them">
+                                    <option value="he/they">
+                                    <option value="she/they">
+                                    <option value="she/her/they/them">
+                                    <option value="any pronouns">
+                                    <option value="all pronouns">
+                                    <option value="any/all">
+                                    <option value="ask me">
+                                    <option value="name only">
+                                    <option value="prefer not to say">
+                                    <option value="ze/hir">
+                                    <option value="ze/zir">
+                                    <option value="xe/xem">
+                                    <option value="ey/em">
+                                    <option value="fae/faer">
+                                    <option value="ne/nem">
+                                    <option value="ve/ver">
+                                    <option value="per/pers">
+                                    <option value="it/its">
+                                </datalist>
                             </div>
                             <div class="premium-actions">
                                 <button class="premium-btn premium-btn-primary" data-click="applyTextFieldEdit('Pronouns')">Apply</button>
@@ -3489,7 +3515,7 @@
                         <!-- Position -->
                         <div class="profile-field-row">
                             <span class="profile-field-label">Position</span>
-                            <span class="profile-field-value" id="displayPosition">N/A</span>
+                            <span class="profile-field-value is-empty" id="displayPosition">—</span>
                             <span class="edit-icon-sm" data-click="togglePositionEdit()">
                                 <svg width="14" height="14" stroke-width="2"><use href="#pencil-icon"/></svg>
                             </span>
@@ -3874,6 +3900,14 @@
             clearTimeout(refreshTimer);
             refreshTimer = setTimeout(function () { fetchUserData(userEmail); }, 1000);
         }
+        function setFieldDisplay(id, value) {
+            let el = document.getElementById(id);
+            if (!el) return;
+            let str = value != null ? String(value).trim() : '';
+            let isEmpty = str === '';
+            el.innerText = isEmpty ? '—' : str;
+            el.classList.toggle('is-empty', isEmpty);
+        }
         function escJs(str) {
             return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/<\//g, '<\\/');
         }
@@ -4176,11 +4210,11 @@
             document.getElementById('avatarInitials').innerText = initials;
 
             // updates all profile fields
-            document.getElementById('displayPosition').innerText = data.position || "Member";
-            document.getElementById('displayFullName').innerText = data.fullName || "N/A";
-            document.getElementById('displayNickname').innerText = data.nickname || "";
-            document.getElementById('displayStaffId').innerText = data.staffId || "N/A";
-            document.getElementById('displayPronouns').innerText = data.pronouns || "";
+            setFieldDisplay('displayPosition', data.position);
+            setFieldDisplay('displayFullName', data.fullName);
+            setFieldDisplay('displayNickname', data.nickname);
+            setFieldDisplay('displayStaffId', data.staffId);
+            setFieldDisplay('displayPronouns', data.pronouns);
 
             // section chips
             renderSectionChips(data.section);
@@ -4486,11 +4520,11 @@
                 : null;
             if (!member) { showAlert('Member data not found.'); return; }
             
-            let displayName = escHtml(member.fullName || 'N/A');
+            let displayName = escHtml(member.fullName || '');
             let nickname = escHtml(member.nickname || '');
-            let staffId = escHtml(member.staffId || 'N/A');
+            let staffId = escHtml(member.staffId || '');
             let pronouns = escHtml(member.pronouns || '');
-            let position = escHtml(member.position || 'N/A');
+            let position = escHtml(member.position || '');
             let section = member.section || 'N/A';
             let hours = Number(member.totalHours).toFixed(2);
             
@@ -4510,27 +4544,27 @@
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">Name</span>
-                        <span class="profile-field-value">${displayName}</span>
+                        <span class="profile-field-value${displayName ? '' : ' is-empty'}">${displayName || '—'}</span>
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">Nickname</span>
-                        <span class="profile-field-value">${nickname || '—'}</span>
+                        <span class="profile-field-value${nickname ? '' : ' is-empty'}">${nickname || '—'}</span>
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">ID Number</span>
-                        <span class="profile-field-value">${staffId}</span>
+                        <span class="profile-field-value${staffId ? '' : ' is-empty'}">${staffId || '—'}</span>
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">Pronouns</span>
-                        <span class="profile-field-value">${pronouns || '—'}</span>
+                        <span class="profile-field-value${pronouns ? '' : ' is-empty'}">${pronouns || '—'}</span>
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">Position</span>
-                        <span class="profile-field-value">${position}</span>
+                        <span class="profile-field-value${position ? '' : ' is-empty'}">${position || '—'}</span>
                     </div>
                     <div class="profile-field-row">
                         <span class="profile-field-label">Section</span>
-                        <span class="profile-field-value">${sectionChips || 'N/A'}</span>
+                        <span class="profile-field-value${sectionChips ? '' : ' is-empty'}">${sectionChips || '—'}</span>
                     </div>
                     <div class="profile-field-row" style="border-bottom:none;">
                         <span class="profile-field-label">Hours</span>
@@ -4826,7 +4860,7 @@
             if (isHidden) {
                 let display = document.getElementById('display' + fieldId);
                 let input = document.getElementById('input' + fieldId);
-                input.value = display.innerText === 'N/A' ? '' : display.innerText;
+                input.value = (display.innerText === 'N/A' || display.innerText === '—' || display.innerText === '' || display.innerText === 'Member') ? '' : display.innerText;
                 input.focus();
                 input.select();
             }
@@ -4836,7 +4870,7 @@
             let input = document.getElementById('input' + fieldId);
             let newValue = input.value.trim();
             let oldValue = display.innerText;
-            if (newValue === oldValue || (!newValue && oldValue === 'N/A')) {
+            if (newValue === oldValue || (!newValue && (oldValue === '—' || oldValue === 'N/A'))) {
                 document.getElementById('edit' + fieldId + 'Panel').classList.add('hidden');
                 return;
             }
@@ -4854,7 +4888,7 @@
             if (backendKey) {
                 pendingAccountChanges[backendKey] = newValue;
             }
-            display.innerText = newValue || 'N/A';
+            setFieldDisplay('display' + fieldId, newValue);
             document.getElementById('edit' + fieldId + 'Panel').classList.add('hidden');
         }
         function cancelTextFieldEdit(fieldId) {
@@ -4879,7 +4913,7 @@
             if (newValue) {
                 pendingAccountChanges['position'] = newValue;
             }
-            document.getElementById('displayPosition').innerText = newValue || 'N/A';
+            setFieldDisplay('displayPosition', newValue);
             document.getElementById('positionEditContainer').classList.add('hidden');
         }
 
@@ -4893,7 +4927,7 @@
             if (!container) return;
             container.innerHTML = '';
             if (!sectionVal || sectionVal === 'N/A') {
-                container.innerHTML = '<span class="profile-field-value" style="font-size:0.88rem;">N/A</span>';
+                container.innerHTML = '<span class="profile-field-value is-empty" style="font-size:0.88rem;">—</span>';
                 return;
             }
             let parts = sectionVal.split(' & ').map(function(s){return s.trim()});
@@ -4915,8 +4949,8 @@
             container.classList.toggle('hidden');
             if (!container.classList.contains('hidden')) {
                 let chipsContainer = document.getElementById('sectionChipsContainer');
-                let currentSection = chipsContainer ? chipsContainer.innerText.replace(/\s+/g,' ').trim() : 'N/A';
-                if (currentSection === 'N/A' || !currentSection) { currentSection = 'N/A'; }
+                let currentSection = chipsContainer ? chipsContainer.innerText.replace(/\s+/g,' ').trim() : '';
+                if (currentSection === 'N/A' || currentSection === '—' || !currentSection) { currentSection = ''; }
                 let mainSection = currentSection;
                 let hasLayout = false;
                 let hasPropMan = false;
@@ -4926,7 +4960,7 @@
                     hasLayout = parts.includes('Layout');
                     hasPropMan = parts.includes('PropMan');
                 }
-                document.getElementById('sectionMainSelect').value = mainSection === 'N/A' ? '' : mainSection;
+                document.getElementById('sectionMainSelect').value = (mainSection === 'N/A' || !mainSection) ? '' : mainSection;
                 document.querySelectorAll('.premium-chip').forEach(chip => {
                     const val = chip.getAttribute('data-value');
                     chip.classList.toggle('active', (val === 'Layout' && hasLayout) || (val === 'PropMan' && hasPropMan));
@@ -4986,11 +5020,11 @@
             // Refresh data to revert display values to server state
             fetchUserData(userEmail, function() {
                 if (fullCachedPayload) {
-                    document.getElementById('displayFullName').innerText = fullCachedPayload.fullName || 'N/A';
-                    document.getElementById('displayNickname').innerText = fullCachedPayload.nickname || '';
-                    document.getElementById('displayStaffId').innerText = fullCachedPayload.staffId || 'N/A';
-                    document.getElementById('displayPronouns').innerText = fullCachedPayload.pronouns || '';
-                    document.getElementById('displayPosition').innerText = fullCachedPayload.position || 'N/A';
+                    setFieldDisplay('displayFullName', fullCachedPayload.fullName);
+                    setFieldDisplay('displayNickname', fullCachedPayload.nickname);
+                    setFieldDisplay('displayStaffId', fullCachedPayload.staffId);
+                    setFieldDisplay('displayPronouns', fullCachedPayload.pronouns);
+                    setFieldDisplay('displayPosition', fullCachedPayload.position);
                     renderSectionChips(fullCachedPayload.section);
                 }
             });
