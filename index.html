@@ -911,41 +911,6 @@
         color: var(--text-muted);
     }
 
-    .streak-value {
-        color: var(--dlsu-green) !important;
-        font-size: 1.5rem !important;
-    }
-
-    [data-theme="dark"] .streak-value {
-        color: #34d399 !important;
-    }
-
-    .restore-streak-btn {
-        display: inline-block;
-        margin: 4px auto 0;
-        padding: 6px 14px;
-        border: 1px solid var(--border-soft);
-        border-radius: 8px;
-        background: transparent;
-        color: var(--text-muted);
-        font-family: inherit;
-        font-size: 0.75rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .restore-streak-btn:hover {
-        border-color: var(--dlsu-green);
-        color: var(--dlsu-green);
-    }
-    .restore-streak-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    [data-theme="dark"] .restore-streak-btn:hover {
-        border-color: #34d399;
-        color: #34d399;
-    }
 
     .admin-submit-btn {
         width: 100%;
@@ -3061,11 +3026,6 @@
                     <div class="metric-label">Total Office Hours</div>
                     <div class="metric-value" id="hoursValue">--</div>
                 </div>
-                <div class="metric-display" id="streakContainer">
-                    <div class="metric-label">Day Streak</div>
-                    <div class="metric-value streak-value" id="streakValue">--</div>
-                    <button class="restore-streak-btn hidden" id="restoreStreakBtn" onclick="restoreStreak()">Restore Streak</button>
-                </div>
 
                 <div class="metric-display hidden" id="liveTimerDisplay">
                     <div class="metric-label">Live Duration</div>
@@ -4162,29 +4122,6 @@
             }
             
             document.getElementById('hoursValue').innerText = Number(data.totalHours).toFixed(2);
-            var streak = data.streak || 0;
-            document.getElementById('streakValue').innerText = streak;
-            var restoreBtn = document.getElementById('restoreStreakBtn');
-            if (streak === 0) {
-                restoreBtn.classList.remove('hidden');
-                if (data.lastStreakRestore) {
-                    var today = new Date();
-                    var lastRestore = new Date(data.lastStreakRestore);
-                    var diffDays = Math.floor((today - lastRestore) / (1000 * 60 * 60 * 24));
-                    if (diffDays < 2) {
-                        restoreBtn.disabled = true;
-                        restoreBtn.textContent = 'Restore (cooldown)';
-                    } else {
-                        restoreBtn.disabled = false;
-                        restoreBtn.textContent = 'Restore Streak';
-                    }
-                } else {
-                    restoreBtn.disabled = false;
-                    restoreBtn.textContent = 'Restore Streak';
-                }
-            } else {
-                restoreBtn.classList.add('hidden');
-            }
             var onlineCount = data.onlineCount || 0;
             var onsiteCount = data.onsiteCount || 0;
             document.getElementById('onlineCountVal').innerText = onlineCount;
@@ -5151,24 +5088,6 @@
             document.getElementById('firstTimeAlert').classList.add('hidden');
         }
 
-        function restoreStreak() {
-            var payload = {
-                action: "Restore Streak",
-                email: userEmail,
-                token: SYSTEM_API_TOKEN
-            };
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            }).then(function() {
-                showAlert("Streak restored! Refreshing data...");
-                fetchUserData(userEmail);
-            }).catch(function() {
-                showAlert("Failed to restore streak. Try again.");
-            });
-        }
 
         (function() {
             var canHover = window.matchMedia('(hover: hover)').matches;
