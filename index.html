@@ -3163,7 +3163,7 @@
 
     <div class="toast" id="successToast"></div>
 
-<div class="info-modal-overlay hidden" id="infoModal">
+<div class="info-modal-overlay hidden" id="infoModal" role="dialog" aria-modal="true">
     <div class="info-modal">
         <div class="info-modal-header">
             <h3>Website Guidelines</h3>
@@ -3361,7 +3361,7 @@
 </div>
 
 
-        <div class="info-modal-overlay hidden" id="accountModal">
+        <div class="info-modal-overlay hidden" id="accountModal" role="dialog" aria-modal="true">
             <div class="info-modal">
                 <div class="info-modal-header">
                     <h3>Account Information</h3>
@@ -3589,7 +3589,7 @@
         </div>
 
         <!-- Edit Folio Modal (admin) -->
-        <div class="info-modal-overlay hidden" id="editFolioModal">
+        <div class="info-modal-overlay hidden" id="editFolioModal" role="dialog" aria-modal="true">
             <div class="info-modal" style="max-width: 520px;">
                 <div class="info-modal-header">
                     <h3 id="editFolioTitle">Edit Folio</h3>
@@ -3675,7 +3675,7 @@
         </div>
 
         <!-- Bug Report / Feedback Modal -->
-        <div class="bug-modal-overlay hidden" id="bugModal" data-click="closeBugModal()">
+        <div class="bug-modal-overlay hidden" id="bugModal" data-click="closeBugModal()" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()">
                 <div class="bug-modal-header">
                     <h3>Send Feedback / Report Bug</h3>
@@ -3722,7 +3722,7 @@
         </div>
 
         <!-- Closure Reminder Overlay -->
-        <div class="closure-overlay hidden" id="closureReminderOverlay">
+        <div class="closure-overlay hidden" id="closureReminderOverlay" role="dialog" aria-modal="true">
             <div class="closure-modal">
                 <div class="closure-modal-header">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--status-in);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -3752,7 +3752,7 @@
         </div>
 
         <!-- Admin View Member Info Modal -->
-        <div class="bug-modal-overlay hidden" id="adminViewMemberModal">
+        <div class="bug-modal-overlay hidden" id="adminViewMemberModal" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()" style="max-width: 460px;">
                 <div class="bug-modal-header">
                     <h3>Member Information</h3>
@@ -3764,7 +3764,7 @@
         </div>
 
         <!-- First-Time / Unfilled Account Alert -->
-        <div class="bug-modal-overlay hidden" id="firstTimeAlert">
+        <div class="bug-modal-overlay hidden" id="firstTimeAlert" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()" style="max-width: 460px;">
                 <div class="bug-modal-header">
                     <h3>Welcome! Let's Get Started</h3>
@@ -3792,7 +3792,7 @@
         </div>
 
         <!-- Alert Modal -->
-        <div class="bug-modal-overlay hidden" id="alertModal" data-click="closeAlertModal()">
+        <div class="bug-modal-overlay hidden" id="alertModal" data-click="closeAlertModal()" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()" style="max-width: 420px;">
                 <div class="bug-modal-header">
                     <h3 id="alertModalTitle">Notice</h3>
@@ -3808,7 +3808,7 @@
         </div>
 
         <!-- Confirm Modal -->
-        <div class="bug-modal-overlay hidden" id="confirmModal" data-click="closeConfirmModal(false)">
+        <div class="bug-modal-overlay hidden" id="confirmModal" data-click="closeConfirmModal(false)" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()" style="max-width: 420px;">
                 <div class="bug-modal-header">
                     <h3 id="confirmModalTitle">Confirm</h3>
@@ -3825,7 +3825,7 @@
         </div>
 
         <!-- EB Password Modal (for members requesting >10 folios) -->
-        <div class="bug-modal-overlay hidden" id="ebPasswordModal" data-click="closeEbPasswordModal()">
+        <div class="bug-modal-overlay hidden" id="ebPasswordModal" data-click="closeEbPasswordModal()" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()">
                 <div class="bug-modal-header">
                     <h3>EB Approval Required</h3>
@@ -3846,7 +3846,7 @@
         </div>
 
         <!-- Admin Set Password Prompt Modal -->
-        <div class="bug-modal-overlay hidden" id="adminSetPasswordModal" data-click="closeAdminSetPasswordModal()">
+        <div class="bug-modal-overlay hidden" id="adminSetPasswordModal" data-click="closeAdminSetPasswordModal()" role="dialog" aria-modal="true">
             <div class="bug-modal" data-click="event.stopPropagation()">
                 <div class="bug-modal-header">
                     <h3>Set Your EB Password</h3>
@@ -3867,7 +3867,7 @@
         </div>
 
         <!-- Image Preview Lightbox -->
-        <div class="image-preview-overlay hidden" id="imagePreviewOverlay" data-click="closeImagePreview()">
+        <div class="image-preview-overlay hidden" id="imagePreviewOverlay" data-click="closeImagePreview()" role="dialog" aria-modal="true">
             <div class="image-preview-container" data-click="event.stopPropagation()">
                 <button class="image-preview-close" data-click="closeImagePreview()">&times;</button>
                 <img id="imagePreviewImg" src="" alt="Folio preview">
@@ -3895,6 +3895,7 @@
         let appBootstrapped = false;
         let lastFocusedEl = null;
         let refreshTimer = null;
+        let passwordPromptShown = false;
         const FOCUSABLE = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
         function debouncedRefresh() {
             clearTimeout(refreshTimer);
@@ -3909,7 +3910,7 @@
             el.classList.toggle('is-empty', isEmpty);
         }
         function escJs(str) {
-            return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/<\//g, '<\\/');
+            return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/<\//g, '<\\/').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
         }
         function escHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -4187,7 +4188,8 @@
                 document.getElementById('adminMenuOpt').classList.remove('hidden');
                 positionText = "Admin";
                 populateAdminConsole(data);
-                if (data.needsPassword) {
+                if (data.needsPassword && !passwordPromptShown) {
+                    passwordPromptShown = true;
                     setTimeout(showAdminSetPasswordPrompt, 500);
                 }
             }
@@ -4323,6 +4325,8 @@
             const btn = document.getElementById('clockInBtn');
             btn.disabled = true;
             btn.innerText = "Processing...";
+            document.getElementById('modeOnsiteBtn').disabled = true;
+            document.getElementById('modeOnlineBtn').disabled = true;
 
             let clockNote = document.getElementById('clockInNote').value.trim();
             let clockInPayload = {
@@ -4334,11 +4338,19 @@
             if (clockNote) {
                 clockInPayload.note = clockNote;
             }
-            document.getElementById('clockInNote').value = '';
-            sendPostRequest(clockInPayload, `Clocked In successfully (${selectedClockInModeStr})`);
+            try {
+                await sendPostRequest(clockInPayload, `Clocked In successfully (${selectedClockInModeStr})`);
+            } catch (e) {
+                document.getElementById('clockInNote').value = clockNote;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Clock In";
+                document.getElementById('modeOnsiteBtn').disabled = false;
+                document.getElementById('modeOnlineBtn').disabled = false;
+            }
         }
 
-        function executeClockOut() {
+        async function executeClockOut() {
             const btn = document.getElementById('clockOutBtn');
             btn.disabled = true;
             btn.innerText = "Processing...";
@@ -4348,16 +4360,23 @@
             }
             lastSessionMode = "";
 
-            sendPostRequest({
-                token: CLIENT_API_TOKEN,
-                action: "Clock Out",
-                email: userEmail,
-                mode: ""
-            }, "Clocked Out successfully");
+            try {
+                await sendPostRequest({
+                    token: CLIENT_API_TOKEN,
+                    action: "Clock Out",
+                    email: userEmail,
+                    mode: ""
+                }, "Clocked Out successfully");
+            } catch (e) {
+                pendingOnsiteCheckout = false;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Clock Out";
+            }
         }
 
         function sendPostRequest(bodyObj, successMessage) {
-            fetch(APPS_SCRIPT_URL, {
+            return fetch(APPS_SCRIPT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(bodyObj)
@@ -4367,15 +4386,18 @@
                 if (resData.status === "error") {
                     showAlert(`Action failed: ${resData.message}`, 'Error');
                     bootstrapApplication();
-                    return;
+                    throw new Error(resData.message);
                 }
                 showToast(successMessage);
                 debouncedRefresh();
             })
             .catch(err => {
                 console.error(err);
-                showAlert("Network communication timeout error occurred.", 'Error');
+                if (err.message !== "Network communication timeout error occurred.") {
+                    showAlert(err.message === "Failed to fetch" ? "Network communication timeout error occurred." : err.message, 'Error');
+                }
                 bootstrapApplication();
+                throw err;
             });
         }
 
@@ -4508,12 +4530,6 @@
             }
         }
 
-        function handleRosterSortChange() {
-            if (fullCachedPayload) {
-                populateAdminConsole(fullCachedPayload);
-            }
-        }
-
         function openAdminViewMemberModal(email) {
             let member = (fullCachedPayload && fullCachedPayload.masterRoster) 
                 ? fullCachedPayload.masterRoster.find(function(m) { return m.email === email; }) 
@@ -4600,7 +4616,8 @@
             sendPostRequest({
                 token: CLIENT_API_TOKEN,
                 action: "Delete User",
-                email: targetEmail
+                email: userEmail,
+                targetEmail: targetEmail
             }, `Purged data for ${targetEmail}`);
         }
 
@@ -4712,8 +4729,10 @@
 
         function handleLogout() {
             appBootstrapped = false;
+            let theme = localStorage.getItem('theme');
             sessionStorage.clear();
             localStorage.clear();
+            if (theme) localStorage.setItem('theme', theme);
             location.reload();
         }
         
@@ -4723,6 +4742,7 @@
         
         function showAlert(message, title) {
             return new Promise(resolve => {
+                lastFocusedEl = document.activeElement;
                 document.getElementById('alertModalTitle').textContent = title || 'Notice';
                 document.getElementById('alertModalMessage').textContent = message;
                 alertResolve = resolve;
@@ -4733,10 +4753,12 @@
         function closeAlertModal() {
             document.getElementById('alertModal').classList.add('hidden');
             if (alertResolve) { alertResolve(); alertResolve = null; }
+            if (lastFocusedEl) { lastFocusedEl.focus(); lastFocusedEl = null; }
         }
         
         function showConfirm(message, title) {
             return new Promise(resolve => {
+                lastFocusedEl = document.activeElement;
                 document.getElementById('confirmModalTitle').textContent = title || 'Confirm';
                 document.getElementById('confirmModalMessage').textContent = message;
                 confirmResolve = resolve;
@@ -4747,6 +4769,7 @@
         function closeConfirmModal(result) {
             document.getElementById('confirmModal').classList.add('hidden');
             if (confirmResolve) { confirmResolve(result); confirmResolve = null; }
+            if (lastFocusedEl) { lastFocusedEl.focus(); lastFocusedEl = null; }
         }
         
         // ===== EB PASSWORD MODAL (for members requesting >10 folios) =====
@@ -4769,7 +4792,8 @@
                 body: JSON.stringify({
                     token: SYSTEM_API_TOKEN,
                     action: "Verify EB Password",
-                    password: password
+                    password: password,
+                    email: userEmail
                 })
             })
             .then(res => res.json())
@@ -5031,7 +5055,7 @@
         }
 
         // ===== BUG / FEEDBACK MODAL =====
-        let feedbackRatings = { 1: 0, 2: 0, 3: 0 };
+        let feedbackRatings = { 1: 0, 2: 0 };
         let feedbackType = 'feedback';
 
         function openBugModal() {
@@ -5040,7 +5064,7 @@
             document.getElementById('navMenu').classList.remove('show');
             // Reset state
             feedbackType = 'feedback';
-            feedbackRatings = { 1: 0, 2: 0, 3: 0 };
+            feedbackRatings = { 1: 0, 2: 0 };
             document.getElementById('bugMessageInput').value = '';
             selectFeedbackType('feedback');
         }
@@ -5240,18 +5264,26 @@
         // Close modals on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                let modals = ['infoModal', 'editFolioModal', 'alertModal', 'confirmModal', 'bugModal', 'firstTimeAlert', 'adminViewMemberModal'];
+                let modalMap = {
+                    'alertModal': closeAlertModal,
+                    'confirmModal': function() { closeConfirmModal(false); },
+                    'infoModal': closeInfoModal,
+                    'bugModal': closeBugModal,
+                    'adminViewMemberModal': closeAdminViewMemberModal
+                };
                 // Handle account modal specially to check for unsaved changes
                 let accEl = document.getElementById('accountModal');
                 if (accEl && !accEl.classList.contains('hidden')) {
                     closeAccountModal();
+                    return;
                 }
-                modals.forEach(function(id) {
+                for (let id in modalMap) {
                     let el = document.getElementById(id);
                     if (el && !el.classList.contains('hidden')) {
-                        el.classList.add('hidden');
+                        modalMap[id]();
+                        return;
                     }
-                });
+                }
             }
         });
 
